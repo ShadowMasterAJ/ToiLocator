@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/screens/home_screen.dart';
 import '/screens/auth_screen.dart';
 import 'palette.dart';
 
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(primary: Palette.turquoise)),
       ),
-      home: AuthScreen(),
+      home: HomeScreen(), // TODO Need to add logic for AuthScreen
     );
   }
 }
