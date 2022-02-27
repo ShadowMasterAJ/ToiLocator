@@ -1,3 +1,3 @@
-# CZ2006_Project
+# CZ2006 Project
 
 More to come later
