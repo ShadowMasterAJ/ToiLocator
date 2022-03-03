@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/screens/profile_screen.dart';
 import '/screens/home_screen.dart';
 import '/screens/auth_screen.dart';
 import 'palette.dart';
@@ -15,6 +16,17 @@ class MyApp extends StatelessWidget {
         primarySwatch: Palette.beige,
         backgroundColor: Palette.beige[100],
         accentColor: Colors.red,
+
+        textTheme: const TextTheme(
+          headline1: TextStyle(
+              fontSize: 30.0, color: Colors.black, fontWeight: FontWeight.bold),
+          headline2: TextStyle(
+              fontSize: 24.0, color: Colors.black, fontWeight: FontWeight.bold),
+          headline3: TextStyle(fontSize: 24.0, color: Colors.black),
+          headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+          bodyText1: TextStyle(fontSize: 18.0),
+        ),
+
         // accentColorBrightness: Brightness.dark,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
@@ -26,7 +38,7 @@ class MyApp extends StatelessWidget {
         textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(primary: Palette.beige)),
       ),
-      home: HomeScreen(), // TODO Need to add logic for AuthScreen
+      home: ProfileScreen(), // TODO: Need to add logic for AuthScreen
     );
   }
 }
