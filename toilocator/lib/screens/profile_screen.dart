@@ -12,7 +12,7 @@ class ProfileScreen extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColorDark,
+                    color: Palette.beige[500],
                     image: DecorationImage(
                         image: NetworkImage("add you image URL here "),
                         fit: BoxFit.cover)),

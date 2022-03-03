@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'ToiLocator',
       theme: ThemeData(
         primarySwatch: Palette.beige,
-        backgroundColor: Palette.beige[100],
+        backgroundColor: Palette.beige[50],
         accentColor: Colors.red,
 
         textTheme: const TextTheme(
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(primary: Palette.beige)),
       ),
-      home: ProfileScreen(), // TODO: Need to add logic for AuthScreen
+      home: AuthScreen(), // TODO: Need to add logic for AuthScreen
     );
   }
 }
