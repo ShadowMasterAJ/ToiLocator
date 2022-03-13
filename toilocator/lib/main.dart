@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:toilocator/screens/home_map_screen.dart';
 import '/screens/profile_screen.dart';
-import '/screens/home_screen.dart';
 import '/screens/auth_screen.dart';
 import 'palette.dart';
 
@@ -13,9 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'ToiLocator',
       theme: ThemeData(
-        primarySwatch: Palette.beige,
         backgroundColor: Palette.beige[50],
-        accentColor: Colors.red,
 
         textTheme: const TextTheme(
           headline1: TextStyle(
@@ -37,8 +35,10 @@ class MyApp extends StatelessWidget {
         ),
         textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(primary: Palette.beige)),
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Palette.beige)
+            .copyWith(secondary: Colors.red),
       ),
-      home: AuthScreen(), // TODO: Need to add logic for AuthScreen
+      home: HomeMapScreen(), // TODO: Need to add logic for AuthScreen
     );
   }
 }
