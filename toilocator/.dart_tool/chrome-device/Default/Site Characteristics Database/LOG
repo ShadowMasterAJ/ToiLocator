@@ -1,17 +1,4 @@
-<<<<<<< HEAD
-2022/03/20-15:44:44.533 cfcc Reusing MANIFEST C:\Users\CHENPE~1\AppData\Local\Temp\flutter_tools.9ff0de40\flutter_tools_chrome_device.4c03a245\Default\Site Characteristics Database/MANIFEST-000001
-2022/03/20-15:44:44.535 cfcc Recovering log #3
-2022/03/20-15:44:44.535 cfcc Level-0 table #6: started
-2022/03/20-15:44:44.538 cfcc Level-0 table #6: 191 bytes OK
-2022/03/20-15:44:44.538 cfcc Recovering log #6
-2022/03/20-15:44:44.539 cfcc Reusing old log C:\Users\CHENPE~1\AppData\Local\Temp\flutter_tools.9ff0de40\flutter_tools_chrome_device.4c03a245\Default\Site Characteristics Database/000006.log 
-2022/03/20-15:44:44.540 cfcc Delete type=0 #3
-=======
-2022/03/20-18:52:10.949 bb03 Reusing MANIFEST /private/var/folders/nw/_dsfxl1x5wl1p_pdmrb1y1hh0000gn/T/flutter_tools.uBspHV/flutter_tools_chrome_device.XyXBJK/Default/Site Characteristics Database/MANIFEST-000001
-2022/03/20-18:52:10.949 bb03 Recovering log #3
-2022/03/20-18:52:10.950 bb03 Level-0 table #6: started
-2022/03/20-18:52:10.974 bb03 Level-0 table #6: 191 bytes OK
-2022/03/20-18:52:10.974 bb03 Recovering log #6
-2022/03/20-18:52:10.975 bb03 Reusing old log /private/var/folders/nw/_dsfxl1x5wl1p_pdmrb1y1hh0000gn/T/flutter_tools.uBspHV/flutter_tools_chrome_device.XyXBJK/Default/Site Characteristics Database/000006.log 
-2022/03/20-18:52:10.999 bb03 Delete type=0 #3
->>>>>>> 1c18f8a6eca2b57f93c3929fe008a066db1aa5aa
+2022/03/20-22:13:45.438 12203 Reusing MANIFEST /private/var/folders/nw/_dsfxl1x5wl1p_pdmrb1y1hh0000gn/T/flutter_tools.V5dJGc/flutter_tools_chrome_device.zzz9vb/Default/Site Characteristics Database/MANIFEST-000001
+2022/03/20-22:13:45.439 12203 Recovering log #6
+2022/03/20-22:13:45.440 12203 Reusing old log /private/var/folders/nw/_dsfxl1x5wl1p_pdmrb1y1hh0000gn/T/flutter_tools.V5dJGc/flutter_tools_chrome_device.zzz9vb/Default/Site Characteristics Database/000006.log 
+2022/03/20-22:13:45.440 12203 Delete type=0 #3

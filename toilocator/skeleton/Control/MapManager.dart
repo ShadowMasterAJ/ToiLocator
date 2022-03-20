@@ -1,3 +1,5 @@
+///
+
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
@@ -31,6 +33,7 @@ class _MapManagerState extends State<MapManager> {
     );
   }
 
+  /// Centres the map to the user's position
   void centerToPositionandMark(double lat, double long) {
     print("Latitude: $lat and Longitude: $long");
 
@@ -46,6 +49,7 @@ class _MapManagerState extends State<MapManager> {
     addMarker();
   }
 
+  /// When called, gets the current location of the user
   void getCurrentLocation() async {
     await Geolocator.requestPermission();
     Position position = await Geolocator.getCurrentPosition(
@@ -81,11 +85,11 @@ class _MapManagerState extends State<MapManager> {
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
             child: TextField(
               onSubmitted: (value) async {
-               GeoData data = await Geocoder2.getDataFromAddress(
-                      address: value,
-                      googleMapApiKey: "AIzaSyB9M5K3SIOoxo2PBhiUsqQ4lGcksjDy-IQ");
+                GeoData data = await Geocoder2.getDataFromAddress(
+                    address: value,
+                    googleMapApiKey: "AIzaSyB9M5K3SIOoxo2PBhiUsqQ4lGcksjDy-IQ");
 
-                      centerToPositionandMark(data.latitude, data.longitude);
+                centerToPositionandMark(data.latitude, data.longitude);
               },
               decoration: InputDecoration(
                 prefixIcon: IconButton(
