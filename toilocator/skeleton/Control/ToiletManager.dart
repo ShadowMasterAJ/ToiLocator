@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'Toilet.dart';
 
+/// Manages the information in the toiletList
 class ToiletManager {
   var toiletList = new List(); //TODO:Check what happened to this
   ToiletManager(Toilet toiletList) {

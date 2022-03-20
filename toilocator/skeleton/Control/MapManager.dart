@@ -18,12 +18,14 @@ class MapManager extends StatefulWidget {
   State<MapManager> createState() => _MapManagerState();
 }
 
+/// Characterises the map manager
 class _MapManagerState extends State<MapManager> {
   LatLng _initialcameraposition = LatLng(1.3521, 103.8198);
   late GoogleMapController _controller;
 
   List<Marker> _markers = [];
 
+  /// Add title for the map
   void addMarker() {
     _markers.add(
       Marker(
