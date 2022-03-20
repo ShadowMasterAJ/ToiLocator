@@ -1,8 +1,6 @@
 import 'Gender.dart';
 
-///
-///
-///
+/// This class stores all the information of a user.
 ///
 class User {
   Gender gender = Gender.MALE;

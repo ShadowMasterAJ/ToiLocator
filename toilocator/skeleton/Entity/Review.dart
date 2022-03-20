@@ -2,6 +2,8 @@ import 'User.dart';
 import 'ToiletType.dart';
 import 'Toilet.dart';
 
+/// This class stores all the information of a review that is written by a user
+/// 
 class Review {
   final dateTime = DateTime.now();
   User user;
@@ -18,28 +20,28 @@ class Review {
     this.userComment = userComment;
   }
 
+ /// Get and set method for datetime stored in Review
  final get getDateTime => this.dateTime;
-
  set setDateTime(final dateTime) => this.dateTime = dateTime;
-
+ 
+ /// Get and set method for user stored in Review
  get getUser => this.user;
-
  set setUser( user) => this.user = user;
 
-  get getToilet => this.toilet;
-
+ /// Get and set method for toilet stored in Review
+ get getToilet => this.toilet;
  set setToilet( toilet) => this.toilet = toilet;
 
-  get getToiletType => this.toiletType;
-
+ /// Get and set method for toilet stored in Review
+ get getToiletType => this.toiletType;
  set setToiletType( toiletType) => this.toiletType = toiletType;
 
-  get getUserRating => this.userRating;
-
+ /// Get and set method for user rating stored in Review
+ get getUserRating => this.userRating;
  set setUserRating( userRating) => this.userRating = userRating;
 
-  get getUserComment => this.userComment;
-
+ /// Get and set method for user comments stored in Review
+ get getUserComment => this.userComment;
  set setUserComment( userComment) => this.userComment = userComment;
 
     

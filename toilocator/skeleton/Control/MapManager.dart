@@ -8,6 +8,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoder2/geocoder2.dart';
 import 'package:toilocator/palette.dart';
 
+/// The map manager class does all the logical tasks
+/// related to the map
+///
 class MapManager extends StatefulWidget {
   const MapManager({Key? key}) : super(key: key);
 

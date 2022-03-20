@@ -2,6 +2,8 @@ import 'dart:ffi';
 import 'ToiletType.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+/// This class stores all the information about all the existing toilets
+///
 class Toilet {
   List<double> coordinates;
   String address;
@@ -16,9 +18,9 @@ class Toilet {
 
   List<double> get getCoordinates => this.coordinates;
 
+  /// Get and set method for coordinates stored in Review
   set setCoordinates(List<double> coordinates) =>
       this.coordinates = coordinates;
-
   get getAddress => this.address;
 
   set setAddress(address) => this.address = address;
