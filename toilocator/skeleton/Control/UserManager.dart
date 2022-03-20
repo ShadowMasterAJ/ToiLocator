@@ -18,7 +18,7 @@ class AuthService {
   }
 
 /// Getter for Firebase user's user ID [uid].
-String getUserID(){
+/*String getUserID(){
   return _auth.currentUser.uid;
 }
 
@@ -44,7 +44,7 @@ getProfileName(){
 /// Getter for Firebase user's email [email].
 getEmail(){
   return _auth.currentUser.email.toString();
-}
+}*/
 
 /// Method to sign out anonymously.
 Future signOut() async {
