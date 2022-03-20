@@ -1,1 +1,7 @@
-2022/03/18-01:14:24.385 b64c Reusing MANIFEST C:\Users\CHENPE~1\AppData\Local\Temp\flutter_tools.4de7d444\flutter_tools_chrome_device.2f26e0f0\Default\Site Characteristics Database/MANIFEST-000001
+2022/03/20-15:44:44.533 cfcc Reusing MANIFEST C:\Users\CHENPE~1\AppData\Local\Temp\flutter_tools.9ff0de40\flutter_tools_chrome_device.4c03a245\Default\Site Characteristics Database/MANIFEST-000001
+2022/03/20-15:44:44.535 cfcc Recovering log #3
+2022/03/20-15:44:44.535 cfcc Level-0 table #6: started
+2022/03/20-15:44:44.538 cfcc Level-0 table #6: 191 bytes OK
+2022/03/20-15:44:44.538 cfcc Recovering log #6
+2022/03/20-15:44:44.539 cfcc Reusing old log C:\Users\CHENPE~1\AppData\Local\Temp\flutter_tools.9ff0de40\flutter_tools_chrome_device.4c03a245\Default\Site Characteristics Database/000006.log 
+2022/03/20-15:44:44.540 cfcc Delete type=0 #3
