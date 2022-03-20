@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-///This class allows the users to create accounts, check or update their account information and connect the information to the firebase
+/// This class allows the users to create accounts, check or update their account information and connect the information to the firebase
 /// Instantiate FirebaseAuthenication instance
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
