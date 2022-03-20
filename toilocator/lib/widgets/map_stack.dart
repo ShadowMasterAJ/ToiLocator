@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geocoder/geocoder.dart';
+import 'package:geocoder2/geocoder2.dart';
 import 'package:toilocator/palette.dart';
 
 class MapStack extends StatefulWidget {
@@ -81,10 +81,11 @@ class _MapStackState extends State<MapStack> {
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
             child: TextField(
               onSubmitted: (value) async {
-                var addr = await Geocoder.local.findAddressesFromQuery(value);
+               GeoData data = await Geocoder2.getDataFromAddress(
+                      address: value,
+                      googleMapApiKey: "AIzaSyB9M5K3SIOoxo2PBhiUsqQ4lGcksjDy-IQ");
 
-                centerToPositionandMark(addr.first.coordinates.latitude,
-                    addr.first.coordinates.longitude);
+                      centerToPositionandMark(data.latitude, data.longitude);
               },
               decoration: InputDecoration(
                 prefixIcon: IconButton(
