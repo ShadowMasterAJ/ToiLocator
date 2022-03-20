@@ -1,5 +1,6 @@
 import 'User.dart';
 import 'ToiletType.dart';
+import 'Toilet.dart';
 
 class Review {
   final dateTime = DateTime.now();
@@ -12,7 +13,7 @@ class Review {
   Review(User user, Toilet toilet, ToiletType toiletType, int userRating, String userComment) {
     this.user = user;
     this.toilet = toilet;
-    this.ToiletType = toiletType;
+    this.toiletType = toiletType;
     this.userRating = userRating;
     this.userComment = userComment;
   }

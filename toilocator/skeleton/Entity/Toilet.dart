@@ -1,5 +1,5 @@
 import 'dart:ffi';
-
+import 'ToiletType.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class Toilet {
