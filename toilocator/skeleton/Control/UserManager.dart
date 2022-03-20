@@ -1,6 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 
 /// Instantiate FirebaseAuthenication instance
 class AuthService {
@@ -25,18 +23,18 @@ String getUserID(){
 }
 
 /// Getter for Firebase user's profile image URL [photoURL].
-String getUserImageURL(){
+/*String getUserImageURL(){
   return _auth.currentUser.photoURL;
-}
+}*/
 
 /// Getter for Firebase user's profile image.
-getProfilePic(){
+/**getProfilePic(){
     if (_auth.currentUser.photoURL != null) {
       return NetworkImage(_auth.currentUser.photoURL.toString());
     } else {
       return Icon(Icons.account_circle, size: 100);
     }
-}
+}**/
 
 /// Getter for Firebase user's display name [displayName].
 getProfileName(){
@@ -48,10 +46,13 @@ getEmail(){
   return _auth.currentUser.email.toString();
 }
 
-/// Method to sign out.
-Future<void> signOutGoogle() async {
-  await googleSignIn.signOut();
-  await FirebaseAuth.instance.signOut();
-
-  print("User Signed Out");
+/// Method to sign out anonymously.
+Future signOut() async {
+    try {
+      return await _auth.signOut();
+    } catch (error) {
+      print(error.toString());
+      return null;
+    }
+  }
 }
