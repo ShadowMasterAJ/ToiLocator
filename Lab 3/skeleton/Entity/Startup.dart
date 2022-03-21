@@ -1,0 +1,1 @@
+/// This class starts the whole app and launch the main app
