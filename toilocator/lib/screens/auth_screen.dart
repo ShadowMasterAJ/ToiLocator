@@ -11,10 +11,24 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: AuthForm(),
+        padding: const EdgeInsets.all(5.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Welcome!',
+                style: Theme.of(context).textTheme.headline1,
+              ),
+            ),
+            AuthForm(),
+            Spacer(),
+            Spacer(),
+          ],
+        ),
       ),
-      backgroundColor: Theme.of(context).primaryColor,
     );
   }
 }

@@ -5,7 +5,7 @@
 5    android:versionName="1.0.0" >
 6
 7    <uses-sdk
-8        android:minSdkVersion="16"
+8        android:minSdkVersion="20"
 9        android:targetSdkVersion="30" />
 10    <!--
 11         Flutter needs it to communicate with the running application
@@ -14,78 +14,150 @@
 14    <uses-permission android:name="android.permission.INTERNET" />
 14-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/debug/AndroidManifest.xml:6:5-66
 14-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/debug/AndroidManifest.xml:6:22-64
-15
-16    <application
-16-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:3:4-40:19
-17        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-17-->[androidx.core:core:1.1.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/2e94107f30f39be366a17347c2bf100b/core-1.1.0/AndroidManifest.xml:24:18-86
-18        android:debuggable="true"
-19        android:icon="@mipmap/ic_launcher"
-19-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:5:9-43
-20        android:label="toilocator" >
-20-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:4:9-35
-21        <activity
-21-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:6:9-34:20
-22            android:name="com.example.toilocator.MainActivity"
-22-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:7:13-41
-23            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-23-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:10:13-163
-24            android:hardwareAccelerated="true"
-24-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:11:13-47
-25            android:launchMode="singleTop"
-25-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:8:13-43
-26            android:theme="@style/LaunchTheme"
-26-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:9:13-47
-27            android:windowSoftInputMode="adjustResize" >
-27-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:12:13-55
-28
-29            <!--
-30                 Specifies an Android theme to apply to this Activity as soon as
-31                 the Android process has started. This theme is visible to the user
-32                 while the Flutter UI initializes. After that, this theme continues
-33                 to determine the Window background behind the Flutter UI.
-34            -->
-35            <meta-data
-35-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:17:13-20:17
-36                android:name="io.flutter.embedding.android.NormalTheme"
-36-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:18:15-70
-37                android:resource="@style/NormalTheme" />
-37-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:19:15-52
-38            <!--
-39                 Displays an Android View that continues showing the launch screen
-40                 Drawable until Flutter paints its first frame, then this splash
-41                 screen fades out. A splash screen is useful to avoid any visual
-42                 gap between the end of Android's launch screen and the painting of
-43                 Flutter's first frame.
-44            -->
-45            <meta-data
-45-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:26:13-29:17
-46                android:name="io.flutter.embedding.android.SplashScreenDrawable"
-46-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:27:15-79
-47                android:resource="@drawable/launch_background" />
-47-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:28:15-61
-48
-49            <intent-filter>
-49-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:30:13-33:29
-50                <action android:name="android.intent.action.MAIN" />
-50-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:31:17-68
-50-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:31:25-66
-51
-52                <category android:name="android.intent.category.LAUNCHER" />
-52-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:32:17-76
-52-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:32:27-74
-53            </intent-filter>
-54        </activity>
-55        <!--
-56             Don't delete the meta-data below.
-57             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-58        -->
-59        <meta-data
-59-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:37:9-39:33
-60            android:name="flutterEmbedding"
-60-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:38:13-44
-61            android:value="2" />
-61-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:39:13-30
-62    </application>
+15    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+15-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:2:3-77
+15-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:2:20-74
+16    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+16-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:3:3-79
+16-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:3:20-76
+17    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- Include required permissions for Google Maps API to run. -->
+17-->[:geolocator_android] /Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/build/geolocator_android/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-77
+17-->[:geolocator_android] /Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/build/geolocator_android/intermediates/library_manifest/debug/AndroidManifest.xml:7:22-74
+18    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+18-->[com.google.android.gms:play-services-maps:17.0.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/6f3daa1ca7d5f0cb334e07491a88b930/jetified-play-services-maps-17.0.0/AndroidManifest.xml:23:5-79
+18-->[com.google.android.gms:play-services-maps:17.0.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/6f3daa1ca7d5f0cb334e07491a88b930/jetified-play-services-maps-17.0.0/AndroidManifest.xml:23:22-76
+19
+20    <uses-feature
+20-->[com.google.android.gms:play-services-maps:17.0.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/6f3daa1ca7d5f0cb334e07491a88b930/jetified-play-services-maps-17.0.0/AndroidManifest.xml:26:5-28:35
+21        android:glEsVersion="0x00020000"
+21-->[com.google.android.gms:play-services-maps:17.0.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/6f3daa1ca7d5f0cb334e07491a88b930/jetified-play-services-maps-17.0.0/AndroidManifest.xml:27:9-41
+22        android:required="true" />
+22-->[com.google.android.gms:play-services-maps:17.0.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/6f3daa1ca7d5f0cb334e07491a88b930/jetified-play-services-maps-17.0.0/AndroidManifest.xml:28:9-32
+23
+24    <application
+24-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:5:3-28:17
+25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+25-->[androidx.core:core:1.6.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/122df2e57d294d1a53db26bbc3b813c1/core-1.6.0/AndroidManifest.xml:24:18-86
+26        android:debuggable="true"
+27        android:icon="@mipmap/ic_launcher"
+27-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:5:43-77
+28        android:label="toilocator" >
+28-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:5:16-42
+29        <meta-data
+29-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:6:5-119
+30            android:name="com.google.android.geo.API_KEY"
+30-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:6:16-61
+31            android:value="AIzaSyB9M5K3SIOoxo2PBhiUsqQ4lGcksjDy-IQ" />
+31-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:6:62-117
+32
+33        <activity
+33-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:8:5-24:16
+34            android:name="com.example.toilocator.MainActivity"
+34-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:8:15-43
+35            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+35-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:8:110-260
+36            android:hardwareAccelerated="true"
+36-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:8:261-295
+37            android:launchMode="singleTop"
+37-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:8:44-74
+38            android:theme="@style/LaunchTheme"
+38-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:8:75-109
+39            android:windowSoftInputMode="adjustResize" >
+39-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:8:296-338
+40
+41            <!--
+42           Specifies an Android theme to apply to this Activity as soon as
+43                 the Android process has started. This theme is visible to the user
+44                 while the Flutter UI initializes. After that, this theme continues
+45                 to determine the Window background behind the Flutter UI.
+46            -->
+47            <meta-data
+47-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:13:7-114
+48                android:name="io.flutter.embedding.android.NormalTheme"
+48-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:13:18-73
+49                android:resource="@style/NormalTheme" />
+49-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:13:74-111
+50            <!--
+51           Displays an Android View that continues showing the launch screen
+52                 Drawable until Flutter paints its first frame, then this splash
+53                 screen fades out. A splash screen is useful to avoid any visual
+54                 gap between the end of Android's launch screen and the painting of
+55                 Flutter's first frame.
+56            -->
+57            <meta-data
+57-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:19:7-132
+58                android:name="io.flutter.embedding.android.SplashScreenDrawable"
+58-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:19:18-82
+59                android:resource="@drawable/launch_background" />
+59-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:19:83-129
+60
+61            <intent-filter>
+61-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:20:7-23:23
+62                <action android:name="android.intent.action.MAIN" />
+62-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:21:9-60
+62-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:21:17-58
 63
-64</manifest>
+64                <category android:name="android.intent.category.LAUNCHER" />
+64-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:22:9-68
+64-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:22:19-66
+65            </intent-filter>
+66        </activity>
+67        <!--
+68         Don't delete the meta-data below.
+69             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+70        -->
+71        <meta-data
+71-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:27:5-68
+72            android:name="flutterEmbedding"
+72-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:27:16-47
+73            android:value="2" />
+73-->/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/android/app/src/main/AndroidManifest.xml:27:48-65
+74
+75        <service
+75-->[:geolocator_android] /Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/build/geolocator_android/intermediates/library_manifest/debug/AndroidManifest.xml:10:9-14:56
+76            android:name="com.baseflow.geolocator.GeolocatorLocationService"
+76-->[:geolocator_android] /Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/build/geolocator_android/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-77
+77            android:enabled="true"
+77-->[:geolocator_android] /Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/build/geolocator_android/intermediates/library_manifest/debug/AndroidManifest.xml:12:13-35
+78            android:exported="false"
+78-->[:geolocator_android] /Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/build/geolocator_android/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-37
+79            android:foregroundServiceType="location" />
+79-->[:geolocator_android] /Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/build/geolocator_android/intermediates/library_manifest/debug/AndroidManifest.xml:14:13-53
+80
+81        <uses-library
+81-->[androidx.window:window:1.0.0-beta04] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/03c633e46d75bfb21f082f0417f55161/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
+82            android:name="androidx.window.extensions"
+82-->[androidx.window:window:1.0.0-beta04] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/03c633e46d75bfb21f082f0417f55161/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
+83            android:required="false" />
+83-->[androidx.window:window:1.0.0-beta04] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/03c633e46d75bfb21f082f0417f55161/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
+84        <uses-library
+84-->[androidx.window:window:1.0.0-beta04] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/03c633e46d75bfb21f082f0417f55161/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
+85            android:name="androidx.window.sidecar"
+85-->[androidx.window:window:1.0.0-beta04] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/03c633e46d75bfb21f082f0417f55161/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
+86            android:required="false" /> <!-- Needs to be explicitly declared on P+ -->
+86-->[androidx.window:window:1.0.0-beta04] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/03c633e46d75bfb21f082f0417f55161/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
+87        <uses-library
+87-->[com.google.android.gms:play-services-maps:17.0.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/6f3daa1ca7d5f0cb334e07491a88b930/jetified-play-services-maps-17.0.0/AndroidManifest.xml:33:9-35:40
+88            android:name="org.apache.http.legacy"
+88-->[com.google.android.gms:play-services-maps:17.0.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/6f3daa1ca7d5f0cb334e07491a88b930/jetified-play-services-maps-17.0.0/AndroidManifest.xml:34:13-50
+89            android:required="false" />
+89-->[com.google.android.gms:play-services-maps:17.0.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/6f3daa1ca7d5f0cb334e07491a88b930/jetified-play-services-maps-17.0.0/AndroidManifest.xml:35:13-37
+90
+91        <activity
+91-->[com.google.android.gms:play-services-base:17.0.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/3679fa9be1d67d14c72169d3353f14d4/jetified-play-services-base-17.0.0/AndroidManifest.xml:23:9-26:75
+92            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+92-->[com.google.android.gms:play-services-base:17.0.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/3679fa9be1d67d14c72169d3353f14d4/jetified-play-services-base-17.0.0/AndroidManifest.xml:24:13-79
+93            android:exported="false"
+93-->[com.google.android.gms:play-services-base:17.0.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/3679fa9be1d67d14c72169d3353f14d4/jetified-play-services-base-17.0.0/AndroidManifest.xml:25:13-37
+94            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+94-->[com.google.android.gms:play-services-base:17.0.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/3679fa9be1d67d14c72169d3353f14d4/jetified-play-services-base-17.0.0/AndroidManifest.xml:26:13-72
+95
+96        <meta-data
+96-->[com.google.android.gms:play-services-basement:17.0.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/a7975ba3cb0c3630bd14453686890431/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
+97            android:name="com.google.android.gms.version"
+97-->[com.google.android.gms:play-services-basement:17.0.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/a7975ba3cb0c3630bd14453686890431/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
+98            android:value="@integer/google_play_services_version" />
+98-->[com.google.android.gms:play-services-basement:17.0.0] /Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/a7975ba3cb0c3630bd14453686890431/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
+99    </application>
+100
+101</manifest>
