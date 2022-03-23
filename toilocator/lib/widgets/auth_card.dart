@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toilocator/palette.dart';
 
 class AuthForm extends StatefulWidget {
   @override
@@ -165,7 +166,8 @@ class _AuthFormState extends State<AuthForm> {
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).primaryColor),
+                  primary: Palette.beige,
+                ),
                 onPressed: () {},
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),

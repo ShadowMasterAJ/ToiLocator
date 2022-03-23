@@ -15,7 +15,6 @@ class MyApp extends StatelessWidget {
       title: 'ToiLocator',
       theme: ThemeData(
         backgroundColor: Palette.beige[50],
-
         textTheme: const TextTheme(
           headline1: TextStyle(
               fontSize: 30.0, color: Colors.black, fontWeight: FontWeight.bold),
