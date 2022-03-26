@@ -15,7 +15,7 @@ class MapStack extends StatefulWidget {
 }
 
 class _MapStackState extends State<MapStack> {
-  LatLng _initialcameraposition = LatLng(1.3521, 103.8198);
+  LatLng _initialcameraposition = LatLng(1.346150, 103.681500);
   late GoogleMapController _controller;
 
   List<Marker> _markers = [];
