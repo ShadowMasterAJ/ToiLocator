@@ -11,6 +11,8 @@ class HomeMapScreen extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
+
         // appBar: AppBar(title: Text('Toilocator')),
         body: SafeArea(child: MapStack()),
         drawer: SafeArea(

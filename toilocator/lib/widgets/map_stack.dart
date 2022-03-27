@@ -19,10 +19,10 @@ class _MapStackState extends State<MapStack> {
   late GoogleMapController _controller;
 
   List<Marker> _markers = [];
-  final double _initFabHeight = 110.0;
+  final double _initFabHeight = 131.0;
   double _fabHeight = 0;
   double _panelHeightOpen = 0;
-  double _panelHeightClosed = 95.0;
+  double _panelHeightClosed = 118.0;
 
   @override
   void initState() {
@@ -75,58 +75,64 @@ class _MapStackState extends State<MapStack> {
 
   Widget _panel(ScrollController sc) {
     return MediaQuery.removePadding(
-        context: context,
-        removeTop: true,
-        child: ListView(
-          controller: sc,
-          children: <Widget>[
-            SizedBox(
-              height: 12.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  width: 30,
-                  height: 5,
-                  decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.all(Radius.circular(12.0))),
-                ),
-              ],
-            ),
-            Divider(
-              thickness: 1.5,
-              indent: 10,
-              endIndent: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  width: 300,
-                  child: Text(
-                    "Recommended Toilets in the area...",
+      context: context,
+      removeTop: true,
+      child: ListView(
+        controller: sc,
+        children: <Widget>[
+          SizedBox(
+            height: 12.0,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                width: 30,
+                height: 5,
+                decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.all(Radius.circular(12.0))),
+              ),
+            ],
+          ),
+          Divider(
+            thickness: 1.5,
+            indent: 10,
+            endIndent: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                width: 300,
+                child: Text("Recommended Toilets in the area...",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 24.0,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Icon(
-                  Icons.wc,
-                  size: 40,
-                  color: Colors.black,
-                ),
-              ],
-            ),
-          ],
-        ));
+                    style: Theme.of(context).textTheme.headline4),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Icon(
+                Icons.wc,
+                size: 40,
+                color: Colors.black,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          ListView.builder(
+            itemCount: 1,
+            shrinkWrap: true,
+            itemBuilder: (BuildContext context, int index) {
+              return toiletCard();
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -148,7 +154,7 @@ class _MapStackState extends State<MapStack> {
             markers: Set.from(_markers),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
             child: TextField(
               onSubmitted: (value) async {
                 var addr = await Geocoder.local.findAddressesFromQuery(value);
@@ -193,7 +199,7 @@ class _MapStackState extends State<MapStack> {
             ),
           ),
           SlidingUpPanel(
-            snapPoint: 0.5,
+            snapPoint: 0.35,
             // minHeight: 100.0,
             // maxHeight: MediaQuery.of(context).size.height * 0.8,
 
@@ -202,52 +208,48 @@ class _MapStackState extends State<MapStack> {
             parallaxEnabled: true,
             parallaxOffset: .1,
             panelBuilder: (sc) => _panel(sc),
-            collapsed: ListView(
-              children: <Widget>[
-                SizedBox(
-                  height: 12.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      width: 30,
-                      height: 5,
-                      decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(12.0))),
-                    ),
-                  ],
-                ),
-                Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      width: 300,
-                      child: Text(
-                        "Recommended Toilets in the area...",
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 24.0,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Icon(
-                      Icons.wc,
-                      size: 40,
-                      color: Colors.black,
-                    ),
-                  ],
-                ),
-              ],
-            ),
+            // collapsed: ListView(
+            //   children: <Widget>[
+            //     SizedBox(
+            //       height: 12.0,
+            //     ),
+            //     Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: <Widget>[
+            //         Container(
+            //           width: 30,
+            //           height: 5,
+            //           decoration: BoxDecoration(
+            //               color: Colors.grey[300],
+            //               borderRadius:
+            //                   BorderRadius.all(Radius.circular(12.0))),
+            //         ),
+            //       ],
+            //     ),
+            //     Divider(),
+            //     Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: <Widget>[
+            //         Container(
+            //           width: 300,
+            //           child: Text("Recommended Toilets in the area...",
+            //               maxLines: 2,
+            //               overflow: TextOverflow.ellipsis,
+            //               style: Theme.of(context).textTheme.headline4),
+            //         ),
+            //         SizedBox(
+            //           width: 10,
+            //         ),
+            //         Icon(
+            //           Icons.wc,
+            //           size: 40,
+            //           color: Colors.black,
+            //         ),
+            //       ],
+            //     ),
+            //   ],
+            // ),
+
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(18.0),
                 topRight: Radius.circular(18.0)),
@@ -260,14 +262,117 @@ class _MapStackState extends State<MapStack> {
             bottom: _fabHeight, // TODO: need to make this relative to drawer
             right: 10,
             child: FloatingActionButton(
+              tooltip: "Center to your location",
+              elevation: 10,
               backgroundColor: Palette.beige[200],
               onPressed: getCurrentLocation,
               child: Icon(
                 Icons.gps_fixed,
+                size: 25,
                 color: Palette.beige[900],
               ),
             ),
           ),
         ]);
+  }
+}
+
+class toiletCard extends StatelessWidget {
+  const toiletCard({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Container(
+        height: 155,
+        // width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      "Toilet Name",
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                  ),
+                  Text(
+                    'Address of Toilet',
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                  Spacer(),
+                  Row(
+                    children: [
+                      Text('Official Rating    '),
+                      Icon(Icons.star_half_rounded),
+                      Icon(Icons.star_half_rounded),
+                      Icon(Icons.star_half_rounded),
+                      Icon(Icons.star_half_rounded),
+                      Icon(Icons.star_half_rounded),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text('User Rating        '),
+                      Icon(Icons.star_half_rounded),
+                      Icon(Icons.star_half_rounded),
+                      Icon(Icons.star_half_rounded),
+                      Icon(Icons.star_half_rounded),
+                      Icon(Icons.star_half_rounded),
+                    ],
+                  ),
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      children: [
+                        Icon(Icons.wheelchair_pickup),
+                        Icon(Icons.baby_changing_station)
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Spacer(),
+              VerticalDivider(
+                color: Colors.black,
+                width: 0,
+              ),
+              Expanded(
+                child: RotatedBox(
+                  quarterTurns: 5,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Palette.beige,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10))),
+                    width: 155,
+                    child: Center(
+                      child: Text(
+                        '300m',
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
