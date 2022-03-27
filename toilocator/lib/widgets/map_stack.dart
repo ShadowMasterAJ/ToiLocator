@@ -6,6 +6,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:toilocator/palette.dart';
+import 'package:network_image_to_byte/network_image_to_byte.dart';
+import 'dart:typed_data';
 
 class MapStack extends StatefulWidget {
   const MapStack({Key? key}) : super(key: key);
@@ -42,6 +44,23 @@ class _MapStackState extends State<MapStack> {
           position: _initialcameraposition),
     );
   }
+
+  void addToiletMarker(int markerId, double lat, double long) async {
+    final Uint8List customIcon = await networkImageToByte(
+        "https://assets.stickpng.com/images/580b57fcd9996e24bc43c39c.png");
+    LatLng _position = LatLng(lat, long);
+    var marker = Marker(
+        markerId: MarkerId(_position.toString()),
+        position: _position,
+        onTap: () {
+          print("toilet is tapped!");
+        },
+        icon: BitmapDescriptor.fromBytes(customIcon));
+  }
+
+  // void markNearestToilets() {
+
+  // }
 
   void centerToPositionandMark(double lat, double long) {
     print("Latitude: $lat and Longitude: $long");
