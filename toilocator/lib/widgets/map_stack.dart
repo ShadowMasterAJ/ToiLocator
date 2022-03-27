@@ -6,7 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:toilocator/palette.dart';
-import 'package:network_image_to_byte/network_image_to_byte.dart';
 import 'dart:typed_data';
 
 class MapStack extends StatefulWidget {
@@ -17,6 +16,7 @@ class MapStack extends StatefulWidget {
 }
 
 class _MapStackState extends State<MapStack> {
+  late BitmapDescriptor toiletIcon;
   LatLng _initialcameraposition = LatLng(1.346150, 103.681500);
   late GoogleMapController _controller;
 
@@ -45,22 +45,32 @@ class _MapStackState extends State<MapStack> {
     );
   }
 
+  void retrieveIcon() {
+    BitmapDescriptor.fromAssetImage(
+            ImageConfiguration(), 'lib/assets/toilet_marker.png')
+        .then((onValue) {
+      toiletIcon = onValue;
+    });
+  }
+
   void addToiletMarker(int markerId, double lat, double long) async {
-    final Uint8List customIcon = await networkImageToByte(
-        "https://assets.stickpng.com/images/580b57fcd9996e24bc43c39c.png");
+    retrieveIcon();
     LatLng _position = LatLng(lat, long);
     var marker = Marker(
         markerId: MarkerId(_position.toString()),
         position: _position,
         onTap: () {
-          print("toilet is tapped!");
+          print("toilet is tapped!"); // future function here
         },
-        icon: BitmapDescriptor.fromBytes(customIcon));
+        icon: toiletIcon);
+    _markers.add(marker);
   }
 
-  // void markNearestToilets() {
-
-  // }
+  void markNearestToilets() {
+    // input is location list? or the nearest function idk
+    // for location in list
+    // run addtoiletmarker
+  }
 
   void centerToPositionandMark(double lat, double long) {
     print("Latitude: $lat and Longitude: $long");
@@ -75,6 +85,7 @@ class _MapStackState extends State<MapStack> {
     _markers.clear();
 
     addMarker();
+    // run the marknesrestest toilets here
   }
 
   void getCurrentLocation() async {
