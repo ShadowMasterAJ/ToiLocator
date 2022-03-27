@@ -1,10 +1,27 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-mn/values-mn.xml",
+            "outputFile": "/Users/tangyiqwan/dev/projects/flutter/toilocator/CZ2006_Project/toilocator/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-mn/values-mn.xml",
             "map": [
                 {
-                    "source": "/Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/3679fa9be1d67d14c72169d3353f14d4/jetified-play-services-base-17.0.0/res/values-mn/values.xml",
+                    "source": "/Users/tangyiqwan/.gradle/caches/transforms-2/files-2.1/a8801b23ef6ae696099b6c78c37d97a2/jetified-play-services-basement-17.0.0/res/values-mn/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "247",
+                        "endColumns": "208",
+                        "endOffsets": "455"
+                    },
+                    "to": {
+                        "startLines": "10",
+                        "startColumns": "4",
+                        "startOffsets": "1271",
+                        "endColumns": "208",
+                        "endOffsets": "1475"
+                    }
+                },
+                {
+                    "source": "/Users/tangyiqwan/.gradle/caches/transforms-2/files-2.1/5a21e3d51ecfbce69f5a852e03b3eddf/jetified-play-services-base-17.0.0/res/values-mn/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -21,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "/Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/122df2e57d294d1a53db26bbc3b813c1/core-1.6.0/res/values-mn/values-mn.xml",
+                    "source": "/Users/tangyiqwan/.gradle/caches/transforms-2/files-2.1/68d8b6f95eda44c538425a37777656c5/core-1.6.0/res/values-mn/values-mn.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -35,23 +52,6 @@
                         "startOffsets": "2809",
                         "endColumns": "100",
                         "endOffsets": "2905"
-                    }
-                },
-                {
-                    "source": "/Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/a7975ba3cb0c3630bd14453686890431/jetified-play-services-basement-17.0.0/res/values-mn/values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "247",
-                        "endColumns": "208",
-                        "endOffsets": "455"
-                    },
-                    "to": {
-                        "startLines": "10",
-                        "startColumns": "4",
-                        "startOffsets": "1271",
-                        "endColumns": "208",
-                        "endOffsets": "1475"
                     }
                 }
             ]
