@@ -1,13 +1,14 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoder/geocoder.dart';
+
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:toilocator/palette.dart';
-import 'package:network_image_to_byte/network_image_to_byte.dart';
-import 'dart:typed_data';
 
 class MapStack extends StatefulWidget {
   const MapStack({Key? key}) : super(key: key);
@@ -124,10 +125,11 @@ class _MapStackState extends State<MapStack> {
             children: <Widget>[
               Container(
                 width: 300,
-                child: Text("Recommended Toilets in the area...",
+                child: Text("Recommended toilets in the area...",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.headline4),
+                    style: Theme.of(context).textTheme.headline4?.copyWith(
+                        color: Colors.black, fontWeight: FontWeight.bold)),
               ),
               SizedBox(
                 width: 10,
@@ -357,7 +359,13 @@ class toiletCard extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Row(
                       children: [
-                        Icon(Icons.wheelchair_pickup),
+                        Icon(
+                          Icons.wheelchair_pickup,
+                          color: Palette.beige[300],
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
                         Icon(Icons.baby_changing_station)
                       ],
                     ),
