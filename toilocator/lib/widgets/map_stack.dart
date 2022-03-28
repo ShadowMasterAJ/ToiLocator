@@ -6,7 +6,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:toilocator/palette.dart';
-import 'dart:typed_data';
+import 'dart:convert';
+import 'dart:math' show cos, sqrt, asin;
+import 'package:flutter/services.dart';
+import '/models/toilet.dart';
 
 class MapStack extends StatefulWidget {
   const MapStack({Key? key}) : super(key: key);
@@ -21,6 +24,8 @@ class _MapStackState extends State<MapStack> {
   late GoogleMapController _controller;
 
   List<Marker> _markers = [];
+  List _toiletTemp = [];
+  List<Toilet> _toiletList = [];
   final double _initFabHeight = 131.0;
   double _fabHeight = 0;
   double _panelHeightOpen = 0;
@@ -60,19 +65,76 @@ class _MapStackState extends State<MapStack> {
         markerId: MarkerId(_position.toString()),
         position: _position,
         onTap: () {
-          print("toilet is tapped!"); // future function here
+          print("toilet is tapped!"); // future function to push info here
         },
         icon: toiletIcon);
     _markers.add(marker);
   }
 
-  void markNearestToilets() {
-    // input is location list? or the nearest function idk
-    // for location in list
-    // run addtoiletmarker
+  Future<void> readJson() async {
+    final String toiletJson =
+        await rootBundle.loadString('lib/data/toilets.json');
+    final toiletParsed = await json.decode(toiletJson);
+    setState(() {
+      _toiletTemp = toiletParsed["data"];
+
+      for (int i = 0; i < _toiletTemp.length; i++) {
+        int index = _toiletTemp[i]["index"];
+        String type = _toiletTemp[i]["type"];
+        String image = _toiletTemp[i]["image_link-href"];
+        String address = _toiletTemp[i]["address"];
+        String name = _toiletTemp[i]["toilet_name"];
+        String district = _toiletTemp[i]["district_name"];
+        List coords = _toiletTemp[i]["coords"];
+        int award = _toiletTemp[i]["award_int"];
+        var toilet = new Toilet(
+            index: index,
+            type: type,
+            image: image,
+            address: address,
+            toiletName: name,
+            district: district,
+            coords: coords,
+            awardInt: award);
+        _toiletList.add(toilet);
+      }
+    });
+  }
+
+  void markNearestToilets(double lat, double long) {
+    List indices = calculateNearestToilets(lat, long);
+    for (int i = 0; i < indices.length; i++) {
+      int index = indices[i];
+      List coords = _toiletList[index].coords;
+      addToiletMarker(index, coords[0], coords[1]);
+    }
+  }
+
+  List calculateNearestToilets(double lat, double long) {
+    List _acceptedIndices = [];
+    for (int i = 0; i < _toiletList.length; i++) {
+      // calculation by haversine
+      double targetCoord_lat = _toiletList[i].coords[0];
+      double targetCoord_long = _toiletList[i].coords[1];
+      var p = 0.017453292519943295;
+      var c = cos;
+      var a = 0.5 -
+          c((targetCoord_lat - lat) * p) / 2 +
+          c(lat * p) *
+              c(targetCoord_lat * p) *
+              (1 - c((targetCoord_long - long) * p)) /
+              2;
+      double dist = 12742 * asin(sqrt(a)); // in KM
+      if (dist < 1) {
+        // CURRENT THRESHOLD AT 1KM
+        _acceptedIndices.add(i);
+      }
+    }
+    return _acceptedIndices;
   }
 
   void centerToPositionandMark(double lat, double long) {
+    readJson();
     print("Latitude: $lat and Longitude: $long");
 
     setState(() => _initialcameraposition = LatLng(lat, long));
@@ -83,9 +145,10 @@ class _MapStackState extends State<MapStack> {
       ),
     ));
     _markers.clear();
+    markNearestToilets(lat,
+        long); // there is a problem with the position of this function. i can't fix it
 
     addMarker();
-    // run the marknesrestest toilets here
   }
 
   void getCurrentLocation() async {
