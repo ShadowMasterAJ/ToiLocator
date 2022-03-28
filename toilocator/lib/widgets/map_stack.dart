@@ -1,5 +1,6 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
+import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -22,7 +23,6 @@ class MapStack extends StatefulWidget {
 }
 
 class _MapStackState extends State<MapStack> {
-  late BitmapDescriptor toiletIcon;
   LatLng _initialcameraposition =
       LatLng(1.3521, 103.8198); // 1.346150, 103.681500
   late GoogleMapController _controller;
@@ -30,6 +30,8 @@ class _MapStackState extends State<MapStack> {
   List<Marker> _markers = [];
   List _toiletTemp = [];
   List<Toilet> _toiletList = [];
+  late BitmapDescriptor toiletIcon;
+
   final double _initFabHeight = 131.0;
   double _fabHeight = 0;
   double _panelHeightOpen = 0;
@@ -38,8 +40,9 @@ class _MapStackState extends State<MapStack> {
   @override
   void initState() {
     super.initState();
-
     _fabHeight = _initFabHeight;
+    retrieveIcon();
+    readJson();
   }
 
   void addMarker() {
@@ -62,10 +65,9 @@ class _MapStackState extends State<MapStack> {
     });
   }
 
-  void addToiletMarker(int markerId, double lat, double long) async {
-    retrieveIcon();
+  void addToiletMarker(int markerId, double lat, double long) {
     LatLng _position = LatLng(lat, long);
-    var marker = Marker(
+    Marker marker = Marker(
         markerId: MarkerId(_position.toString()),
         position: _position,
         onTap: () {
@@ -73,9 +75,11 @@ class _MapStackState extends State<MapStack> {
         },
         icon: toiletIcon);
     _markers.add(marker);
+    print('added marker');
   }
 
-  Future<void> readJson() async {
+  void readJson() async {
+    print('fetching from json...');
     final String toiletJson =
         await rootBundle.loadString('lib/data/toilets.json');
     final toiletParsed = await json.decode(toiletJson);
@@ -91,7 +95,7 @@ class _MapStackState extends State<MapStack> {
         String district = _toiletTemp[i]["district_name"];
         List coords = _toiletTemp[i]["coords"];
         int award = _toiletTemp[i]["award_int"];
-        var toilet = new Toilet(
+        Toilet toilet = new Toilet(
             index: index,
             type: type,
             image: image,
@@ -103,6 +107,7 @@ class _MapStackState extends State<MapStack> {
         _toiletList.add(toilet);
       }
     });
+    print('fetched from json');
   }
 
   void markNearestToilets(double lat, double long) {
@@ -111,6 +116,7 @@ class _MapStackState extends State<MapStack> {
       int index = indices[i];
       List coords = _toiletList[index].coords;
       addToiletMarker(index, coords[0], coords[1]);
+      print('marked nearest toilets');
     }
   }
 
@@ -134,11 +140,13 @@ class _MapStackState extends State<MapStack> {
         _acceptedIndices.add(i);
       }
     }
+    print('calcd nearest toilets');
+    print(_acceptedIndices);
     return _acceptedIndices;
   }
 
   void centerToPositionandMark(double lat, double long) {
-    readJson();
+    print('fetched in function');
     print("Latitude: $lat and Longitude: $long");
 
     setState(() => _initialcameraposition = LatLng(lat, long));
@@ -149,10 +157,14 @@ class _MapStackState extends State<MapStack> {
       ),
     ));
     _markers.clear();
-    markNearestToilets(lat,
-        long); // there is a problem with the position of this function. i can't fix it
-
     addMarker();
+    print('addMarker called');
+
+    markNearestToilets(lat, long);
+    print('centered and marked');
+    for (int i = 0; i < _markers.length; i++) {
+      print(_markers[i].markerId.toString());
+    }
     // run the marknesrestest toilets here
   }
 
@@ -257,7 +269,6 @@ class _MapStackState extends State<MapStack> {
             child: TextField(
               onSubmitted: (value) async {
                 var addr = await Geocoder.local.findAddressesFromQuery(value);
-
                 centerToPositionandMark(addr.first.coordinates.latitude,
                     addr.first.coordinates.longitude);
               },
@@ -358,7 +369,7 @@ class _MapStackState extends State<MapStack> {
             }),
           ),
           Positioned(
-            bottom: _fabHeight, // TODO: need to make this relative to drawer
+            bottom: _fabHeight,
             right: 10,
             child: FloatingActionButton(
               tooltip: "Center to your location",

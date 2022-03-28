@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
               fontSize: 24.0, color: Colors.black, fontWeight: FontWeight.bold),
           headline3: TextStyle(fontSize: 24.0, color: Colors.black),
           headline4: TextStyle(
-              fontSize: 22.0, color: Colors.black, fontWeight: FontWeight.bold),
+              fontSize: 20.0, color: Colors.black, fontWeight: FontWeight.bold),
           headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
           bodyText1: TextStyle(fontSize: 18.0),
         ),
