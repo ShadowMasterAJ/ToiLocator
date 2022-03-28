@@ -3,6 +3,7 @@ import 'package:toilocator/palette.dart';
 import 'package:toilocator/widgets/map_stack.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:toilocator/widgets/side_drawer_button.dart';
+import 'package:toilocator/screens/profile_screen.dart';
 
 class HomeMapScreen extends StatelessWidget {
   HomeMapScreen({Key? key}) : super(key: key);
@@ -25,7 +26,12 @@ class HomeMapScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       DrawerButton(context, 'Map', Icons.map_outlined, () {}),
-                      DrawerButton(context, 'Profile', Icons.person_pin, () {}),
+                      DrawerButton(context, 'Profile', Icons.person_pin, () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ProfileScreen()),
+                        );
+                      }),
                       DrawerButton(context, 'Settings', Icons.settings, () {}),
                       DrawerButton(
                           context, 'Favorite\n Toilets', Icons.favorite, () {}),

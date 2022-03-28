@@ -20,7 +20,8 @@ class MapStack extends StatefulWidget {
 
 class _MapStackState extends State<MapStack> {
   late BitmapDescriptor toiletIcon;
-  LatLng _initialcameraposition = LatLng(1.346150, 103.681500);
+  LatLng _initialcameraposition =
+      LatLng(1.3521, 103.8198); // 1.346150, 103.681500
   late GoogleMapController _controller;
 
   List<Marker> _markers = [];
@@ -149,6 +150,7 @@ class _MapStackState extends State<MapStack> {
         long); // there is a problem with the position of this function. i can't fix it
 
     addMarker();
+    // run the marknesrestest toilets here
   }
 
   void getCurrentLocation() async {
