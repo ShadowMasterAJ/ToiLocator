@@ -27,6 +27,7 @@ class _MapStackState extends State<MapStack> {
       LatLng(1.3521, 103.8198); // 1.346150, 103.681500
   late GoogleMapController _controller;
 
+  List indices = [];
   List<Marker> _markers = [];
   List _toiletTemp = [];
   List<Toilet> _toiletList = [];
@@ -36,6 +37,8 @@ class _MapStackState extends State<MapStack> {
   double _fabHeight = 0;
   double _panelHeightOpen = 0;
   double _panelHeightClosed = 118.0;
+
+  bool infoDrawerPopup = false;
 
   @override
   void initState() {
@@ -71,6 +74,9 @@ class _MapStackState extends State<MapStack> {
         markerId: MarkerId(_position.toString()),
         position: _position,
         onTap: () {
+          setState(() {
+            infoDrawerPopup = true;
+          });
           print("toilet is tapped!"); // future function to push info here
         },
         icon: toiletIcon);
@@ -111,17 +117,19 @@ class _MapStackState extends State<MapStack> {
   }
 
   void markNearestToilets(double lat, double long) {
-    List indices = calculateNearestToilets(lat, long);
+    indices.clear();
+    indices = calculateNearestToilets(lat, long);
     for (int i = 0; i < indices.length; i++) {
       int index = indices[i];
       List coords = _toiletList[index].coords;
       addToiletMarker(index, coords[0], coords[1]);
       print('marked nearest toilets');
     }
+    // indices.clear();
   }
 
   List calculateNearestToilets(double lat, double long) {
-    List _acceptedIndices = [];
+    List nearestToiletList = [];
     for (int i = 0; i < _toiletList.length; i++) {
       // calculation by haversine
       double targetCoord_lat = _toiletList[i].coords[0];
@@ -137,12 +145,12 @@ class _MapStackState extends State<MapStack> {
       double dist = 12742 * asin(sqrt(a)); // in KM
       if (dist < 1) {
         // CURRENT THRESHOLD AT 1KM
-        _acceptedIndices.add(i);
+        nearestToiletList.add(i);
       }
     }
     print('calcd nearest toilets');
-    print(_acceptedIndices);
-    return _acceptedIndices;
+    print(nearestToiletList);
+    return nearestToiletList;
   }
 
   void centerToPositionandMark(double lat, double long) {
@@ -184,6 +192,9 @@ class _MapStackState extends State<MapStack> {
   }
 
   Widget _panel(ScrollController sc) {
+    final List<int> indexList = List<int>.generate(
+        indices.length, (int indexPointer) => indices[indexPointer],
+        growable: true);
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
@@ -234,13 +245,17 @@ class _MapStackState extends State<MapStack> {
           SizedBox(
             height: 10,
           ),
-          ListView.builder(
-            itemCount: 1,
-            shrinkWrap: true,
-            itemBuilder: (BuildContext context, int index) {
-              return toiletCard();
-            },
-          ),
+          SingleChildScrollView(
+              physics: ScrollPhysics(),
+              child: ListView.builder(
+                itemCount: indexList.length,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (BuildContext context, int indexPointer) {
+                  return toiletCard(
+                      toiletList: _toiletList, index: indexList[indexPointer]);
+                },
+              )),
         ],
       ),
     );
@@ -388,9 +403,103 @@ class _MapStackState extends State<MapStack> {
 }
 
 class toiletCard extends StatelessWidget {
+  // final List indices;
+  final List toiletList;
+  final int index;
+
   const toiletCard({
     Key? key,
+    // required List this.indices,
+    required List this.toiletList,
+    required int this.index,
   }) : super(key: key);
+
+  List<Widget> childrenCreator(BuildContext context, int index) {
+    final childrenList = <Widget>[];
+    // for (var i = 0; i < indices.length; i++) {
+    childrenList.add(Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: Text(
+            toiletList[index].toiletName,
+            style: Theme.of(context).textTheme.headline5,
+          ),
+        ),
+        Text(
+          toiletList[index].address,
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+        Spacer(),
+        Row(
+          children: [
+            // replace this with rating creator
+            Text('Official Rating    '),
+            Icon(Icons.star_half_rounded),
+            Icon(Icons.star_half_rounded),
+            Icon(Icons.star_half_rounded),
+            Icon(Icons.star_half_rounded),
+            Icon(Icons.star_half_rounded),
+          ],
+        ),
+        Row(
+          children: [
+            // replace this with rating creator
+            Text('User Rating        '),
+            Icon(Icons.star_half_rounded),
+            Icon(Icons.star_half_rounded),
+            Icon(Icons.star_half_rounded),
+            Icon(Icons.star_half_rounded),
+            Icon(Icons.star_half_rounded),
+          ],
+        ),
+        Spacer(),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Row(
+            children: [
+              Icon(
+                Icons.wheelchair_pickup,
+                color: Palette.beige[300],
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Icon(Icons.baby_changing_station)
+            ],
+          ),
+        ),
+      ],
+    ));
+    childrenList.add(Spacer());
+    childrenList.add(VerticalDivider(
+      color: Colors.black,
+      width: 0,
+    ));
+    childrenList.add(Expanded(
+      child: RotatedBox(
+        quarterTurns: 5,
+        child: Container(
+          decoration: BoxDecoration(
+              color: Palette.beige,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+          width: 155,
+          child: Center(
+            child: Text(
+              '300m', // CHANGE TO DISTANCE
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          ),
+        ),
+      ),
+    ));
+    print(childrenList);
+    print("help");
+    return childrenList;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -406,86 +515,7 @@ class toiletCard extends StatelessWidget {
           padding: const EdgeInsets.only(left: 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Text(
-                      "Toilet Name",
-                      style: Theme.of(context).textTheme.headline5,
-                    ),
-                  ),
-                  Text(
-                    'Address of Toilet',
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  Spacer(),
-                  Row(
-                    children: [
-                      Text('Official Rating    '),
-                      Icon(Icons.star_half_rounded),
-                      Icon(Icons.star_half_rounded),
-                      Icon(Icons.star_half_rounded),
-                      Icon(Icons.star_half_rounded),
-                      Icon(Icons.star_half_rounded),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text('User Rating        '),
-                      Icon(Icons.star_half_rounded),
-                      Icon(Icons.star_half_rounded),
-                      Icon(Icons.star_half_rounded),
-                      Icon(Icons.star_half_rounded),
-                      Icon(Icons.star_half_rounded),
-                    ],
-                  ),
-                  Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.wheelchair_pickup,
-                          color: Palette.beige[300],
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Icon(Icons.baby_changing_station)
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Spacer(),
-              VerticalDivider(
-                color: Colors.black,
-                width: 0,
-              ),
-              Expanded(
-                child: RotatedBox(
-                  quarterTurns: 5,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Palette.beige,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10))),
-                    width: 155,
-                    child: Center(
-                      child: Text(
-                        '300m',
-                        style: Theme.of(context).textTheme.headline4,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            children: childrenCreator(context, index),
           ),
         ),
       ),
