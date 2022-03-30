@@ -1,8 +1,6 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
-import 'dart:ffi';
-import 'dart:typed_data';
-
+import 'bottom_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -89,30 +87,29 @@ class _MapStackState extends State<MapStack> {
     final String toiletJson =
         await rootBundle.loadString('lib/data/toilets.json');
     final toiletParsed = await json.decode(toiletJson);
-    setState(() {
-      _toiletTemp = toiletParsed["data"];
 
-      for (int i = 0; i < _toiletTemp.length; i++) {
-        int index = _toiletTemp[i]["index"];
-        String type = _toiletTemp[i]["type"];
-        String image = _toiletTemp[i]["image_link-href"];
-        String address = _toiletTemp[i]["address"];
-        String name = _toiletTemp[i]["toilet_name"];
-        String district = _toiletTemp[i]["district_name"];
-        List coords = _toiletTemp[i]["coords"];
-        int award = _toiletTemp[i]["award_int"];
-        Toilet toilet = new Toilet(
-            index: index,
-            type: type,
-            image: image,
-            address: address,
-            toiletName: name,
-            district: district,
-            coords: coords,
-            awardInt: award);
-        _toiletList.add(toilet);
-      }
-    });
+    _toiletTemp = toiletParsed["data"];
+
+    for (int i = 0; i < _toiletTemp.length; i++) {
+      int index = _toiletTemp[i]["index"];
+      String type = _toiletTemp[i]["type"];
+      String image = _toiletTemp[i]["image_link-href"];
+      String address = _toiletTemp[i]["address"];
+      String name = _toiletTemp[i]["toilet_name"];
+      String district = _toiletTemp[i]["district_name"];
+      List coords = _toiletTemp[i]["coords"];
+      int award = _toiletTemp[i]["award_int"];
+      Toilet toilet = new Toilet(
+          index: index,
+          type: type,
+          image: image,
+          address: address,
+          toiletName: name,
+          district: district,
+          coords: coords,
+          awardInt: award);
+      _toiletList.add(toilet);
+    }
     print('fetched from json');
   }
 
@@ -194,82 +191,10 @@ class _MapStackState extends State<MapStack> {
     _controller = _cntlr;
   }
 
-  Widget _panel(ScrollController sc) {
-    final List<int> indexList = List<int>.generate(indices.length,
-        (int indexPointer) => indices.keys.elementAt(indexPointer),
-        growable: true);
-    return MediaQuery.removePadding(
-      context: context,
-      removeTop: true,
-      child: ListView(
-        controller: sc,
-        children: <Widget>[
-          SizedBox(
-            height: 12.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                width: 30,
-                height: 5,
-                decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.all(Radius.circular(12.0))),
-              ),
-            ],
-          ),
-          Divider(
-            thickness: 1.5,
-            indent: 10,
-            endIndent: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                width: 300,
-                child: Text("Recommended toilets in the area...",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.headline4?.copyWith(
-                        color: Colors.black, fontWeight: FontWeight.bold)),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Icon(
-                Icons.wc,
-                size: 40,
-                color: Colors.black,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          SingleChildScrollView(
-              physics: ScrollPhysics(),
-              child: ListView.builder(
-                itemCount: indexList.length,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int indexPointer) {
-                  return toiletCard(
-                      indices: indices,
-                      toiletList: _toiletList,
-                      index: indexList[indexPointer]);
-                },
-              )),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     _panelHeightOpen = MediaQuery.of(context).size.height * .8;
-
+    bool entered = false;
     return Stack(
         alignment: AlignmentDirectional.topStart,
         fit: StackFit.loose,
@@ -291,6 +216,8 @@ class _MapStackState extends State<MapStack> {
                 var addr = await Geocoder.local.findAddressesFromQuery(value);
                 centerToPositionandMark(addr.first.coordinates.latitude,
                     addr.first.coordinates.longitude);
+                entered = true;
+                print(entered);
               },
               decoration: InputDecoration(
                 prefixIcon: IconButton(
@@ -309,7 +236,7 @@ class _MapStackState extends State<MapStack> {
                   color: Palette.beige.shade800,
                 ),
                 filled: true,
-                fillColor: Palette.beige[100]?.withOpacity(0.9),
+                fillColor: Palette.beige[100]?.withOpacity(0.95),
                 enabledBorder: OutlineInputBorder(
                     borderSide:
                         BorderSide(color: Colors.brown.shade100, width: 2),
@@ -330,56 +257,15 @@ class _MapStackState extends State<MapStack> {
           ),
           SlidingUpPanel(
             snapPoint: 0.35,
-            // minHeight: 100.0,
-            // maxHeight: MediaQuery.of(context).size.height * 0.8,
-
             maxHeight: _panelHeightOpen,
-            minHeight: _panelHeightClosed,
+            minHeight: entered ? _panelHeightClosed + 185 : _panelHeightClosed,
             parallaxEnabled: true,
             parallaxOffset: .1,
-            panelBuilder: (sc) => _panel(sc),
-            // collapsed: ListView(
-            //   children: <Widget>[
-            //     SizedBox(
-            //       height: 12.0,
-            //     ),
-            //     Row(
-            //       mainAxisAlignment: MainAxisAlignment.center,
-            //       children: <Widget>[
-            //         Container(
-            //           width: 30,
-            //           height: 5,
-            //           decoration: BoxDecoration(
-            //               color: Colors.grey[300],
-            //               borderRadius:
-            //                   BorderRadius.all(Radius.circular(12.0))),
-            //         ),
-            //       ],
-            //     ),
-            //     Divider(),
-            //     Row(
-            //       mainAxisAlignment: MainAxisAlignment.center,
-            //       children: <Widget>[
-            //         Container(
-            //           width: 300,
-            //           child: Text("Recommended Toilets in the area...",
-            //               maxLines: 2,
-            //               overflow: TextOverflow.ellipsis,
-            //               style: Theme.of(context).textTheme.headline4),
-            //         ),
-            //         SizedBox(
-            //           width: 10,
-            //         ),
-            //         Icon(
-            //           Icons.wc,
-            //           size: 40,
-            //           color: Colors.black,
-            //         ),
-            //       ],
-            //     ),
-            //   ],
-            // ),
-
+            panelBuilder: (sc) => bottomPanel(
+                indices: indices,
+                context: context,
+                toiletList: _toiletList,
+                sc: sc),
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(18.0),
                 topRight: Radius.circular(18.0)),
@@ -404,135 +290,5 @@ class _MapStackState extends State<MapStack> {
             ),
           ),
         ]);
-  }
-}
-
-class toiletCard extends StatelessWidget {
-  final Map indices;
-  final List toiletList;
-  final int index;
-
-  const toiletCard({
-    Key? key,
-    required Map this.indices,
-    required List this.toiletList,
-    required int this.index,
-  }) : super(key: key);
-
-  List<Widget> displayStarRating(
-      BuildContext context, String input, int awardInt) {
-    List<Widget> childrenList = [
-      Text(input)
-    ]; // PROBLEM: some toilets have 6 star rating while we max at 5 stars. need to discuss.
-    for (int i = 0; i < awardInt; i++) {
-      childrenList.add(Icon(Icons.star_rate_rounded,
-          color: Color.fromARGB(255, 255, 198, 77)));
-    }
-    for (int i = 0; i < 5 - awardInt; i++) {
-      childrenList.add(Icon(Icons.star_rate_rounded,
-          color: Color.fromARGB(255, 211, 211, 211)));
-    }
-    return childrenList;
-  }
-
-  List<Widget> childrenCreator(BuildContext context, int index) {
-    // i had half a mind to name this method the 'babymaker'
-    final childrenList = <Widget>[];
-    childrenList.add(Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 15.0),
-          child: Text(
-            toiletList[index].toiletName,
-            style: Theme.of(context).textTheme.headline6,
-          ),
-        ),
-        Text(
-          toiletList[index].address,
-          style: Theme.of(context).textTheme.bodyText2,
-        ),
-        Spacer(),
-        Row(
-          children: displayStarRating(
-              context, 'Official Rating    ', toiletList[index].awardInt),
-        ),
-        Row(
-          children: displayStarRating(
-              context,
-              'User Rating        ',
-              toiletList[index] // this is placeholder variable
-                  .awardInt) // i'll probably create another variable for user rating in entity class
-          ,
-        ),
-        Spacer(),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: Row(
-            children: [
-              Icon(
-                Icons.wheelchair_pickup,
-                color: Palette.beige[300],
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Icon(Icons.baby_changing_station)
-            ],
-          ),
-        ),
-      ],
-    ));
-    childrenList.add(Spacer());
-    childrenList.add(VerticalDivider(
-      color: Colors.white,
-      width: 0,
-    ));
-    childrenList.add(Expanded(
-      child: RotatedBox(
-        quarterTurns: 5,
-        child: Container(
-          height: 42,
-          decoration: BoxDecoration(
-              // PROBLEM: boxdeco size (the brown partition) is dependednt on the wording size. want to make it consistent for all cards.
-              // PROBLEM 2: overflow of wording. i've already tried reducing the wording sizes but some names are too damn long. not just names, addresses also
-              color: Palette.beige,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10), topRight: Radius.circular(10))),
-          width: 155,
-          child: Center(
-            child: Text(
-              indices[index].toString() + "m", // CHANGE TO DISTANCE
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ),
-        ),
-      ),
-    ));
-    print(childrenList);
-    print("help");
-    return childrenList;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Container(
-        height: 155,
-        // width: double.infinity,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: childrenCreator(context, index),
-          ),
-        ),
-      ),
-    );
   }
 }
