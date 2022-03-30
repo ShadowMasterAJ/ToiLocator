@@ -27,7 +27,7 @@ class _MapStackState extends State<MapStack> {
       LatLng(1.3521, 103.8198); // 1.346150, 103.681500
   late GoogleMapController _controller;
 
-  List indices = [];
+  Map indices = {}; // key = index of toilet, value = distance
   List<Marker> _markers = [];
   List _toiletTemp = [];
   List<Toilet> _toiletList = [];
@@ -119,17 +119,17 @@ class _MapStackState extends State<MapStack> {
   void markNearestToilets(double lat, double long) {
     indices.clear();
     indices = calculateNearestToilets(lat, long);
-    for (int i = 0; i < indices.length; i++) {
-      int index = indices[i];
+    for (int k in indices.keys) {
+      int index = k;
       List coords = _toiletList[index].coords;
       addToiletMarker(index, coords[0], coords[1]);
       print('marked nearest toilets');
     }
-    // indices.clear();
+    print(indices);
   }
 
-  List calculateNearestToilets(double lat, double long) {
-    List nearestToiletList = [];
+  Map calculateNearestToilets(double lat, double long) {
+    Map nearestToiletList = {};
     for (int i = 0; i < _toiletList.length; i++) {
       // calculation by haversine
       double targetCoord_lat = _toiletList[i].coords[0];
@@ -145,12 +145,15 @@ class _MapStackState extends State<MapStack> {
       double dist = 12742 * asin(sqrt(a)); // in KM
       if (dist < 1) {
         // CURRENT THRESHOLD AT 1KM
-        nearestToiletList.add(i);
+        nearestToiletList[i] = (dist * 1000).ceil();
       }
     }
     print('calcd nearest toilets');
     print(nearestToiletList);
-    return nearestToiletList;
+    Map nearestToiletListSorted = Map.fromEntries(
+        nearestToiletList.entries.toList()
+          ..sort((e1, e2) => e1.value.compareTo(e2.value)));
+    return nearestToiletListSorted;
   }
 
   void centerToPositionandMark(double lat, double long) {
@@ -192,8 +195,8 @@ class _MapStackState extends State<MapStack> {
   }
 
   Widget _panel(ScrollController sc) {
-    final List<int> indexList = List<int>.generate(
-        indices.length, (int indexPointer) => indices[indexPointer],
+    final List<int> indexList = List<int>.generate(indices.length,
+        (int indexPointer) => indices.keys.elementAt(indexPointer),
         growable: true);
     return MediaQuery.removePadding(
       context: context,
@@ -253,7 +256,9 @@ class _MapStackState extends State<MapStack> {
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext context, int indexPointer) {
                   return toiletCard(
-                      toiletList: _toiletList, index: indexList[indexPointer]);
+                      indices: indices,
+                      toiletList: _toiletList,
+                      index: indexList[indexPointer]);
                 },
               )),
         ],
@@ -403,29 +408,45 @@ class _MapStackState extends State<MapStack> {
 }
 
 class toiletCard extends StatelessWidget {
-  // final List indices;
+  final Map indices;
   final List toiletList;
   final int index;
 
   const toiletCard({
     Key? key,
-    // required List this.indices,
+    required Map this.indices,
     required List this.toiletList,
     required int this.index,
   }) : super(key: key);
 
+  List<Widget> displayStarRating(
+      BuildContext context, String input, int awardInt) {
+    List<Widget> childrenList = [
+      Text(input)
+    ]; // PROBLEM: some toilets have 6 star rating while we max at 5 stars. need to discuss.
+    for (int i = 0; i < awardInt; i++) {
+      childrenList.add(Icon(Icons.star_rate_rounded,
+          color: Color.fromARGB(255, 255, 198, 77)));
+    }
+    for (int i = 0; i < 5 - awardInt; i++) {
+      childrenList.add(Icon(Icons.star_rate_rounded,
+          color: Color.fromARGB(255, 211, 211, 211)));
+    }
+    return childrenList;
+  }
+
   List<Widget> childrenCreator(BuildContext context, int index) {
+    // i had half a mind to name this method the 'babymaker'
     final childrenList = <Widget>[];
-    // for (var i = 0; i < indices.length; i++) {
     childrenList.add(Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 10.0),
+          padding: const EdgeInsets.only(top: 15.0),
           child: Text(
             toiletList[index].toiletName,
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headline6,
           ),
         ),
         Text(
@@ -434,26 +455,16 @@ class toiletCard extends StatelessWidget {
         ),
         Spacer(),
         Row(
-          children: [
-            // replace this with rating creator
-            Text('Official Rating    '),
-            Icon(Icons.star_half_rounded),
-            Icon(Icons.star_half_rounded),
-            Icon(Icons.star_half_rounded),
-            Icon(Icons.star_half_rounded),
-            Icon(Icons.star_half_rounded),
-          ],
+          children: displayStarRating(
+              context, 'Official Rating    ', toiletList[index].awardInt),
         ),
         Row(
-          children: [
-            // replace this with rating creator
-            Text('User Rating        '),
-            Icon(Icons.star_half_rounded),
-            Icon(Icons.star_half_rounded),
-            Icon(Icons.star_half_rounded),
-            Icon(Icons.star_half_rounded),
-            Icon(Icons.star_half_rounded),
-          ],
+          children: displayStarRating(
+              context,
+              'User Rating        ',
+              toiletList[index] // this is placeholder variable
+                  .awardInt) // i'll probably create another variable for user rating in entity class
+          ,
         ),
         Spacer(),
         Padding(
@@ -475,21 +486,24 @@ class toiletCard extends StatelessWidget {
     ));
     childrenList.add(Spacer());
     childrenList.add(VerticalDivider(
-      color: Colors.black,
+      color: Colors.white,
       width: 0,
     ));
     childrenList.add(Expanded(
       child: RotatedBox(
         quarterTurns: 5,
         child: Container(
+          height: 42,
           decoration: BoxDecoration(
+              // PROBLEM: boxdeco size (the brown partition) is dependednt on the wording size. want to make it consistent for all cards.
+              // PROBLEM 2: overflow of wording. i've already tried reducing the wording sizes but some names are too damn long. not just names, addresses also
               color: Palette.beige,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10), topRight: Radius.circular(10))),
           width: 155,
           child: Center(
             child: Text(
-              '300m', // CHANGE TO DISTANCE
+              indices[index].toString() + "m", // CHANGE TO DISTANCE
               style: Theme.of(context).textTheme.headline4,
             ),
           ),
