@@ -17,7 +17,7 @@ import '/models/toilet.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:path_provider/path_provider.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart'; 
 
 class MapStack extends StatefulWidget {
   const MapStack({Key? key}) : super(key: key);
@@ -254,6 +254,9 @@ class _MapStackState extends State<MapStack> {
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
             child: TextField(
               onSubmitted: (value) async {
+                // testing
+                uploadingData(value);
+                
                 var addr = await Geocoder.local.findAddressesFromQuery(value);
                 centerToPositionandMark(addr.first.coordinates.latitude,
                     addr.first.coordinates.longitude);
@@ -333,3 +336,10 @@ class _MapStackState extends State<MapStack> {
         ]);
   }
 }
+Future<void> uploadingData(value) async {
+                  await Firestore.instance
+                    .collection('userInput')
+                    .add({
+                    'input': value,
+                    });
+                } 
