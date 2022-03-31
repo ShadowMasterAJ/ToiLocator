@@ -13,9 +13,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>.value(
-      value:AuthService().user,
-      child: MaterialApp(
+    // return StreamProvider<User>.value(
+    //   value:AuthService().user,
+    //   child: // MaterialApp was here
+      return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'ToiLocator',
         theme: ThemeData(
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
               .copyWith(secondary: Colors.red),
         ),
         home: HomeMapScreen(), // TODO: Need to add logic for AuthScreen
-      ),
+      //),
     );
   }
 }

@@ -1,21 +1,21 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
-class DatabaseService {
+// class DatabaseService {
 
-final String uid;
-DatabaseService({ required this.uid });
+// final String uid;
+// DatabaseService({ required this.uid });
 
-// collection reference
- final CollectionReference usersCollection = Firestore.instance.collection('users');
+// // collection reference
+//  final CollectionReference usersCollection = Firestore.instance.collection('users');
 
-//favourite toilets may change to a list, add in age, map of reviews and toilets
- Future<void> updateUserData(bool gender, String favToilets) async {
- return await usersCollection.document(uid).setData({
- 'gender': gender,
- 'favourite toilets' : favToilets
- });
- }
+// //favourite toilets may change to a list, add in age, map of reviews and toilets
+//  Future<void> updateUserData(bool gender, String favToilets) async {
+//  return await usersCollection.document(uid).setData({
+//  'gender': gender,
+//  'favourite toilets' : favToilets
+//  });
+//  }
 
 
-//set up another stream to notify any document changes in the database
-}
+// //set up another stream to notify any document changes in the database
+// }

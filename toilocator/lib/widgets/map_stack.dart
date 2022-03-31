@@ -337,7 +337,8 @@ class _MapStackState extends State<MapStack> {
   }
 }
 Future<void> uploadingData(value) async {
-                  await Firestore.instance
+                  FirebaseFirestore firestore = FirebaseFirestore.instance;
+                  await firestore
                     .collection('userInput')
                     .add({
                     'input': value,
