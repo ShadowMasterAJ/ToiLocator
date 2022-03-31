@@ -17,5 +17,21 @@ DatabaseService({ required this.uid });
  }
 
 
+//  Future<DocumentReference> addReview(String message) {
+//     if (_loginState != ApplicationLoginState.loggedIn) {
+//       throw Exception('Must be logged in');
+//     }
+
+//     return FirebaseFirestore.instance
+//         .collection('guestbook')
+//         .add(<String, dynamic>{
+//       'review': message,
+//       'timestamp': DateTime.now().millisecondsSinceEpoch,
+//       'name': FirebaseAuth.instance.currentUser!.displayName,
+//       'userId': FirebaseAuth.instance.currentUser!.uid,
+//     });
+//   }
+
+
 //set up another stream to notify any document changes in the database
 }

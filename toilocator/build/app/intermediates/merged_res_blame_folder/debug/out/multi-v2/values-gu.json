@@ -1,44 +1,44 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-gu/values-gu.xml",
+            "outputFile": "/Users/tangyiqwan/dev/projects/flutter/toilocator/CZ2006_Project/toilocator/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-gu/values-gu.xml",
             "map": [
                 {
-                    "source": "/Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/5a21e3d51ecfbce69f5a852e03b3eddf/jetified-play-services-base-17.0.0/res/values-gu/values.xml",
+                    "source": "/Users/tangyiqwan/.gradle/caches/transforms-2/files-2.1/3ff8636c26bdf3c7633d823849b79f01/jetified-play-services-base-18.0.1/res/values-gu/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
-                        "startOffsets": "245,351,549,672,782,979,1099,1236,1361,1568,1674,1869,1992,2194,2370,2457,2549",
-                        "endColumns": "105,197,122,109,196,119,136,124,206,105,194,122,201,175,86,91,106",
-                        "endOffsets": "350,548,671,781,978,1098,1235,1360,1567,1673,1868,1991,2193,2369,2456,2548,2655"
+                        "startOffsets": "193,297,459,580,688,822,940,1047,1143,1287,1391,1551,1672,1811,1957,2014,2076",
+                        "endColumns": "103,161,120,107,133,117,106,95,143,103,159,120,138,145,56,61,77",
+                        "endOffsets": "296,458,579,687,821,939,1046,1142,1286,1390,1550,1671,1810,1956,2013,2075,2153"
                     },
                     "to": {
                         "startLines": "2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,215,413,540,654,851,975,1116,1451,1658,1768,1963,2090,2292,2472,2563,2659",
-                        "endColumns": "109,197,126,113,196,123,140,128,206,109,194,126,201,179,90,95,110",
-                        "endOffsets": "210,408,535,649,846,970,1111,1240,1653,1763,1958,2085,2287,2467,2558,2654,2765"
+                        "startOffsets": "55,163,329,454,566,704,826,937,1184,1332,1440,1604,1729,1872,2022,2083,2149",
+                        "endColumns": "107,165,124,111,137,121,110,99,147,107,163,124,142,149,60,65,81",
+                        "endOffsets": "158,324,449,561,699,821,932,1032,1327,1435,1599,1724,1867,2017,2078,2144,2226"
                     }
                 },
                 {
-                    "source": "/Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/a8801b23ef6ae696099b6c78c37d97a2/jetified-play-services-basement-17.0.0/res/values-gu/values.xml",
+                    "source": "/Users/tangyiqwan/.gradle/caches/transforms-2/files-2.1/aa4e8e06568e4194a3f1ac269d86a205/jetified-play-services-basement-18.0.0/res/values-gu/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
-                        "startOffsets": "247",
-                        "endColumns": "205",
-                        "endOffsets": "452"
+                        "startOffsets": "195",
+                        "endColumns": "142",
+                        "endOffsets": "337"
                     },
                     "to": {
                         "startLines": "10",
                         "startColumns": "4",
-                        "startOffsets": "1245",
-                        "endColumns": "205",
-                        "endOffsets": "1446"
+                        "startOffsets": "1037",
+                        "endColumns": "146",
+                        "endOffsets": "1179"
                     }
                 },
                 {
-                    "source": "/Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/68d8b6f95eda44c538425a37777656c5/core-1.6.0/res/values-gu/values-gu.xml",
+                    "source": "/Users/tangyiqwan/.gradle/caches/transforms-2/files-2.1/68d8b6f95eda44c538425a37777656c5/core-1.6.0/res/values-gu/values-gu.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -49,9 +49,9 @@
                     "to": {
                         "startLines": "20",
                         "startColumns": "4",
-                        "startOffsets": "2770",
+                        "startOffsets": "2231",
                         "endColumns": "100",
-                        "endOffsets": "2866"
+                        "endOffsets": "2327"
                     }
                 }
             ]

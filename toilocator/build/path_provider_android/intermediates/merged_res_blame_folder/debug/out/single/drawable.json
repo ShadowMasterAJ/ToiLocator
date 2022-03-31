@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/tangyiqwan/dev/projects/flutter/toilocator/CZ2006_Project/toilocator/build/path_provider_android/intermediates/res/merged/debug/drawable/notification_bg_low.xml",
+        "source": "/Users/tangyiqwan/.gradle/caches/transforms-2/files-2.1/68d8b6f95eda44c538425a37777656c5/core-1.6.0/res/drawable/notification_bg_low.xml"
+    },
+    {
+        "merged": "/Users/tangyiqwan/dev/projects/flutter/toilocator/CZ2006_Project/toilocator/build/path_provider_android/intermediates/res/merged/debug/drawable/notification_tile_bg.xml",
+        "source": "/Users/tangyiqwan/.gradle/caches/transforms-2/files-2.1/68d8b6f95eda44c538425a37777656c5/core-1.6.0/res/drawable/notification_tile_bg.xml"
+    },
+    {
+        "merged": "/Users/tangyiqwan/dev/projects/flutter/toilocator/CZ2006_Project/toilocator/build/path_provider_android/intermediates/res/merged/debug/drawable/notification_bg.xml",
+        "source": "/Users/tangyiqwan/.gradle/caches/transforms-2/files-2.1/68d8b6f95eda44c538425a37777656c5/core-1.6.0/res/drawable/notification_bg.xml"
+    },
+    {
+        "merged": "/Users/tangyiqwan/dev/projects/flutter/toilocator/CZ2006_Project/toilocator/build/path_provider_android/intermediates/res/merged/debug/drawable/notification_icon_background.xml",
+        "source": "/Users/tangyiqwan/.gradle/caches/transforms-2/files-2.1/68d8b6f95eda44c538425a37777656c5/core-1.6.0/res/drawable/notification_icon_background.xml"
+    }
+]

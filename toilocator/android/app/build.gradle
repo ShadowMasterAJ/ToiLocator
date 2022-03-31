@@ -34,7 +34,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.cz2006swee.toilocator"//"com.example.toilocator"
+        applicationId "com.example.toilocator" //"com.cz2006swee.toilocator"//
         minSdkVersion 20
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
@@ -61,6 +61,11 @@ apply plugin: 'com.google.gms.google-services'
 
 dependencies {
   implementation 'com.android.support:multidex:2.0.1' //enter the latest multidex version
+  implementation platform('com.google.firebase:firebase-bom:29.2.1')
+  implementation 'com.google.firebase:firebase-auth'
+  implementation 'com.google.firebase:firebase-firestore'
+  implementation 'com.google.firebase:firebase-storage'
+  // added some stuff here by yq
 }
 android {
     defaultConfig {

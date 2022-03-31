@@ -15,6 +15,7 @@ attr cameraZoom
 attr circleCrop
 attr clearTop
 attr colorScheme
+attr coordinatorLayoutStyle
 attr finishPrimaryWithSecondary
 attr finishSecondaryWithPrimary
 attr font
@@ -30,10 +31,17 @@ attr fontVariationSettings
 attr fontWeight
 attr imageAspectRatio
 attr imageAspectRatioAdjust
+attr keylines
 attr latLngBoundsNorthEastLatitude
 attr latLngBoundsNorthEastLongitude
 attr latLngBoundsSouthWestLatitude
 attr latLngBoundsSouthWestLongitude
+attr layout_anchor
+attr layout_anchorGravity
+attr layout_behavior
+attr layout_dodgeInsetEdges
+attr layout_insetEdge
+attr layout_keyline
 attr liteMode
 attr mapType
 attr nestedScrollViewStyle
@@ -48,6 +56,7 @@ attr splitLayoutDirection
 attr splitMinSmallestWidth
 attr splitMinWidth
 attr splitRatio
+attr statusBarBackground
 attr ttcIndex
 attr uiCompass
 attr uiMapToolbar
@@ -61,6 +70,10 @@ attr useViewLifecycle
 attr zOrderOnTop
 color androidx_core_ripple_material_light
 color androidx_core_secondary_text_default_material_light
+color browser_actions_bg_grey
+color browser_actions_divider_color
+color browser_actions_text_color
+color browser_actions_title_color
 color common_google_signin_btn_text_dark
 color common_google_signin_btn_text_dark_default
 color common_google_signin_btn_text_dark_disabled
@@ -74,6 +87,8 @@ color common_google_signin_btn_text_light_pressed
 color common_google_signin_btn_tint
 color notification_action_color_filter
 color notification_icon_bg_color
+dimen browser_actions_context_menu_max_width
+dimen browser_actions_context_menu_min_padding
 dimen compat_button_inset_horizontal_material
 dimen compat_button_inset_vertical_material
 dimen compat_button_padding_horizontal_material
@@ -170,13 +185,29 @@ id action_text
 id actions
 id adjust_height
 id adjust_width
+id all
 id androidx_window_activity_scope
 id async
 id auto
 id blocking
+id bottom
+id browser_actions_header_text
+id browser_actions_menu_item_icon
+id browser_actions_menu_item_text
+id browser_actions_menu_items
+id browser_actions_menu_view
+id center
+id center_horizontal
+id center_vertical
 id chronometer
+id clip_horizontal
+id clip_vertical
 id dark
 id dialog_button
+id end
+id fill
+id fill_horizontal
+id fill_vertical
 id forever
 id hybrid
 id icon
@@ -184,6 +215,7 @@ id icon_group
 id icon_only
 id info
 id italic
+id left
 id light
 id line1
 id line3
@@ -194,11 +226,13 @@ id normal
 id notification_background
 id notification_main_column
 id notification_main_column_container
+id right
 id right_icon
 id right_side
 id rtl
 id satellite
 id standard
+id start
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans
 id tag_accessibility_heading
@@ -217,9 +251,12 @@ id text
 id text2
 id time
 id title
+id top
 id wide
 integer google_play_services_version
 integer status_bar_notification_info_maxnum
+layout browser_actions_context_menu_page
+layout browser_actions_context_menu_row
 layout custom_dialog
 layout notification_action
 layout notification_action_tombstone
@@ -263,10 +300,13 @@ style TextAppearance_Compat_Notification_Time
 style TextAppearance_Compat_Notification_Title
 style Widget_Compat_NotificationActionContainer
 style Widget_Compat_NotificationActionText
+style Widget_Support_CoordinatorLayout
 styleable ActivityFilter activityAction activityName
 styleable ActivityRule alwaysExpand
 styleable Capability queryPatterns shortcutMatchRequired
 styleable ColorStateListItem android_color android_alpha alpha
+styleable CoordinatorLayout keylines statusBarBackground
+styleable CoordinatorLayout_Layout android_layout_gravity layout_anchor layout_anchorGravity layout_behavior layout_dodgeInsetEdges layout_insetEdge layout_keyline
 styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery fontProviderSystemFontFamily
 styleable FontFamilyFont android_font android_fontWeight android_fontStyle android_ttcIndex android_fontVariationSettings font fontStyle fontVariationSettings fontWeight ttcIndex
 styleable GradientColor android_startColor android_endColor android_type android_centerX android_centerY android_gradientRadius android_tileMode android_centerColor android_startX android_startY android_endX android_endY
