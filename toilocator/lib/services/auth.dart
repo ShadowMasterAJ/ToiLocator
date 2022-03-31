@@ -40,7 +40,7 @@ Future registerWithEmailAndPassword(String email, String password) async{
     AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
     FirebaseUser user = result.user;
     // create a new document for the user with the uid
-    //await DatabaseService(uid: user.uid).updateUserData(true, 'toilet1');
+    await DatabaseService(uid: user.uid).updateUserData('gender', []);
     return _userFromFirebaseUser(user);
   }catch(e){
     print(e.toString());

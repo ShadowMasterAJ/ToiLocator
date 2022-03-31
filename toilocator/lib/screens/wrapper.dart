@@ -1,6 +1,6 @@
 import 'package:toilocator/models/user.dart';
-import 'auth_screen.dart';
-import 'home_map_screen.dart';
+import 'package:toilocator/screens/auth_screen.dart';
+import 'package:toilocator/screens/home_map_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
