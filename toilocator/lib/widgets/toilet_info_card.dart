@@ -127,12 +127,13 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                                       side: BorderSide(
                                           color:
                                               Palette.beige[300] as Color)))))),
-              SizedBox(width: 55),
+              Spacer(),
               Text(widget.indices[widget.index].toString() + "m",
                   style:
                       Theme.of(context).textTheme.headline5 // change colour too
                   ),
-              SizedBox(width: 65),
+              // SizedBox(width: 65),
+              Spacer(),
               Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Row(children: [
@@ -281,7 +282,10 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                       )), // also change to grey
                   Container(height: 180, child: createImageList()),
                   Divider(
-                      color: Color.fromARGB(255, 114, 114, 114), thickness: 4),
+                      color: Color.fromARGB(255, 114, 114, 114),
+                      thickness: 4,
+                      indent: 30,
+                      endIndent: 30),
                   SizedBox(height: 12),
                   Padding(
                       padding: const EdgeInsets.only(left: 20),
