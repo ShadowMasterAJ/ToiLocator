@@ -10,7 +10,6 @@ packages
 # pubspec.lock
 # https://dart.dev/guides/libraries/private-files#pubspeclock
 .flutter-plugins
-
 toilocator/.dart_tool/flutter_build/106a02a4f58cbf7d234623af8030db14/.filecache
 toilocator/.dart_tool/flutter_build/106a02a4f58cbf7d234623af8030db14/app.dill
 toilocator/.dart_tool/flutter_build/106a02a4f58cbf7d234623af8030db14/debug_android_application.stamp
@@ -1365,5 +1364,4 @@ toilocator/build/google_maps_flutter/intermediates/res/merged/debug/values-zh-rC
 toilocator/build/google_maps_flutter/intermediates/res/merged/debug/values-zh-rHK/values-zh-rHK.xml
 toilocator/build/google_maps_flutter/intermediates/res/merged/debug/values-zh-rTW/values-zh-rTW.xml
 toilocator/build/google_maps_flutter/intermediates/res/merged/debug/values-zu/values-zu.xml
-toilocator/.flutter-plugins-dependencies
 toilocator/.flutter-plugins-dependencies
