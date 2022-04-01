@@ -7,38 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:71700312246:android:4fc867208fe70d27b47617",
+        "mobilesdk_app_id": "1:71700312246:android:06abff8738a2e1c5b47617",
         "android_client_info": {
-          "package_name": "com.abdul.toilocator"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "71700312246-1l88ginht0ldra4b74l2e7je2cm6dlkk.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBf-ghhEKEFlpwX-8UNT_hs4kBl9E5uaS4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "71700312246-1l88ginht0ldra4b74l2e7je2cm6dlkk.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:71700312246:android:82e4269349d460f5b47617",
-        "android_client_info": {
-          "package_name": "com.cz2006swee.toilocator"
+          "package_name": "com.example.toilocator"
         }
       },
       "oauth_client": [

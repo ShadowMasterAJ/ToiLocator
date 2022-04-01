@@ -4,7 +4,7 @@
     "type": "PACKAGED_MANIFESTS",
     "kind": "Directory"
   },
-  "applicationId": "io.flutter.plugins.firebaseauth",
+  "applicationId": "io.flutter.plugins.firebase.auth",
   "variantName": "debug",
   "elements": [
     {

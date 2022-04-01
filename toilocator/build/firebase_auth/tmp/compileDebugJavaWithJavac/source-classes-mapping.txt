@@ -1,12 +1,19 @@
-io/flutter/plugins/firebaseauth/FirebaseAuthPlugin.java
- io.flutter.plugins.firebaseauth.FirebaseAuthPlugin
- io.flutter.plugins.firebaseauth.FirebaseAuthPlugin$1
- io.flutter.plugins.firebaseauth.FirebaseAuthPlugin$2
- io.flutter.plugins.firebaseauth.FirebaseAuthPlugin$3
- io.flutter.plugins.firebaseauth.FirebaseAuthPlugin$GetSignInMethodsCompleteListener
- io.flutter.plugins.firebaseauth.FirebaseAuthPlugin$SignInCompleteListener
- io.flutter.plugins.firebaseauth.FirebaseAuthPlugin$TaskVoidCompleteListener
-io/flutter/plugins/firebaseauth/FlutterFirebaseAppRegistrar.java
- io.flutter.plugins.firebaseauth.FlutterFirebaseAppRegistrar
-io/flutter/plugins/firebaseauth/BuildConfig.java
- io.flutter.plugins.firebaseauth.BuildConfig
+io/flutter/plugins/firebase/auth/FlutterFirebaseAuthPlugin.java
+ io.flutter.plugins.firebase.auth.FlutterFirebaseAuthPlugin
+ io.flutter.plugins.firebase.auth.FlutterFirebaseAuthPlugin$1
+io/flutter/plugins/firebase/auth/FlutterFirebaseAuthRegistrar.java
+ io.flutter.plugins.firebase.auth.FlutterFirebaseAuthRegistrar
+io/flutter/plugins/firebase/auth/PhoneNumberVerificationStreamHandler.java
+ io.flutter.plugins.firebase.auth.PhoneNumberVerificationStreamHandler
+ io.flutter.plugins.firebase.auth.PhoneNumberVerificationStreamHandler$1
+ io.flutter.plugins.firebase.auth.PhoneNumberVerificationStreamHandler$OnCredentialsListener
+io/flutter/plugins/firebase/auth/FlutterFirebaseAuthPluginException.java
+ io.flutter.plugins.firebase.auth.FlutterFirebaseAuthPluginException
+io/flutter/plugins/firebase/auth/Constants.java
+ io.flutter.plugins.firebase.auth.Constants
+io/flutter/plugins/firebase/auth/BuildConfig.java
+ io.flutter.plugins.firebase.auth.BuildConfig
+io/flutter/plugins/firebase/auth/AuthStateChannelStreamHandler.java
+ io.flutter.plugins.firebase.auth.AuthStateChannelStreamHandler
+io/flutter/plugins/firebase/auth/IdTokenChannelStreamHandler.java
+ io.flutter.plugins.firebase.auth.IdTokenChannelStreamHandler
