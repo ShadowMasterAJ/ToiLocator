@@ -74,7 +74,8 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                           style: Theme.of(context)
                               .textTheme
                               .subtitle1)), //needs to change i guess
-                  Padding(padding: const EdgeInsets.only(right: 160.0)),
+                  // Padding(padding: const EdgeInsets.only(right: 160.0)),
+                  Spacer(),
                   Row(children: displayStarRating(4)),
                 ]),
                 SizedBox(height: 10),
@@ -88,7 +89,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                       style:
                           TextStyle(color: Color.fromARGB(255, 136, 136, 136)),
                     )),
-                Padding(padding: const EdgeInsets.only(right: 110.0)),
+                // Padding(padding: const EdgeInsets.only(right: 110.0)),
                 SizedBox(height: 8),
                 Divider(
                     color: Color.fromARGB(255, 218, 218, 218), thickness: 1),
