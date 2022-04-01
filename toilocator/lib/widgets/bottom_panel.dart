@@ -98,7 +98,8 @@ class bottomPanel extends StatelessWidget {
                         return toiletCard(
                             indices: indices,
                             toiletList: _toiletList,
-                            index: indexList[indexPointer]);
+                            index: indexList[indexPointer],
+                            sc: this.sc);
                       },
                     )),
         ],

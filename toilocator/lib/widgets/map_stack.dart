@@ -12,9 +12,12 @@ import 'dart:convert';
 import 'dart:math' show cos, sqrt, asin;
 import 'package:flutter/services.dart';
 import '/models/toilet.dart';
+import 'toilet_info_card.dart';
 
 class MapStack extends StatefulWidget {
-  const MapStack({Key? key}) : super(key: key);
+  const MapStack({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<MapStack> createState() => _MapStackState();
@@ -72,10 +75,14 @@ class _MapStackState extends State<MapStack> {
         markerId: MarkerId(_position.toString()),
         position: _position,
         onTap: () {
-          setState(() {
-            infoDrawerPopup = true;
-          });
-          print("toilet is tapped!"); // future function to push info here
+          // setState(() {
+          //   infoDrawerPopup = true;
+          // });
+          // print("toilet is tapped!");
+          print("what");
+          Navigator.of(context)
+              .push(createRoute(markerId)); // future function to push info here
+          // bool frommap = true;
         },
         icon: toiletIcon);
     _markers.add(marker);
@@ -191,6 +198,31 @@ class _MapStackState extends State<MapStack> {
     _controller = _cntlr;
   }
 
+  Route createRoute(int markerId) {
+    return PageRouteBuilder(
+      pageBuilder: (
+        context,
+        animation,
+        secondaryAnimation,
+      ) =>
+          toiletInfoCard(
+              indices: indices, toiletList: _toiletList, index: markerId),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     _panelHeightOpen = MediaQuery.of(context).size.height * .8;
@@ -256,16 +288,21 @@ class _MapStackState extends State<MapStack> {
             ),
           ),
           SlidingUpPanel(
+            // bottom drawer
             snapPoint: 0.35,
             maxHeight: _panelHeightOpen,
             minHeight: entered ? _panelHeightClosed + 185 : _panelHeightClosed,
             parallaxEnabled: true,
             parallaxOffset: .1,
             panelBuilder: (sc) => bottomPanel(
+                // reponds to bottom_panel.dart THIS IS A TEMPORARY BLOCKAGE
                 indices: indices,
                 context: context,
                 toiletList: _toiletList,
                 sc: sc),
+            //TEMPORATRYR
+            // panelBuilder: (sc) => toiletInfoCard(sc: sc),
+            //TEMPORARY
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(18.0),
                 topRight: Radius.circular(18.0)),
