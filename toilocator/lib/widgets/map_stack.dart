@@ -1,5 +1,7 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
+import 'dart:io';
+
 import 'bottom_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -12,6 +14,10 @@ import 'dart:convert';
 import 'dart:math' show cos, sqrt, asin;
 import 'package:flutter/services.dart';
 import '/models/toilet.dart';
+import 'package:http/http.dart' as http;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:path_provider/path_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; 
 
 class MapStack extends StatefulWidget {
   const MapStack({Key? key}) : super(key: key);
@@ -44,6 +50,8 @@ class _MapStackState extends State<MapStack> {
     _fabHeight = _initFabHeight;
     retrieveIcon();
     readJson();
+    //downloadJSON();
+
   }
 
   void addMarker() {
@@ -82,14 +90,45 @@ class _MapStackState extends State<MapStack> {
     print('added marker');
   }
 
+  // Future<void> downloadJSON() async {
+  //   Directory appDocDir = await getApplicationDocumentsDirectory();
+  //   File downloadToFile = File('${appDocDir.path}/test.json');
+
+  //   try {
+  //     await firebase_storage.FirebaseStorage.instance
+  //       .ref('toilets.json')
+  //       .writeToFile(downloadToFile);
+  //   // ignore: nullable_type_in_catch_clause
+  //   } on firebase_core.FirebaseException catch (e) {
+  //     // e.code == 'canceled'
+  //     print("firebaseException");
+  //   }
+  // }
   void readJson() async {
     print('fetching from json...');
-    final String toiletJson =
-        await rootBundle.loadString('lib/data/toilets.json');
+    final String toiletJson = 
+         await rootBundle.loadString('lib/data/toilets.json');
     final toiletParsed = await json.decode(toiletJson);
 
-    _toiletTemp = toiletParsed["data"];
+    // final toiletJson = 
+    //   await http.get('gs://cz2006-swe-43eae.appspot.com/toilets.json');
+    // final toiletParsed = await json.decode(toiletJson.body);
 
+    //firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance.ref('/toilets.json');
+
+    // storage.ref('toilets.json').getDownloadURL()
+    //   .then((url) => {
+    //     final toiletJson = 
+    //       await http.get(url);
+    //     final toiletParsed = await json.decode(toiletJson.body);
+    //   })
+    // Directory appDocDir = await getApplicationDocumentsDirectory();
+
+    // final String toiletJson = 
+    //   await rootBundle.loadString('{appDocDir.path}/toilets.json');
+    // final toiletParsed = await json.decode(toiletJson);
+    _toiletTemp = toiletParsed["toilets"];
+    debugPrint('toiletJson.statusCode');
     for (int i = 0; i < _toiletTemp.length; i++) {
       int index = _toiletTemp[i]["index"];
       String type = _toiletTemp[i]["type"];
@@ -109,6 +148,8 @@ class _MapStackState extends State<MapStack> {
           coords: coords,
           awardInt: award);
       _toiletList.add(toilet);
+      debugPrint('Getting toilet ${i}');
+
     }
     print('fetched from json');
   }
@@ -213,6 +254,9 @@ class _MapStackState extends State<MapStack> {
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
             child: TextField(
               onSubmitted: (value) async {
+                // testing
+                uploadingData(value);
+                
                 var addr = await Geocoder.local.findAddressesFromQuery(value);
                 centerToPositionandMark(addr.first.coordinates.latitude,
                     addr.first.coordinates.longitude);
@@ -292,3 +336,11 @@ class _MapStackState extends State<MapStack> {
         ]);
   }
 }
+Future<void> uploadingData(value) async {
+                  FirebaseFirestore firestore = FirebaseFirestore.instance;
+                  await firestore
+                    .collection('userInput')
+                    .add({
+                    'input': value,
+                    });
+                } 

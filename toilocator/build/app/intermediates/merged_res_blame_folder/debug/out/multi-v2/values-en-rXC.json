@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-en-rXC/values-en-rXC.xml",
+            "outputFile": "C:\\Users\\Chen Peilin\\gitchanges\\CZ2006_Project\\toilocator\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-en-rXC\\values-en-rXC.xml",
             "map": [
                 {
-                    "source": "/Users/arnavjaiswal/.gradle/caches/transforms-2/files-2.1/68d8b6f95eda44c538425a37777656c5/core-1.6.0/res/values-en-rXC/values-en-rXC.xml",
+                    "source": "C:\\Users\\Chen Peilin\\.gradle\\caches\\transforms-2\\files-2.1\\68d8b6f95eda44c538425a37777656c5\\core-1.6.0\\res\\values-en-rXC\\values-en-rXC.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
