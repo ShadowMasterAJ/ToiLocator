@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.cz2006swee.toilocator",
+  "applicationId": "com.example.toilocator",
   "variantName": "processDebugResources",
   "elements": [
     {
