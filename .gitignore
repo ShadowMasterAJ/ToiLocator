@@ -7,7 +7,8 @@
 build/
 ios/.generated/
 packages
-# pubspec.lock
+pubspec.lock
+# include pubspec.lock for now cos there will be package clash
 # https://dart.dev/guides/libraries/private-files#pubspeclock
 .flutter-plugins
 toilocator/.dart_tool/flutter_build/106a02a4f58cbf7d234623af8030db14/.filecache
