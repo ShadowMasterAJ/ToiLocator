@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Users/arnavjaiswal/flutter
-FLUTTER_APPLICATION_PATH=/Users/arnavjaiswal/Documents/University/AY2020-21 Yr 2 Sem 2/CZ2006 Software Engineering/CZ2006_Project/toilocator
+FLUTTER_ROOT=/Users/tangyiqwan/flutter
+FLUTTER_APPLICATION_PATH=/Users/tangyiqwan/dev/projects/flutter/toilocator/CZ2006_Project/toilocator
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_TARGET=lib/main.dart
 FLUTTER_BUILD_DIR=build
