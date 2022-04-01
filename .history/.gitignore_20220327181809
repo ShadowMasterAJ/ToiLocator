@@ -1,16 +1,3 @@
-.dart_tool/
-.DS_Store
-.atom/
-.idea
-.packages
-.pub/
-build/
-ios/.generated/
-packages
-# pubspec.lock
-# https://dart.dev/guides/libraries/private-files#pubspeclock
-.flutter-plugins
-
 toilocator/.dart_tool/flutter_build/106a02a4f58cbf7d234623af8030db14/.filecache
 toilocator/.dart_tool/flutter_build/106a02a4f58cbf7d234623af8030db14/app.dill
 toilocator/.dart_tool/flutter_build/106a02a4f58cbf7d234623af8030db14/debug_android_application.stamp
