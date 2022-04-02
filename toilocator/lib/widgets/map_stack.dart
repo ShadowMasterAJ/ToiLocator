@@ -360,7 +360,7 @@ class _MapStackState extends State<MapStack> {
 
 Future<void> uploadingData(value) async {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  await firestore.collection('userInput').add({
-    'input': value,
+  await firestore.collection('userInput').doc(value).set({
+    'dateTime': DateTime.now(),
   });
 }
