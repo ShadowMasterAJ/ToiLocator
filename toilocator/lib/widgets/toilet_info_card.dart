@@ -306,8 +306,9 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                           return const Center(child: CircularProgressIndicator());
                         }
                         else return RefreshIndicator(
-                          child: , 
-                          onRefresh: createImageList());
+                          child: Text("User Reviews",
+                          style: Theme.of(context).textTheme.headline6), 
+                          onRefresh: createImageList);
                           },)),
                   Divider(
                       color: Color.fromARGB(255, 114, 114, 114),
