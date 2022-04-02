@@ -2,6 +2,8 @@
 
 import 'dart:io';
 
+import 'package:toilocator/widgets/toilet_info_card.dart';
+
 import 'bottom_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -14,10 +16,11 @@ import 'dart:convert';
 import 'dart:math' show cos, sqrt, asin;
 import 'package:flutter/services.dart';
 import '/models/toilet.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:path_provider/path_provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; 
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MapStack extends StatefulWidget {
   const MapStack({Key? key}) : super(key: key);
@@ -51,7 +54,6 @@ class _MapStackState extends State<MapStack> {
     retrieveIcon();
     readJson();
     //downloadJSON();
-
   }
 
   void addMarker() {
@@ -80,10 +82,14 @@ class _MapStackState extends State<MapStack> {
         markerId: MarkerId(_position.toString()),
         position: _position,
         onTap: () {
-          setState(() {
-            infoDrawerPopup = true;
-          });
-          print("toilet is tapped!"); // future function to push info here
+          // setState(() {
+          //   infoDrawerPopup = true;
+          // });
+          // print("toilet is tapped!");
+          print("what");
+          Navigator.of(context)
+              .push(createRoute(markerId)); // future function to push info here
+          // bool frommap = true;
         },
         icon: toiletIcon);
     _markers.add(marker);
@@ -106,11 +112,11 @@ class _MapStackState extends State<MapStack> {
   // }
   void readJson() async {
     print('fetching from json...');
-    final String toiletJson = 
-         await rootBundle.loadString('lib/data/toilets.json');
+    final String toiletJson =
+        await rootBundle.loadString('lib/data/toilets.json');
     final toiletParsed = await json.decode(toiletJson);
 
-    // final toiletJson = 
+    // final toiletJson =
     //   await http.get('gs://cz2006-swe-43eae.appspot.com/toilets.json');
     // final toiletParsed = await json.decode(toiletJson.body);
 
@@ -118,13 +124,13 @@ class _MapStackState extends State<MapStack> {
 
     // storage.ref('toilets.json').getDownloadURL()
     //   .then((url) => {
-    //     final toiletJson = 
+    //     final toiletJson =
     //       await http.get(url);
     //     final toiletParsed = await json.decode(toiletJson.body);
     //   })
     // Directory appDocDir = await getApplicationDocumentsDirectory();
 
-    // final String toiletJson = 
+    // final String toiletJson =
     //   await rootBundle.loadString('{appDocDir.path}/toilets.json');
     // final toiletParsed = await json.decode(toiletJson);
     _toiletTemp = toiletParsed["toilets"];
@@ -149,7 +155,6 @@ class _MapStackState extends State<MapStack> {
           awardInt: award);
       _toiletList.add(toilet);
       debugPrint('Getting toilet ${i}');
-
     }
     print('fetched from json');
   }
@@ -232,6 +237,31 @@ class _MapStackState extends State<MapStack> {
     _controller = _cntlr;
   }
 
+  Route createRoute(int markerId) {
+    return PageRouteBuilder(
+      pageBuilder: (
+        context,
+        animation,
+        secondaryAnimation,
+      ) =>
+          toiletInfoCard(
+              indices: indices, toiletList: _toiletList, index: markerId),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     _panelHeightOpen = MediaQuery.of(context).size.height * .8;
@@ -254,9 +284,6 @@ class _MapStackState extends State<MapStack> {
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
             child: TextField(
               onSubmitted: (value) async {
-                // testing
-                uploadingData(value);
-                
                 var addr = await Geocoder.local.findAddressesFromQuery(value);
                 centerToPositionandMark(addr.first.coordinates.latitude,
                     addr.first.coordinates.longitude);
@@ -300,16 +327,21 @@ class _MapStackState extends State<MapStack> {
             ),
           ),
           SlidingUpPanel(
+            // bottom drawer
             snapPoint: 0.35,
             maxHeight: _panelHeightOpen,
             minHeight: entered ? _panelHeightClosed + 185 : _panelHeightClosed,
             parallaxEnabled: true,
             parallaxOffset: .1,
             panelBuilder: (sc) => bottomPanel(
+                // reponds to bottom_panel.dart THIS IS A TEMPORARY BLOCKAGE
                 indices: indices,
                 context: context,
                 toiletList: _toiletList,
                 sc: sc),
+            //TEMPORATRYR
+            // panelBuilder: (sc) => toiletInfoCard(sc: sc),
+            //TEMPORARY
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(18.0),
                 topRight: Radius.circular(18.0)),
@@ -336,11 +368,10 @@ class _MapStackState extends State<MapStack> {
         ]);
   }
 }
-Future<void> uploadingData(value) async {
-                  FirebaseFirestore firestore = FirebaseFirestore.instance;
-                  await firestore
-                    .collection('userInput')
-                    .add({
-                    'input': value,
-                    });
-                } 
+  Future<void> uploadingData(value) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    await firestore.collection('userInput').add({
+      'input': value,
+    });
+  }
+

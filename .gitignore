@@ -1,3 +1,4 @@
+# Manually added ignored files for dart
 .dart_tool/
 .DS_Store
 .atom/
@@ -11,6 +12,21 @@ pubspec.lock
 # include pubspec.lock for now cos there will be package clash
 # https://dart.dev/guides/libraries/private-files#pubspeclock
 .flutter-plugins
+# Manually added ignored files for android
+bin
+gen
+target
+.settings
+.classpath
+.project
+*.keystore
+*.swp
+*.orig
+*.log
+*.properties
+seed.txt
+map.txt
+
 toilocator/.dart_tool/flutter_build/106a02a4f58cbf7d234623af8030db14/.filecache
 toilocator/.dart_tool/flutter_build/106a02a4f58cbf7d234623af8030db14/app.dill
 toilocator/.dart_tool/flutter_build/106a02a4f58cbf7d234623af8030db14/debug_android_application.stamp
