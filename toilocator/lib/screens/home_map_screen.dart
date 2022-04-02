@@ -16,8 +16,15 @@ class HomeMapScreen extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           child: Column(
             children: [
-              DrawerButton(context, 'Map', Icons.map_outlined, () {}),
+              DrawerButton(context, 'Map', Icons.map_outlined, () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeMapScreen()),
+                );
+              }),
               DrawerButton(context, 'Profile', Icons.person_pin, () {
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ProfileScreen()),
@@ -28,6 +35,7 @@ class HomeMapScreen extends StatelessWidget {
                   context, 'Favorite\n Toilets', Icons.favorite, () {}),
               DrawerButton(context, 'Help', Icons.help, () {}),
               DrawerButton(context, 'Login', Icons.logout, () {
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AuthScreen()),
