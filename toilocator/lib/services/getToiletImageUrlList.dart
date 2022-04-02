@@ -21,8 +21,8 @@ Future<List?> getToiletImageUrlList(String toiletAlbumLink) async {
 
     // for loop from 0 to end (break when error)
     int i = 0;
-    final ImageURLList = <String>[]; // Creates growable list.
-
+    //final ImageURLList = <String>[]; // Creates growable list.
+    List<String> ImageURLList = [];
     // Loop through the html and get all the toilet image links
     while (true) {
       try {

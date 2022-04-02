@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toilocator/services/getToiletImageUrlList.dart';
 import '../palette.dart';
 import 'bottom_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -21,6 +22,8 @@ class toiletInfoCard extends StatefulWidget {
 }
 
 class _toiletInfoCardState extends State<toiletInfoCard> {
+  List<Widget> imageList = [];
+
   List<Widget> displayStarRating(int awardInt) {
     List<Widget> childrenList = [];
     if (awardInt > 5) {
@@ -36,31 +39,22 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     }
     return childrenList;
   }
-@override
-void initState() {
-  super.initState();
-  
-}
-  Widget createImageList() {
-    return SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            // replace contents with list of images to parse
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.blue),
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.amber),
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.pink),
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.grey),
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.brown)
-          ],
-        ));
+
+  Future createImageList() async {
+    // Convert URL links to realToiletImage
+
+    List<Widget> realToiletImages = [];
+    List? ImageUrlList =
+        await getToiletImageUrlList(widget.toiletList[widget.index].image);
+    for (var item in ImageUrlList!) {
+      realToiletImages.add(Container(
+          margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          child: Image.network(item, scale: 2.3)));
+    }
+
+    imageList = realToiletImages;
+
+    return Future.value();
   }
 
   Widget UserReviewInfo() {
@@ -285,7 +279,22 @@ void initState() {
                         "Official Images",
                         style: Theme.of(context).textTheme.bodyText1,
                       )), // also change to grey
-                  Container(height: 180, child: createImageList()),
+                  Container(
+                      height: 180,
+                      child: FutureBuilder(
+                        future: createImageList(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<dynamic> snapshot) {
+                          return SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: imageList,
+                            ),
+                          );
+                        },
+                      )),
                   Divider(
                       color: Color.fromARGB(255, 114, 114, 114),
                       thickness: 4,
