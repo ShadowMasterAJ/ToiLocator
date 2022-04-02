@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:toilocator/palette.dart';
 import 'package:toilocator/widgets/map_stack.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:toilocator/screens/login_screen.dart';
+import 'package:toilocator/screens/auth_screen.dart';
 import 'package:toilocator/widgets/side_drawer_button.dart';
 import 'package:toilocator/screens/profile_screen.dart';
 
@@ -41,7 +41,7 @@ class HomeMapScreen extends StatelessWidget {
                       DrawerButton(context, 'Login', Icons.logout, () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          MaterialPageRoute(builder: (context) => AuthScreen()),
                         );
                       }),
                       Spacer(),
