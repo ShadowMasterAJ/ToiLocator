@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:toilocator/services/getToiletImageUrlList.dart';
 import '../palette.dart';
+import '../services/getToiletImageUrlList.dart';
 import 'bottom_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'toilet_card.dart';
@@ -38,27 +38,15 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     return childrenList;
   }
 
-  Future<Widget> createImageList() async{
-    // Convert URL links to realToiletImage
-    
-    List<Image> realToiletImages = [];
-    List? ImageUrlList = await getToiletImageUrlList("https://www.toilet.org.sg/gallery/202/4-star-toilet-dt20-fort-canning-station");
-    for (var item in ImageUrlList!) {
-      realToiletImages.add(Image.network(item));
-    }
-    
-    return Future.value(SingleChildScrollView(
+  Widget createImageList() {
+    return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: 
-            realToiletImages
-          // [
+            children: getToiletImagesList()
+          // children: [
           //   // replace contents with list of images to parse
-          //   Image.network('https://picsum.photos/250?image=9'),
-            
-          //   Image.network('https://www.toilet.org.sg/photos/3S_NTUCFCClifford_1.jpg'),
           //   Container(
           //       margin: EdgeInsets.all(10), width: 100, color: Colors.blue),
           //   Container(
@@ -70,7 +58,16 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
           //   Container(
           //       margin: EdgeInsets.all(10), width: 100, color: Colors.brown)
           // ],
-        )));
+        ));
+  }
+
+  List<Image> getToiletImagesList() {
+    List<Image> realToiletImages = [];
+    List? ImageUrlList = getToiletImageUrlList("https://www.toilet.org.sg/gallery/202/4-star-toilet-dt20-fort-canning-station") as List?;
+    for (var item in ImageUrlList!) {
+      realToiletImages.add(Image.network(item));
+    }
+    return realToiletImages; 
   }
 
   Widget UserReviewInfo() {
@@ -295,21 +292,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                         "Official Images",
                         style: Theme.of(context).textTheme.bodyText1,
                       )), // also change to grey
-                      // yq edited this part: future builder (idk what i'm doing)
-                  Container(height: 180, 
-                    child: FutureBuilder(
-                      future: createImageList(), 
-                      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                        //throw("Comment: future widget for toilet images");
-                        // ignore: unnecessary_null_comparison
-                        if (AsyncSnapshot == null) {
-                          return const Center(child: CircularProgressIndicator());
-                        }
-                        else return RefreshIndicator(
-                          child: Text("User Reviews",
-                          style: Theme.of(context).textTheme.headline6), 
-                          onRefresh: createImageList);
-                          },)),
+                  Container(height: 180, child: createImageList()),
                   Divider(
                       color: Color.fromARGB(255, 114, 114, 114),
                       thickness: 4,
