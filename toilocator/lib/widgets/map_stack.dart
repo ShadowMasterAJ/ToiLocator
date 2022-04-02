@@ -141,7 +141,7 @@ class _MapStackState extends State<MapStack> {
       String image = _toiletTemp[i]["image_link-href"];
       String address = _toiletTemp[i]["address"];
       String name = _toiletTemp[i]["toilet_name"];
-      String district = _toiletTemp[i]["district_name"];
+      //String district = _toiletTemp[i]["district_name"];
       List coords = _toiletTemp[i]["coords"];
       int award = _toiletTemp[i]["award_int"];
       Toilet toilet = new Toilet(
@@ -150,7 +150,7 @@ class _MapStackState extends State<MapStack> {
           image: image,
           address: address,
           toiletName: name,
-          district: district,
+          //district: district,
           coords: coords,
           awardInt: award);
       _toiletList.add(toilet);
