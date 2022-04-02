@@ -282,6 +282,7 @@ class _MapStackState extends State<MapStack> {
                     addr.first.coordinates.longitude);
                 entered = true;
                 print(entered);
+                uploadingData(value);
               },
               decoration: InputDecoration(
                 prefixIcon: IconButton(
@@ -359,9 +360,9 @@ class _MapStackState extends State<MapStack> {
 }
 
 Future<void> uploadingData(value) async {
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  await firestore.collection('userInput').add({
+  await FirebaseFirestore.instance.collection('userInput').add({
     'location': value,
     'dateTime': DateTime.now(),
   });
+  print('Comment: value added');
 }
