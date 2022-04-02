@@ -14,10 +14,12 @@ class ProfileScreen extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                    color: Palette.beige[500],
-                    image: DecorationImage(
-                        image: NetworkImage("add your image URL here "),
-                        fit: BoxFit.cover)),
+                  color: Palette.beige[500],
+                  // image: DecorationImage(
+                  //     image: NetworkImage(
+                  //         "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.theguardian.com%2Flifeandstyle%2F2019%2Fnov%2F08%2Fexperience-hide-the-pain-harold-face-became-meme-turned-it-into-career&psig=AOvVaw3xRZQ75mtTZuFLknTsTZCQ&ust=1648968747866000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCNiZ47Xl9PYCFQAAAAAdAAAAABAD"),
+                  //     fit: BoxFit.cover),
+                ),
                 child: Container(
                   width: double.infinity,
                   height: 200,
@@ -35,8 +37,7 @@ class ProfileScreen extends StatelessWidget {
                               icon: Icon(Icons.menu_rounded)),
                           Text('Profile',
                               style: Theme.of(context).textTheme.headline2),
-                          IconButton(
-                              onPressed: () {}, icon: Icon(Icons.settings)),
+                          SizedBox(width: 40),
                         ],
                       ),
                     ),
@@ -59,70 +60,32 @@ class ProfileScreen extends StatelessWidget {
                 height: 60,
               ),
               Text(
-                "<UserInput>",
+                "Abdul Bari",
                 style: TextStyle(
                     fontSize: 25.0,
                     color: Colors.black,
-                    letterSpacing: 2.0,
                     fontWeight: FontWeight.w400),
               ),
               SizedBox(
                 height: 10,
               ),
-              Card(
-                color: Theme.of(context).backgroundColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    side: BorderSide.none),
-                child: SizedBox(
-                  height: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            fixedSize: const Size(100, 100),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0)),
-                          ),
-                          onPressed: () {},
-                          child: Text("Info"),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Expanded(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            fixedSize: const Size(100, 100),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0)),
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                              "Reviews"), // TODO: add setState logic to change behavior and apperance onClick
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               SizedBox(
                 height: 15,
               ),
-              Text('Age', style: Theme.of(context).textTheme.headline1),
-              Text('<UserInput>', style: Theme.of(context).textTheme.headline3),
-              Spacer(),
-              Text('Gender', style: Theme.of(context).textTheme.headline1),
-              Text('<UserInput>', style: Theme.of(context).textTheme.headline3),
-              Spacer(),
-              Text('Email', style: Theme.of(context).textTheme.headline1),
-              Text('<UserInput>', style: Theme.of(context).textTheme.headline3),
-              Spacer(),
+              Text('Age', style: Theme.of(context).textTheme.headline2),
+              SizedBox(height: 10),
+              Text('69', style: Theme.of(context).textTheme.subtitle1),
+              SizedBox(height: 30),
+              Text('Gender', style: Theme.of(context).textTheme.headline2),
+              SizedBox(height: 10),
+              Text('Female', style: Theme.of(context).textTheme.subtitle1),
+              SizedBox(height: 30),
+              Text('Email', style: Theme.of(context).textTheme.headline2),
+              SizedBox(height: 10),
+              Text('ilovedick42069@scatmail.com',
+                  style: Theme.of(context).textTheme.subtitle1,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis),
             ],
           );
         }),
