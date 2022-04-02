@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toilocator/services/getToiletImageUrlList.dart';
 import '../palette.dart';
 import 'bottom_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -21,6 +22,8 @@ class toiletInfoCard extends StatefulWidget {
 }
 
 class _toiletInfoCardState extends State<toiletInfoCard> {
+  List<Widget> imageList = [];
+
   List<Widget> displayStarRating(int awardInt) {
     List<Widget> childrenList = [];
     if (awardInt > 5) {
@@ -36,31 +39,22 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     }
     return childrenList;
   }
-@override
-void initState() {
-  super.initState();
-  
-}
-  Widget createImageList() {
-    return SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            // replace contents with list of images to parse
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.blue),
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.amber),
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.pink),
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.grey),
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.brown)
-          ],
-        ));
+
+  Future createImageList() async {
+    // Convert URL links to realToiletImage
+
+    List<Widget> realToiletImages = [];
+    List? ImageUrlList =
+        await getToiletImageUrlList(widget.toiletList[widget.index].image);
+    for (var item in ImageUrlList!) {
+      realToiletImages.add(Container(
+          margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          child: Image.network(item, scale: 2.3)));
+    }
+
+    imageList = realToiletImages;
+
+    return Future.value();
   }
 
   Widget UserReviewInfo() {
@@ -75,9 +69,7 @@ void initState() {
                   Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: Text('User Name',
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1)), //needs to change i guess
+                          style: Theme.of(context).textTheme.subtitle1)),
                   // Padding(padding: const EdgeInsets.only(right: 160.0)),
                   Spacer(),
                   Row(children: displayStarRating(4)),
@@ -132,10 +124,11 @@ void initState() {
                                       side: BorderSide(
                                           color:
                                               Palette.beige[300] as Color)))))),
-              Spacer(),
+              SizedBox(width: 58),
               Text(widget.indices[widget.index].toString() + "m",
-                  style:
-                      Theme.of(context).textTheme.headline5 // change colour too
+                  style: Theme.of(context).textTheme.headline5?.merge(TextStyle(
+                      color:
+                          Color.fromARGB(255, 87, 62, 25))) // change colour too
                   ),
               // SizedBox(width: 65),
               Spacer(),
@@ -196,6 +189,7 @@ void initState() {
                       widget.toiletList[widget.index].toiletName,
                       maxLines: 2,
                       style: Theme.of(context).textTheme.headline5,
+                      // style: TextStyle(fontFamily: "Avenir"),
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -205,9 +199,9 @@ void initState() {
                     width: MediaQuery.of(context).size.width * 1,
                     height: 18,
                     child: Text(
-                      widget.toiletList[widget.index]
-                          .address, //change colour one day
-                      style: Theme.of(context).textTheme.bodyText2,
+                      widget.toiletList[widget.index].address,
+                      style: Theme.of(context).textTheme.bodyText2?.merge(
+                          TextStyle(color: Color.fromARGB(255, 87, 87, 87))),
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
@@ -278,14 +272,31 @@ void initState() {
                       Icon(Icons.baby_changing_station)
                     ])
                   ]),
-                  SizedBox(height: 10),
+                  SizedBox(height: 15),
                   Padding(
-                      padding: const EdgeInsets.only(left: 30.0),
+                      padding: const EdgeInsets.only(left: 18.0),
                       child: Text(
                         "Official Images",
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.bodyText1?.merge(
+                            TextStyle(
+                                color: Color.fromARGB(255, 118, 118, 118))),
                       )), // also change to grey
-                  Container(height: 180, child: createImageList()),
+                  Container(
+                      height: 180,
+                      child: FutureBuilder(
+                        future: createImageList(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<dynamic> snapshot) {
+                          return SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: imageList,
+                            ),
+                          );
+                        },
+                      )),
                   Divider(
                       color: Color.fromARGB(255, 114, 114, 114),
                       thickness: 4,

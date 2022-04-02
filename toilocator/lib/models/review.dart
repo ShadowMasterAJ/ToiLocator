@@ -7,11 +7,11 @@ class Review {
   
   DateTime dateTime = DateTime.now();
   late String userID;
-  late String toiletID;
-  late int userRating;
+  late String toiletID; // is index in Toilet class
+  late double userRating;
   late String userComment;
 
-  Review(User user, Toilet toilet, int userRating, String userComment) {
+  Review(User user, Toilet toilet, double userRating, String userComment) {
     this.userID = userID;
     this.toiletID = toiletID;
     this.userRating = userRating;

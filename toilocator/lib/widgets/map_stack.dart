@@ -82,14 +82,8 @@ class _MapStackState extends State<MapStack> {
         markerId: MarkerId(_position.toString()),
         position: _position,
         onTap: () {
-          // setState(() {
-          //   infoDrawerPopup = true;
-          // });
-          // print("toilet is tapped!");
           print("what");
-          Navigator.of(context)
-              .push(createRoute(markerId)); // future function to push info here
-          // bool frommap = true;
+          Navigator.of(context).push(createRoute(markerId));
         },
         icon: toiletIcon);
     _markers.add(marker);
@@ -154,7 +148,6 @@ class _MapStackState extends State<MapStack> {
           coords: coords,
           awardInt: award);
       _toiletList.add(toilet);
-      debugPrint('Getting toilet ${i}');
     }
     print('fetched from json');
   }
