@@ -74,7 +74,11 @@ class toiletCard extends StatelessWidget {
                             width: MediaQuery.of(context).size.width * 0.8,
                             child: Text(
                               toiletList[index].address,
-                              style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  ?.merge(TextStyle(
+                                      color: Color.fromARGB(255, 87, 87, 87))),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),

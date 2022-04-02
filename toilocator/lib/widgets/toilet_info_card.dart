@@ -69,9 +69,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                   Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: Text('User Name',
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1)), //needs to change i guess
+                          style: Theme.of(context).textTheme.subtitle1)),
                   // Padding(padding: const EdgeInsets.only(right: 160.0)),
                   Spacer(),
                   Row(children: displayStarRating(4)),
@@ -126,10 +124,11 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                                       side: BorderSide(
                                           color:
                                               Palette.beige[300] as Color)))))),
-              Spacer(),
+              SizedBox(width: 58),
               Text(widget.indices[widget.index].toString() + "m",
-                  style:
-                      Theme.of(context).textTheme.headline5 // change colour too
+                  style: Theme.of(context).textTheme.headline5?.merge(TextStyle(
+                      color:
+                          Color.fromARGB(255, 87, 62, 25))) // change colour too
                   ),
               // SizedBox(width: 65),
               Spacer(),
@@ -190,6 +189,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                       widget.toiletList[widget.index].toiletName,
                       maxLines: 2,
                       style: Theme.of(context).textTheme.headline5,
+                      // style: TextStyle(fontFamily: "Avenir"),
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -199,9 +199,9 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                     width: MediaQuery.of(context).size.width * 1,
                     height: 18,
                     child: Text(
-                      widget.toiletList[widget.index]
-                          .address, //change colour one day
-                      style: Theme.of(context).textTheme.bodyText2,
+                      widget.toiletList[widget.index].address,
+                      style: Theme.of(context).textTheme.bodyText2?.merge(
+                          TextStyle(color: Color.fromARGB(255, 87, 87, 87))),
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
@@ -272,12 +272,14 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                       Icon(Icons.baby_changing_station)
                     ])
                   ]),
-                  SizedBox(height: 10),
+                  SizedBox(height: 15),
                   Padding(
-                      padding: const EdgeInsets.only(left: 30.0),
+                      padding: const EdgeInsets.only(left: 18.0),
                       child: Text(
                         "Official Images",
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.bodyText1?.merge(
+                            TextStyle(
+                                color: Color.fromARGB(255, 118, 118, 118))),
                       )), // also change to grey
                   Container(
                       height: 180,

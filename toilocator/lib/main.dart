@@ -17,7 +17,6 @@ void main() async {
   runApp(MyApp());
 }
 
-
 //may add in the wrapper, for users who wish to comment, switch to register screen, if not, back to homeMap screen
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -37,6 +36,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'ToiLocator',
         theme: ThemeData(
+          fontFamily: 'Avenir',
           backgroundColor: Palette.beige[50],
           textTheme: const TextTheme(
             headline1: TextStyle(

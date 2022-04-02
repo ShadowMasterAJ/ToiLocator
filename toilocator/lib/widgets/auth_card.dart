@@ -40,7 +40,7 @@ class _AuthFormState extends State<AuthForm> {
                             TextStyle(color: Color(0xFFACACAC), fontSize: 18),
                         suffixIcon: Icon(
                           Icons.person,
-                          color: Theme.of(context).primaryColorDark,
+                          color: Palette.beige[500],
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
@@ -106,7 +106,7 @@ class _AuthFormState extends State<AuthForm> {
                   suffixIcon: IconButton(
                       icon: Icon(
                           _isObscure ? Icons.visibility_off : Icons.visibility,
-                          color: Theme.of(context).primaryColorDark),
+                          color: Palette.beige[500]),
                       onPressed: () {
                         setState(() {
                           _isObscure = !_isObscure;
@@ -185,11 +185,12 @@ class _AuthFormState extends State<AuthForm> {
               onPressed: () {},
               child: Text(
                 'Forgot Password?',
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyText1?.merge(
+                    TextStyle(color: Color.fromARGB(255, 155, 155, 155))),
               ),
               style: ButtonStyle(
                 overlayColor: MaterialStateColor.resolveWith(
-                    (states) => Theme.of(context).primaryColor),
+                    (states) => Palette.beige[100] as Color),
               ),
             ),
             Divider(
@@ -218,7 +219,7 @@ class _AuthFormState extends State<AuthForm> {
                   },
                   style: ButtonStyle(
                     overlayColor: MaterialStateColor.resolveWith(
-                        (states) => Theme.of(context).primaryColor),
+                        (states) => Palette.beige[100] as Color),
                   ),
                   child: Text(
                     _authMode == AuthMode.Signup ? 'Login' : 'Sign Up',
