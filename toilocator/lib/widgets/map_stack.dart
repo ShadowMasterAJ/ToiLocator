@@ -334,14 +334,10 @@ class _MapStackState extends State<MapStack> {
             parallaxEnabled: true,
             parallaxOffset: .1,
             panelBuilder: (sc) => bottomPanel(
-                // reponds to bottom_panel.dart THIS IS A TEMPORARY BLOCKAGE
                 indices: indices,
                 context: context,
                 toiletList: _toiletList,
                 sc: sc),
-            //TEMPORATRYR
-            // panelBuilder: (sc) => toiletInfoCard(sc: sc),
-            //TEMPORARY
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(18.0),
                 topRight: Radius.circular(18.0)),
