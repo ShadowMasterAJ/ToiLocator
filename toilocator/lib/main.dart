@@ -7,6 +7,8 @@ import '/screens/profile_screen.dart';
 import '/screens/auth_screen.dart';
 import 'palette.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:toilocator/services/userDatabase.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 //the app will always initialise firebase when it starts
 void main() async {
@@ -14,6 +16,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MyApp());
 }
+
 
 //may add in the wrapper, for users who wish to comment, switch to register screen, if not, back to homeMap screen
 class MyApp extends StatelessWidget {
@@ -25,7 +28,10 @@ class MyApp extends StatelessWidget {
         Provider<AuthService>(
           create: (_) => AuthService(),
         ),
-        //streamProvider?
+        // StreamBuilder<QuerySnapshot>(
+        //   stream: FirebaseFirestore.instance.collection('users').snapshots(),
+        //   builder: BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot
+        // )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
