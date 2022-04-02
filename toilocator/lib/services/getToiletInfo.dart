@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 // void main() async {
 //   // WidgetsFlutterBinding.ensureInitialized();
@@ -14,16 +15,20 @@ import 'package:flutter/services.dart';
 
 //test
 Future<void> test(String test) async {
-  await FirebaseFirestore.instance.collection("toilet").add({
+  await FirebaseFirestore.instance.collection("toilets").add({
     'test': test
   });
 }
 // add a toilet instance to firebase
+// doc() specifies our own index
+// .set is used for the doc like to update
 Future<void> addToilet(int index, String type, 
   String albumURL, String address, String toiletName, 
-  List coords, int officialRating, userRating) async {
-  await FirebaseFirestore.instance.collection("toilet").add({
-    'index': index,
+  List coords, int officialRating, double userRating) async {
+  await FirebaseFirestore.instance.collection("toilets")
+    .doc(index.toString())
+    .set({
+    'index': index.toString(),
     'type': type,
     'albumURL': albumURL,
     'address': address,
@@ -32,7 +37,9 @@ Future<void> addToilet(int index, String type,
     'longitude': coords[1],
     'officialRating': officialRating,
     'userRating': userRating
-  });
+  })
+  .then((value) => print("Toilet Added"))
+  .catchError((error) => print("Failed to add toilet: $error"));
 }
 // convert toilet JSON format to firebase
 Future<void> helperConvertToiletJSON() async {
@@ -68,18 +75,24 @@ Future<void> helperConvertToiletJSON() async {
 }
 
 
-// addReview for a toilet ID
+// addReview for a toilet ID = index
 Future<void> addReview(DateTime dateTime,
-    String userID, String toiletID, 
-    int userRating, String userComment, int index) async {
-  await FirebaseFirestore.instance.collection("toilet").doc().add({
+  String userID, String toiletID, 
+  int userRating, String userComment) async {
+    CollectionReference toilets = FirebaseFirestore.instance.collection('toilets');
+    
+    // try to get the doc ref given index
+    await toilets.doc(toiletID).collection("reviews").add({
     'dateTime': dateTime,
     'userID': userID,
     'toiletID': toiletID,
     'userRating': userRating,
     'userComment': userComment
-  });
+    });
+  
 }
+
+
 
 // getReview for a toilet, maybe filter wrt ratings
 
