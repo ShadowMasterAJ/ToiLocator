@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../palette.dart';
+import '../services/getToiletImageUrlList.dart';
 import 'bottom_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'toilet_card.dart';
@@ -43,20 +44,30 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
         padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            // replace contents with list of images to parse
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.blue),
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.amber),
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.pink),
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.grey),
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.brown)
-          ],
+            children: getToiletImagesList()
+          // children: [
+          //   // replace contents with list of images to parse
+          //   Container(
+          //       margin: EdgeInsets.all(10), width: 100, color: Colors.blue),
+          //   Container(
+          //       margin: EdgeInsets.all(10), width: 100, color: Colors.amber),
+          //   Container(
+          //       margin: EdgeInsets.all(10), width: 100, color: Colors.pink),
+          //   Container(
+          //       margin: EdgeInsets.all(10), width: 100, color: Colors.grey),
+          //   Container(
+          //       margin: EdgeInsets.all(10), width: 100, color: Colors.brown)
+          // ],
         ));
+  }
+
+  List<Image> getToiletImagesList() {
+    List<Image> realToiletImages = [];
+    List? ImageUrlList = getToiletImageUrlList("https://www.toilet.org.sg/gallery/202/4-star-toilet-dt20-fort-canning-station") as List?;
+    for (var item in ImageUrlList!) {
+      realToiletImages.add(Image.network(item));
+    }
+    return realToiletImages; 
   }
 
   Widget UserReviewInfo() {
