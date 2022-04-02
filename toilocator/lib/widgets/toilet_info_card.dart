@@ -36,7 +36,11 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     }
     return childrenList;
   }
-
+@override
+void initState() {
+  super.initState();
+  
+}
   Widget createImageList() {
     return SingleChildScrollView(
         scrollDirection: Axis.horizontal,

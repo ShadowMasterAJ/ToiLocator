@@ -1,22 +1,22 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
-import 'dart:io';
+//just there cuz why not
+import 'dart:convert';
+import 'dart:math' show cos, sqrt, asin;
 
+//files
 import 'package:toilocator/widgets/toilet_info_card.dart';
-
-import 'bottom_panel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:toilocator/palette.dart';
+import 'bottom_panel.dart';
+import '/models/toilet.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoder/geocoder.dart';
 
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:toilocator/palette.dart';
-import 'dart:convert';
-import 'dart:math' show cos, sqrt, asin;
-import 'package:flutter/services.dart';
-import '/models/toilet.dart';
-
+//packages
 import 'package:http/http.dart' as http;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:path_provider/path_provider.dart';
