@@ -7,10 +7,11 @@ class User{
 
 class UserRecord {
   final String uid;
+  final String userName;
   final String gender;
   final int age;
 
-  UserRecord({required this.uid, required this.gender, required this.age});
+  UserRecord({required this.uid, required this.userName, required this.gender, required this.age});
 
 
   // String getUid() {

@@ -1,5 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:toilocator/palette.dart';
+import '../services/auth.dart';
+import '../services/userDatabase.dart';
+
 
 class AuthForm extends StatefulWidget {
   @override
@@ -19,8 +24,17 @@ class _AuthFormState extends State<AuthForm> {
     _authMode = AuthMode.Signup;
   }
 
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController uidController = TextEditingController();
+  final TextEditingController genderController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+  final navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
+    //navigatorKey: navigatorKey;
+    final authService = Provider.of<AuthService>(context);
     return SingleChildScrollView(
       child: Form(
         child: Column(
@@ -68,6 +82,7 @@ class _AuthFormState extends State<AuthForm> {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: TextField(
+                controller: emailController,
                 decoration: InputDecoration(
                   isDense: true,
                   hintText: 'Email',
@@ -98,6 +113,7 @@ class _AuthFormState extends State<AuthForm> {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: TextField(
+                controller: passwordController,
                 obscureText: _isObscure,
                 decoration: InputDecoration(
                   isDense: true,
@@ -135,6 +151,7 @@ class _AuthFormState extends State<AuthForm> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: TextField(
+          
                       obscureText: _isObscure,
                       decoration: InputDecoration(
                         isDense: true,
@@ -168,7 +185,15 @@ class _AuthFormState extends State<AuthForm> {
                 style: ElevatedButton.styleFrom(
                   primary: Palette.beige,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if(_authMode == AuthMode.Signup){
+                    signUp();
+                  }
+
+                  else{
+                    signIn();
+                  }
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Text(
@@ -235,4 +260,45 @@ class _AuthFormState extends State<AuthForm> {
       ),
     );
   }
+
+  Future signIn() async{
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder:(context)=>Center(child: CircularProgressIndicator()),
+      );
+
+    try{
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    );} on FirebaseAuthException catch (e){
+      print (e);
+    }
+    navigatorKey.currentState!.popUntil((route)=>route.isFirst);
+  }
+
+  Future signUp() async{
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder:(context)=>Center(child: CircularProgressIndicator()),
+      );
+
+    try{
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    );
+    //await UserDatabaseService(FirebaseAuth.instance.currentUser!.uid).addNewUser(emailController.text, emailController.text, int.parse(emailController.text));
+    } on FirebaseAuthException catch (e){
+      print (e);
+    }
+    //navigator needs to change
+    navigatorKey.currentState!.popUntil((route)=>route.isFirst);
+  }
+
+  
 }
+
+

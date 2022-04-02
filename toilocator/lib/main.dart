@@ -10,6 +10,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:toilocator/services/userDatabase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
+
 //the app will always initialise firebase when it starts
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

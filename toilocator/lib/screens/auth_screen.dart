@@ -23,7 +23,9 @@ class _AuthScreenState extends State<AuthScreen> {
                 style: Theme.of(context).textTheme.headline1,
               ),
             ),
-            AuthForm(),
+            AuthForm(
+              
+            ),
             Spacer(),
             Spacer(),
           ],
