@@ -10,6 +10,14 @@ import 'package:flutter/widgets.dart';
 //   // await Firebase.initializeApp();
 //   helperConvertToiletJSON();
 
+    // put this in addMarker map_stack
+    // print("Comment: main running");
+    // print('----------------------');
+    // print('----------------------');
+    // print('----------------------');
+    // print('----------------------');
+    // helperConvertToiletJSON(); ady converted, don't use anymore
+    // addReview(DateTime.now(), 'abc', '0', 4, "Very clean");
 
 // }
 
@@ -48,8 +56,8 @@ Future<void> helperConvertToiletJSON() async {
   final toiletParsed = await json.decode(toiletJson);
 
   List _toiletTemp = toiletParsed["toilets"];
-  for (int i = 0; i < 1; i++) {
-  // for (int i = 0; i < _toiletTemp.length; i++) {
+  //for (int i = 0; i < 1; i++) {
+  for (int i = 0; i < _toiletTemp.length; i++) {
     int index = _toiletTemp[i]["index"];
     String type = _toiletTemp[i]["type"];
     String image = _toiletTemp[i]["image_link-href"];
