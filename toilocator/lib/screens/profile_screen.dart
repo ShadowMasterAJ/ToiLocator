@@ -7,6 +7,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Container(width: 100, child: HomeMapScreen.buildDrawer(context)),
       backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: Builder(builder: (context) {
