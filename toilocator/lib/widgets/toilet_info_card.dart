@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toilocator/services/getToiletImageUrlList.dart';
+import 'package:toilocator/services/getToiletInfo.dart';
 import '../palette.dart';
 import 'bottom_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -24,7 +25,7 @@ class toiletInfoCard extends StatefulWidget {
 
 class _toiletInfoCardState extends State<toiletInfoCard> {
   List<Widget> imageList = [];
-
+  List<Widget> reviewList = [];
   List<Widget> displayStarRating(int awardInt) {
     List<Widget> childrenList = [];
     if (awardInt > 5) {
@@ -58,7 +59,38 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     return Future.value();
   }
 
-  Widget UserReviewInfo() {
+  // Create a list of review widgets
+  Future createReviewList() async {
+    // addReview(DateTime.now(), 'user1', widget.toiletList[widget.index].index.toString(), 2, 'Pee everywhere');
+    // Can delete this afterards
+    
+    List<Widget> tempReviewList = [];
+    print('Comment: createReviewList: index is ${widget.toiletList[widget.index].index.toString()}');
+    List? textReviewList = await getReviewList(widget.toiletList[widget.index].index.toString(), 10);
+    // 2nd parameter is the limit of numOfReview
+    // List? textReviewList = [];
+    // try {
+    //   textReviewList = await getReviewList('0', 2);
+    // } catch (e) {
+    //   throw ('createReviewList: Something went wrong getting review list, $e');
+    // }
+
+    // print("Comment: createReviewList textReviewList: ${textReviewList[0].userComment}");
+    try {
+      for (var item in textReviewList) {
+        print('Comment: createReviewList: item in textReviewList ${item.userComment}');
+        tempReviewList.add(UserReviewInfo(item.userID, item.userRating, item.userComment));
+      }
+    } catch (e) {
+      throw ('Something went wrong getting item in textReviewList, $e');
+
+    }
+
+    reviewList = tempReviewList;
+
+    return Future.value();
+  }
+  Widget UserReviewInfo(String userID, int userRating, String userComment) {
     //ListView builder probably needed, refer to bottom_panel line 93
     return Container(
         height: 160,
@@ -69,17 +101,17 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                 Row(children: [
                   Padding(
                       padding: const EdgeInsets.only(left: 20),
-                      child: Text('User Name',
+                      child: Text(userID,
                           style: Theme.of(context).textTheme.subtitle1)),
                   // Padding(padding: const EdgeInsets.only(right: 160.0)),
                   Spacer(),
-                  Row(children: displayStarRating(4)),
+                  Row(children: displayStarRating(userRating)),
                 ]),
-                SizedBox(height: 10),
+                // SizedBox(height: 10),
                 Padding(
                     padding: const EdgeInsets.only(left: 20.0),
                     child: Text(
-                      'according to all known laws of aviation,',
+                      userComment,
                       maxLines: 5,
                       textAlign: TextAlign.left,
                       overflow: TextOverflow.ellipsis,
@@ -87,7 +119,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                           TextStyle(color: Color.fromARGB(255, 136, 136, 136)),
                     )),
                 // Padding(padding: const EdgeInsets.only(right: 110.0)),
-                SizedBox(height: 8),
+                // SizedBox(height: 8),
                 Divider(
                     color: Color.fromARGB(255, 218, 218, 218), thickness: 1),
               ]),
@@ -355,38 +387,41 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                                 color: Color.fromARGB(255, 185, 185, 185),
                               ),
                             ),
-                            style: ButtonStyle(
-                              padding: MaterialStateProperty.all<EdgeInsets>(
-                                  EdgeInsets.all(15)),
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  Color.fromARGB(255, 255, 255, 255)),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Color.fromARGB(255, 255, 255, 255)),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  side: BorderSide(
-                                    color: Color.fromARGB(255, 185, 185, 185),
-                                  ),
-                                ),
-                              ),
-                            ),
                           ),
-                        ),
-                        SizedBox(width: 10),
-                      ],
-                    )
-                  ],
-                )),
-            SizedBox(height: 6),
-            Divider(color: Color.fromARGB(255, 218, 218, 218), thickness: 2),
-            SizedBox(height: 6),
-            UserReviewInfo(),
-            SizedBox(width: 10),
-          ],
-        ),
-      ),
-    );
+                      ),]
+                      ),
+                  Divider(
+                      color: Color.fromARGB(255, 114, 114, 114),
+                      thickness: 4,
+                      indent: 30,
+                      endIndent: 30),
+                  SizedBox(height: 12),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Text("User Reviews",
+                          style: Theme.of(context).textTheme.headline6)),
+                  SizedBox(height: 6),
+                  Divider(
+                      color: Color.fromARGB(255, 218, 218, 218), thickness: 2),
+                  SizedBox(height: 6),
+                  Container(
+                      height: 180,
+                      child: FutureBuilder(
+                        future: createReviewList(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<dynamic> snapshot) {
+                          return SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: reviewList,
+                            ),
+                          );
+                        },
+                      )),
+            ],
+          ),
+    ),);
   }
 }
