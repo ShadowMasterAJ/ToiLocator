@@ -44,7 +44,7 @@ dependencies:
   flutter_rating_bar: ^4.0.0
 
   # network_image_to_byte: ^0.0.1 # TAKE NOTE!!!  
-  flutter_rating_bar: ^4.0.0
+
   
   
 dev_dependencies:
