@@ -8,25 +8,25 @@ import 'package:toilocator/models/review.dart';
 
 // DO NOT DELETE
 // Must press run to initialise app
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp();
 
-  addReview(DateTime.now(), 'user2', '0', 5, "High class toilet, enjoyed it!");
-  getReviewList('0', 1);
-  test('hi2');
-//   helperConvertToiletJSON();
+//   addReview(DateTime.now(), 'user2', '0', 5, "High class toilet, enjoyed it!");
+//   getReviewList('0', 1);
+//   test('hi2');
+// //   helperConvertToiletJSON();
 
-    // put this in addMarker map_stack
-    // print("Comment: main running");
-    // print('----------------------');
-    // print('----------------------');
-    // print('----------------------');
-    // print('----------------------');
-    // helperConvertToiletJSON(); ady converted, don't use anymore
+//     // put this in addMarker map_stack
+//     // print("Comment: main running");
+//     // print('----------------------');
+//     // print('----------------------');
+//     // print('----------------------');
+//     // print('----------------------');
+//     // helperConvertToiletJSON(); ady converted, don't use anymore
   
 
-}
+// }
 
 //test
 Future<void> test(String test) async {
@@ -104,31 +104,48 @@ Future<void> addReview(DateTime dateTime,
     'userRating': userRating,
     'userComment': userComment
     });
-  
+    print('Comment: addReview - review added');
 }
 
-Future<List> getReviewList(String toiletID, int numOfReview) async {
+Future<List<Review>> getReviewList(String toiletID, int numOfReview) async {
     List<Review> reviewList = [];
     CollectionReference toilets = FirebaseFirestore.instance.collection('toilets');
-    toilets
+    await toilets
       .doc(toiletID)
       .collection('reviews')
       .limit(numOfReview)
       .get()  // get all the documents
       .then((QuerySnapshot querySnapshot) {
         querySnapshot.docs.forEach((doc) {
-          print(doc['userComment']);
+          // print('Document: ${doc['userComment']}');
+          // print('Document: ${doc['userID']}');
+          // print('Document: ${doc['userRating']}');
+          // print('Document: ${doc['toiletID']}');
+          // print('Document: ${doc['userComment']}');
+
           Review review = new Review(
             DateTime.parse(doc['dateTime'].toDate().toString()),
             doc['userID'],
             doc['toiletID'],
             doc['userRating'],
             doc['userComment']);
+          // print("Comment: getReviewList ${review.dateTime}");
+          // print("Comment: getReviewList ${reviewList[1].userID}");
+          // print("Comment: getReviewList ${reviewList[2].userRating}");
+          // print("Comment: getReviewList ${reviewList[0].userComment}");
+          // print('Comment: getReviewList length of reviewList: ${reviewList.length}');
           reviewList.add(review);
         });
       });
-    print(reviewList[0].dateTime);
-    return reviewList;
+      // print("Comment: getReviewList ${reviewList[0].dateTime}");
+      // print("Comment: getReviewList ${reviewList[1].userID}");
+      // print("Comment: getReviewList ${reviewList[2].userRating}");
+      // print("Comment: getReviewList ${reviewList[0].userComment}");
+      print('Comment: getReviewList length of reviewList: ${reviewList.length}');
+      return reviewList;
+
+      
+    
       // THIS IS FOR ONE DOCUMENT
       // .then((DocumentSnapshot documentSnapshot) { // only for one document
       //   if (documentSnapshot.exists) {

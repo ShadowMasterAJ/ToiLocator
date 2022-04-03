@@ -20,12 +20,13 @@ Future<bool> checkIfUserExists(String uid) async {
     return snapshot.exists;
   }
 
-Future<void> addNewUser(String userName, String gender, int age) {
+Future<void> addNewUser(String userName, String userEmail, bool gender, int age) {
       // Call the user's CollectionReference to add a new user
       return usersCollection
           .add({
             // 'uid': uid, // John Doe
-            'userName': userName,
+            'name' : userName,
+            'email': userEmail,
             'gender': gender, // Stokes and Sons
             'age': age // 42
           })
@@ -34,10 +35,11 @@ Future<void> addNewUser(String userName, String gender, int age) {
 
 }
 
- Future<void> updateUser(String uid, String userName, String gender, int age) {
+ Future<void> updateUser(String uid, String userName, String userEmail, bool gender, int age) {
   return usersCollection
     .doc(uid)
-    .update({ 'userName':userName,
+    .update({ 'name' : userName,
+              'email':userEmail,
               'gender': gender,
               'age': age})
     .then((value) => print("User Updated"))
