@@ -369,6 +369,7 @@ class _MapStackState extends State<MapStack> {
               indices: indices,
               context: context,
               toiletList: _toiletList,
+              getPolyLines: (polies) => setPolyLines(polies),
               sc: sc,
               lat: userLat,
               lng: userLong,

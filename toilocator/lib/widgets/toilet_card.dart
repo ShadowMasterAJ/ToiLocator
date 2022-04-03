@@ -7,6 +7,7 @@ class toiletCard extends StatelessWidget {
   final List toiletList;
   final int index;
   final double lat, lng;
+  final Function(dynamic) getPolyLines;
 
   final ScrollController sc;
 
@@ -18,6 +19,7 @@ class toiletCard extends StatelessWidget {
     required this.sc,
     required this.lat,
     required this.lng,
+    required this.getPolyLines,
   }) : super(key: key);
 
   List<Widget> displayStarRating(
@@ -171,7 +173,7 @@ class toiletCard extends StatelessWidget {
         indices: indices,
         toiletList: toiletList,
         index: index,
-        getPolyLines: (_) {},
+        getPolyLines: (polies) => getPolyLines(polies),
         lat: lat,
         lng: lng,
       ),

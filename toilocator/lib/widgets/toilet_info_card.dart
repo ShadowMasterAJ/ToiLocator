@@ -36,6 +36,7 @@ class toiletInfoCard extends StatefulWidget {
 class _toiletInfoCardState extends State<toiletInfoCard> {
   List<Widget> imageList = [];
   bool isLoading = false;
+  Directions directions = new Directions();
 
   List<Widget> reviewList = [];
   List<Widget> displayStarRating(int awardInt) {
@@ -165,62 +166,59 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     );
   }
 
-  late PolylinePoints polylinePoints;
-  List<LatLng> polylineCoordinates = [];
-  Map<PolylineId, Polyline> polylines = {};
+  // late PolylinePoints polylinePoints;
+  // List<LatLng> polylineCoordinates = [];
+  // Map<PolylineId, Polyline> polylines = {};
 
-  createPolylines(
-    double startLatitude,
-    double startLongitude,
-    double destinationLatitude,
-    double destinationLongitude,
-  ) async {
-    polylinePoints = PolylinePoints();
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      'AIzaSyBD6svvL_5JkLGtN9NG3V1KMx28IJ0Jiog', // Google Maps API Key
-      PointLatLng(startLatitude, startLongitude),
-      PointLatLng(destinationLatitude, destinationLongitude),
-      travelMode: TravelMode.walking,
-    );
+  // createPolylines(
+  //   double startLatitude,
+  //   double startLongitude,
+  //   double destinationLatitude,
+  //   double destinationLongitude,
+  // ) async {
+  //   polylinePoints = PolylinePoints();
+  //   PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+  //     'AIzaSyBD6svvL_5JkLGtN9NG3V1KMx28IJ0Jiog', // Google Maps API Key
+  //     PointLatLng(startLatitude, startLongitude),
+  //     PointLatLng(destinationLatitude, destinationLongitude),
+  //     travelMode: TravelMode.walking,
+  //   );
 
-    print('Results: ${result.points}');
-    if (result.points.isNotEmpty) {
-      print('result not empty');
-      result.points.forEach((PointLatLng point) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
-      setState(() {
-        isLoading = false;
-      });
-    } else {
-      setState(() {
-        isLoading = true;
-      });
-    }
+  //   print('Results: ${result.points}');
+  //   if (result.points.isNotEmpty) {
+  //     print('result not empty');
+  //     result.points.forEach((PointLatLng point) {
+  //       polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+  //     });
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   } else {
+  //     setState(() {
+  //       isLoading = true;
+  //     });
+  //   }
 
-    PolylineId id = PolylineId('poly');
-    Polyline polyline = Polyline(
-      polylineId: id,
-      color: Palette.beige.shade800,
-      points: polylineCoordinates,
-      patterns: [PatternItem.dot],
-      width: 7,
-    );
-    print('polyCoords $polylineCoordinates');
-    setState(() {
-      print('polyline setstate: ${polyline.points}');
-      polylines[id] = polyline;
+  //   PolylineId id = PolylineId('poly');
+  //   Polyline polyline = Polyline(
+  //     polylineId: id,
+  //     color: Palette.beige.shade800,
+  //     points: polylineCoordinates,
+  //     patterns: [PatternItem.dot],
+  //     width: 7,
+  //   );
+  //   print('polyCoords $polylineCoordinates');
+  //   setState(() {
+  //     print('polyline setstate: ${polyline.points}');
+  //     polylines[id] = polyline;
 
-      print('polylines setstate: ${polylines.entries}');
-    });
-    widget.getPolyLines(polylines);
-  }
+  //     print('polylines setstate: ${polylines.entries}');
+  //   });
+  //   widget.getPolyLines(polylines);
+  // }
 
   @override
   Widget build(BuildContext context) {
-    BorderRadius.only(
-        topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0));
-
     return isLoading
         ? const CircularProgressIndicator()
         : Scaffold(
@@ -238,22 +236,17 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                           ),
                           onPressed: () async {
                             print('directions pressed');
-                            // await Geolocator.requestPermission();
-                            // Position position =
-                            //     await Geolocator.getCurrentPosition(
-                            //         desiredAccuracy: LocationAccuracy.high);
-
-                            // var latSrc = position.latitude;
-                            // var longSrc = position.longitude;
 
                             print(
                                 "All LatLng: ${widget.lat}, ${widget.lng} || ${widget.toiletList[widget.index].coords[0]}, ${widget.toiletList[widget.index].coords[1]}");
 
-                            createPolylines(
-                                widget.lat,
-                                widget.lng,
-                                widget.toiletList[widget.index].coords[0],
-                                widget.toiletList[widget.index].coords[1]);
+                            Map<PolylineId, Polyline> res =
+                                await directions.createPolylines(
+                                    widget.lat,
+                                    widget.lng,
+                                    widget.toiletList[widget.index].coords[0],
+                                    widget.toiletList[widget.index].coords[1]);
+                            widget.getPolyLines(res);
                             Navigator.pop(context);
                           },
                           style: ButtonStyle(

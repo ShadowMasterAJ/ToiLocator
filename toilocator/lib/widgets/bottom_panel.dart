@@ -9,7 +9,9 @@ class bottomPanel extends StatelessWidget {
     required this.indices,
     required this.context,
     required List<Toilet> toiletList,
-    required this.sc, required this.lat, required this.lng,
+    required this.sc,
+    required this.lat,
+    required this.lng, required this.getPolyLines,
   })  : _toiletList = toiletList,
         super(key: key);
 
@@ -17,8 +19,8 @@ class bottomPanel extends StatelessWidget {
   final BuildContext context;
   final List<Toilet> _toiletList;
   final ScrollController sc;
-    final double lat, lng;
-
+  final double lat, lng;
+  final Function(dynamic) getPolyLines;
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +104,7 @@ class bottomPanel extends StatelessWidget {
                           toiletList: _toiletList,
                           index: indexList[indexPointer],
                           sc: this.sc,
+                          getPolyLines: (polies)=>getPolyLines(polies),
                           lat: lat,
                           lng: lng,
                         );
