@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toilocator/services/getToiletImageUrlList.dart';
+import 'package:toilocator/services/getToiletInfo.dart';
 import '../palette.dart';
 import 'toilet_info_card.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -18,7 +19,16 @@ class InputReviewPage extends StatefulWidget {
 }
 
 class _InputReviewPageState extends State<InputReviewPage> {
-  double userRating = 0; // need somehow to fetch the userrating
+  int userRating = 0; // need somehow to fetch the userrating
+  String userComment = "";
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
 
   Widget ratingBarBuilder() {
     return RatingBar.builder(
@@ -35,7 +45,7 @@ class _InputReviewPageState extends State<InputReviewPage> {
       ),
       onRatingUpdate: (rating) {
         print(rating);
-        userRating = rating;
+        userRating = rating.ceil();
       },
     );
   }
@@ -109,6 +119,9 @@ class _InputReviewPageState extends State<InputReviewPage> {
                 ratingBarBuilder(),
                 SizedBox(height: 20),
                 TextField(
+                  controller: myController,
+
+                
                   textAlignVertical: TextAlignVertical.top,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
@@ -127,7 +140,33 @@ class _InputReviewPageState extends State<InputReviewPage> {
                   child: Text(
                     "Submit Review",
                   ),
-                  onPressed: null,
+                  // TODO: add userID after auth
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          // Retrieve the text the that user has entered by using the
+                          // TextEditingController.
+                          content: Text("Review submitted!"),
+                        );
+                      },
+                    );
+                    // Widget backHome = FloatingActionButton(
+                    //   child: Text("Back to home"),
+                    //   onPressed: () {
+                    //     Navigator.of(context).pop();
+                    //     // Navigator.of(context)
+                    //     //   .push(new );
+                    //   } );
+                    //   setState((){});
+                    
+
+
+                    userComment = myController.text;
+                    print('Comment: User gave review: $userComment');
+                    addReview(DateTime.now(), 'userABC', widget.toiletList[widget.index].index.toString(), userRating, userComment);
+                  },
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsets>(
                         EdgeInsets.all(15)),
@@ -151,3 +190,51 @@ class _InputReviewPageState extends State<InputReviewPage> {
     );
   }
 }
+
+// // Define a corresponding State class.
+// // This class holds the data related to the Form.
+// class _CommentState extends State<InputReviewPage> {
+//   // Create a text controller and use it to retrieve the current value
+//   // of the TextField.
+//   final myController = TextEditingController();
+
+//   @override
+//   void dispose() {
+//     // Clean up the controller when the widget is disposed.
+//     myController.dispose();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Retrieve Text Input'),
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: TextField(
+//           controller: myController,
+//         ),
+//       ),
+//       floatingActionButton: FloatingActionButton(
+//         // When the user presses the button, show an alert dialog containing
+//         // the text that the user has entered into the text field.
+//         onPressed: () {
+//           showDialog(
+//             context: context,
+//             builder: (context) {
+//               return AlertDialog(
+//                 // Retrieve the text the that user has entered by using the
+//                 // TextEditingController.
+//                 content: Text(myController.text),
+//               );
+//             },
+//           );
+//         },
+//         tooltip: 'Show me the value!',
+//         child: const Icon(Icons.text_fields),
+//       ),
+//     );
+//   }
+// }
