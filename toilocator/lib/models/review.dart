@@ -8,10 +8,11 @@ class Review {
   DateTime dateTime = DateTime.now();
   late String userID;
   late String toiletID; // is index in Toilet class
-  late double userRating;
+  late int userRating;
   late String userComment;
 
-  Review(User user, Toilet toilet, double userRating, String userComment) {
+  Review(DateTime dateTime, String userID, String toiletID, int userRating, String userComment) {
+    this.dateTime = dateTime;
     this.userID = userID;
     this.toiletID = toiletID;
     this.userRating = userRating;
