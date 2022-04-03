@@ -1,10 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:toilocator/models/user.dart';
 import 'package:toilocator/palette.dart';
+import 'package:toilocator/screens/home_map_screen.dart';
+import 'package:toilocator/screens/profile_screen.dart';
 import '../services/auth.dart';
-import '../services/userDatabase.dart';
-
 
 class AuthForm extends StatefulWidget {
   @override
@@ -17,19 +19,30 @@ enum AuthMode { Signup, Login }
 class _AuthFormState extends State<AuthForm> {
   AuthMode _authMode = AuthMode.Login;
 
+  auth.User? user = auth.FirebaseAuth.instance.currentUser;
+  UserRecord userRecord = UserRecord();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.userRecord = UserRecord.fromMap(value.data());
+      setState(() {});
     _authMode = AuthMode.Signup;
+  });
   }
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController uidController = TextEditingController();
   final TextEditingController genderController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final navigatorKey = GlobalKey<NavigatorState>();
+  final _auth = auth.FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -270,13 +283,14 @@ class _AuthFormState extends State<AuthForm> {
       );
 
     try{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
+    await auth.FirebaseAuth.instance.signInWithEmailAndPassword(
       email: emailController.text.trim(),
       password: passwordController.text.trim(),
-    );} on FirebaseAuthException catch (e){
+    );} on auth.FirebaseAuthException catch (e){
       print (e);
     }
-    navigatorKey.currentState!.popUntil((route)=>route.isFirst);
+   Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => HomeMapScreen()));
   }
 
   Future signUp() async{
@@ -287,19 +301,40 @@ class _AuthFormState extends State<AuthForm> {
       );
 
     try{
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    await auth.FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: emailController.text.trim(),
       password: passwordController.text.trim(),
-    );
+    )
+    .then((value) => {postDetailsToFirestore()})
+     ;
     //await UserDatabaseService(FirebaseAuth.instance.currentUser!.uid).addNewUser(emailController.text, emailController.text, int.parse(emailController.text));
-    } on FirebaseAuthException catch (e){
+    } on auth.FirebaseAuthException catch (e){
       print (e);
     }
-    //navigator needs to change
-    navigatorKey.currentState!.popUntil((route)=>route.isFirst);
+     Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context) => ProfileScreen()),
+        (route) => false);
   }
+postDetailsToFirestore() async {
+    // calling our firestore, calling our user record, sending these values
 
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    // writing all the values
+    //userRecord.userEmail = user!.email;
+    userRecord.uid = auth.FirebaseAuth.instance.currentUser!.uid;
+    //userRecord.uid = user?.uid;
+    userRecord.userEmail = emailController.text;
+    // userRecord.gender = genderController.text;
+    // userRecord.age = ageController.text;
+
+    await firebaseFirestore
+        .collection("users")
+        .doc(user?.uid)
+        .set(userRecord.toMap());
   
+}
+
 }
 
 

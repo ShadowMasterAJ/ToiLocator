@@ -12,9 +12,11 @@ class AuthService {
   }
 
 
+/// the stream that parent widgets listen to, to be notified of authentication changes.
+/// Returns a firebase user, mapped to custom `User` object when change in auth- sign in or out.
 Stream<User?>? get user {
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
-}
+     }
 
 Future<User?> signInWithEmailAndPassword(
   String email,
@@ -59,6 +61,17 @@ Future<void> signOut() async {
   return await _firebaseAuth.signOut();
 }
 
+// Future<void> userState() async{
+//   await _firebaseAuth.authStateChanges()
+//   .listen((User? user) {
+//     if (user == null) {
+//       print('User is currently signed out!');
+     
+//     } else {
+//       print('User is signed in!');
+//     }
+//   });
+}
 
 //auth state change
 // FirebaseAuth.instance
@@ -71,4 +84,3 @@ Future<void> signOut() async {
 //     }
 //   });
 
-}
