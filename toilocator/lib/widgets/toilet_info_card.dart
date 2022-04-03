@@ -64,34 +64,21 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     // Can delete this afterards
     
     List<Widget> tempReviewList = [];
-    print(widget.toiletList[widget.index].index.toString());
-    // List? textReviewList = await getReviewList(widget.toiletList[widget.index].index.toString(), 10);
+    print('Comment: createReviewList: index is ${widget.toiletList[widget.index].index.toString()}');
+    List? textReviewList = await getReviewList(widget.toiletList[widget.index].index.toString(), 10);
     // 2nd parameter is the limit of numOfReview
-    List? textReviewList = [];
-    try {
-      textReviewList = await getReviewList('0', 2);
-    } catch (e) {
-      throw ('createReviewList: Something went wrong getting review list, $e');
-    }
+    // List? textReviewList = [];
+    // try {
+    //   textReviewList = await getReviewList('0', 2);
+    // } catch (e) {
+    //   throw ('createReviewList: Something went wrong getting review list, $e');
+    // }
 
-    print("Comment: createReviewList textReviewList: ${textReviewList[0].userComment}");
+    // print("Comment: createReviewList textReviewList: ${textReviewList[0].userComment}");
     try {
       for (var item in textReviewList) {
         print('Comment: createReviewList: item in textReviewList ${item.userComment}');
-        tempReviewList.add(Container(
-            margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child: 
-              //SizedBox(height: 10),
-              Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Text(
-                    item.userComment,
-                    maxLines: 5,
-                    textAlign: TextAlign.left,
-                    overflow: TextOverflow.ellipsis,
-                    style:
-                        TextStyle(color: Color.fromARGB(255, 136, 136, 136)),
-                  ))));
+        tempReviewList.add(UserReviewInfo(item.userID, item.userRating, item.userComment));
       }
     } catch (e) {
       throw ('Something went wrong getting item in textReviewList, $e');
@@ -102,7 +89,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
 
     return Future.value();
   }
-  Widget UserReviewInfo() {
+  Widget UserReviewInfo(String userID, int userRating, String userComment) {
     //ListView builder probably needed, refer to bottom_panel line 93
     return Container(
         height: 160,
@@ -113,39 +100,27 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                 Row(children: [
                   Padding(
                       padding: const EdgeInsets.only(left: 20),
-                      child: FutureBuilder(
-                        future: createReviewList(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<dynamic> snapshot) {
-                          return SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: reviewList,
-                            ),
-                          );
-                        },
-                      )),
+                      child: Text(userID,
+                          style: Theme.of(context).textTheme.subtitle1)),
                   // Padding(padding: const EdgeInsets.only(right: 160.0)),
                   Spacer(),
-                  Row(children: displayStarRating(4)),
+                  Row(children: displayStarRating(userRating)),
                 ]),
                 // SizedBox(height: 10),
-                // Padding(
-                //     padding: const EdgeInsets.only(left: 20.0),
-                //     child: Text(
-                //       'according to all known laws of aviation,',
-                //       maxLines: 5,
-                //       textAlign: TextAlign.left,
-                //       overflow: TextOverflow.ellipsis,
-                //       style:
-                //           TextStyle(color: Color.fromARGB(255, 136, 136, 136)),
-                //     )),
-                // // Padding(padding: const EdgeInsets.only(right: 110.0)),
+                Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: Text(
+                      userComment,
+                      maxLines: 5,
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                      style:
+                          TextStyle(color: Color.fromARGB(255, 136, 136, 136)),
+                    )),
+                // Padding(padding: const EdgeInsets.only(right: 110.0)),
                 // SizedBox(height: 8),
-                // Divider(
-                //     color: Color.fromARGB(255, 218, 218, 218), thickness: 1),
+                Divider(
+                    color: Color.fromARGB(255, 218, 218, 218), thickness: 1),
               ]),
         ));
   }
@@ -375,9 +350,9 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                         builder: (BuildContext context,
                             AsyncSnapshot<dynamic> snapshot) {
                           return SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
+                            scrollDirection: Axis.vertical,
                             padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                            child: Row(
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: reviewList,
                             ),
