@@ -5,8 +5,6 @@ import 'dart:convert';
 import 'dart:math' show cos, sqrt, asin;
 
 //files
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:toilocator/widgets/toilet_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,7 +23,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MapStack extends StatefulWidget {
-  const MapStack({Key? key}) : super(key: key);
+  final Function(double lat, double long) getLocFromInfo;
+
+  const MapStack({
+    Key? key,
+    required this.getLocFromInfo,
+  }) : super(key: key);
 
   @override
   State<MapStack> createState() => _MapStackState();
@@ -34,6 +37,9 @@ class MapStack extends StatefulWidget {
 class _MapStackState extends State<MapStack> {
   LatLng _initialcameraposition =
       LatLng(1.3521, 103.8198); // 1.346150, 103.681500
+
+  late double userLat = 1.3521, userLong = 103.8198;
+
   late GoogleMapController _controller;
 
   Map indices = {}; // key = index of toilet, value = distance
@@ -247,9 +253,9 @@ class _MapStackState extends State<MapStack> {
         indices: indices,
         toiletList: _toiletList,
         index: markerId,
-        displayDir: (double lat, double long, double latt, double longg) {
-          createPolylines(0, 0, 0, 0);
-        },
+        getPolyLines: (polies) => setPolyLines(polies),
+        lat: userLat,
+        lng: userLong,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
@@ -267,40 +273,15 @@ class _MapStackState extends State<MapStack> {
     );
   }
 
-  late PolylinePoints polylinePoints;
   Map<PolylineId, Polyline> polylines = {};
-  List<LatLng> polylineCoordinates = [];
 
-  createPolylines(
-    double startLatitude,
-    double startLongitude,
-    double destinationLatitude,
-    double destinationLongitude,
-  ) async {
-    polylinePoints = PolylinePoints();
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      'AIzaSyB9M5K3SIOoxo2PBhiUsqQ4lGcksjDy-IQ', // Google Maps API Key
-      PointLatLng(startLatitude, startLongitude),
-      PointLatLng(destinationLatitude, destinationLongitude),
-      travelMode: TravelMode.walking,
-    );
-
-    if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
-    }
-
-    PolylineId id = PolylineId('poly');
-    Polyline polyline = Polyline(
-      polylineId: id,
-      color: Colors.red,
-      points: polylineCoordinates,
-      width: 3,
-    );
+  void setPolyLines(Map<PolylineId, Polyline> poly) {
+    print('set poly points set state map stack');
+    // print('1',polylines.entries);
     setState(() {
-      polylines[id] = polyline;
+      polylines = poly;
     });
+    print('Printing poly: ${poly.entries}');
   }
 
   @override
@@ -329,8 +310,14 @@ class _MapStackState extends State<MapStack> {
               onSubmitted: (value) async {
                 var addr = await Geocoder.local.findAddressesFromQuery(value);
                 // var addr = await locationFromAddress(value);
-                centerToPositionandMark(addr.first.coordinates.latitude,
-                    addr.first.coordinates.longitude);
+                var lat = addr.first.coordinates.latitude;
+                var long = addr.first.coordinates.longitude;
+                setState(() {
+                  userLat = lat;
+                  userLong = long;
+                });
+                print('Mapstack latlng: $lat, $long');
+                centerToPositionandMark(lat, long);
                 entered = true;
                 print(entered);
                 uploadingData(value);
@@ -379,10 +366,13 @@ class _MapStackState extends State<MapStack> {
             parallaxEnabled: true,
             parallaxOffset: .1,
             panelBuilder: (sc) => bottomPanel(
-                indices: indices,
-                context: context,
-                toiletList: _toiletList,
-                sc: sc),
+              indices: indices,
+              context: context,
+              toiletList: _toiletList,
+              sc: sc,
+              lat: userLat,
+              lng: userLong,
+            ),
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(18.0),
                 topRight: Radius.circular(18.0)),

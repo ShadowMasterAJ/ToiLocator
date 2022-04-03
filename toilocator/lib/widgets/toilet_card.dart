@@ -6,6 +6,8 @@ class toiletCard extends StatelessWidget {
   final Map indices;
   final List toiletList;
   final int index;
+  final double lat, lng;
+
   final ScrollController sc;
 
   const toiletCard({
@@ -14,6 +16,8 @@ class toiletCard extends StatelessWidget {
     required this.toiletList,
     required this.index,
     required this.sc,
+    required this.lat,
+    required this.lng,
   }) : super(key: key);
 
   List<Widget> displayStarRating(
@@ -167,8 +171,9 @@ class toiletCard extends StatelessWidget {
         indices: indices,
         toiletList: toiletList,
         index: index,
-        displayDir: (double startLatitude, double startLongitude,
-            double destinationLatitude, double destinationLongitude) {},
+        getPolyLines: (_) {},
+        lat: lat,
+        lng: lng,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);

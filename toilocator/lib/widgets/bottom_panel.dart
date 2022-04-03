@@ -9,7 +9,7 @@ class bottomPanel extends StatelessWidget {
     required this.indices,
     required this.context,
     required List<Toilet> toiletList,
-    required this.sc,
+    required this.sc, required this.lat, required this.lng,
   })  : _toiletList = toiletList,
         super(key: key);
 
@@ -17,6 +17,8 @@ class bottomPanel extends StatelessWidget {
   final BuildContext context;
   final List<Toilet> _toiletList;
   final ScrollController sc;
+    final double lat, lng;
+
 
   @override
   Widget build(BuildContext context) {
@@ -96,10 +98,13 @@ class bottomPanel extends StatelessWidget {
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context, int indexPointer) {
                         return toiletCard(
-                            indices: indices,
-                            toiletList: _toiletList,
-                            index: indexList[indexPointer],
-                            sc: this.sc);
+                          indices: indices,
+                          toiletList: _toiletList,
+                          index: indexList[indexPointer],
+                          sc: this.sc,
+                          lat: lat,
+                          lng: lng,
+                        );
                       },
                     )),
         ],
