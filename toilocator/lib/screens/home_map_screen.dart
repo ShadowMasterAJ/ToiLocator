@@ -30,9 +30,6 @@ class HomeMapScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => ProfileScreen()),
                 );
               }),
-              DrawerButton(context, 'Settings', Icons.settings, () {}),
-              DrawerButton(
-                  context, 'Favorite\n Toilets', Icons.favorite, () {}),
               DrawerButton(context, 'Help', Icons.help, () {}),
               DrawerButton(context, 'Login', Icons.logout, () {
                 Navigator.pop(context);

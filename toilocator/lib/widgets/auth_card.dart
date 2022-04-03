@@ -5,7 +5,6 @@ import 'package:toilocator/palette.dart';
 import '../services/auth.dart';
 import '../services/userDatabase.dart';
 
-
 class AuthForm extends StatefulWidget {
   @override
   _AuthFormState createState() => _AuthFormState();
@@ -33,9 +32,11 @@ class _AuthFormState extends State<AuthForm> {
 
   @override
   Widget build(BuildContext context) {
+    String dropDownValue = "Female";
     //navigatorKey: navigatorKey;
     final authService = Provider.of<AuthService>(context);
     return SingleChildScrollView(
+      physics: ScrollPhysics(),
       child: Form(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -151,7 +152,6 @@ class _AuthFormState extends State<AuthForm> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: TextField(
-          
                       obscureText: _isObscure,
                       decoration: InputDecoration(
                         isDense: true,
@@ -178,7 +178,58 @@ class _AuthFormState extends State<AuthForm> {
                 : SizedBox(
                     height: 0,
                   ),
-            Padding(padding: EdgeInsets.all(16)),
+            _authMode == AuthMode.Signup
+                ? Column(children: [
+                    SizedBox(height: 10),
+                    Row(children: [
+                      SizedBox(
+                        // FIGURE OUT HOW TO RETRIEVE AGE INPUT
+                        width: 100,
+                        child: Flexible(
+                          child: TextField(
+                            // textAlignVertical: TextAlignVertical.top,
+                            maxLines: null,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              hintText: 'Age',
+                              alignLabelWithHint: true,
+                              // contentPadding:
+                              //     EdgeInsets.symmetric(vertical: 80, horizontal: 20),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 30),
+                      DropdownButton<String>(
+                        value: dropDownValue,
+                        elevation: 16,
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 94, 55, 17)),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropDownValue =
+                                newValue!; // CAN TAKE GENDER INPUT AS DROPDOWNVALUE (GLOBAL)
+                          });
+                        },
+                        underline: Container(
+                          height: 2,
+                          color: Palette.beige[100],
+                        ),
+                        icon: const Icon(Icons.arrow_downward),
+                        items: <String>['Female', 'Male'].map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ]),
+                    SizedBox(height: 10),
+                  ])
+                : Padding(padding: EdgeInsets.all(16)),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -186,11 +237,9 @@ class _AuthFormState extends State<AuthForm> {
                   primary: Palette.beige,
                 ),
                 onPressed: () {
-                  if(_authMode == AuthMode.Signup){
+                  if (_authMode == AuthMode.Signup) {
                     signUp();
-                  }
-
-                  else{
+                  } else {
                     signIn();
                   }
                 },
@@ -262,44 +311,41 @@ class _AuthFormState extends State<AuthForm> {
     );
   }
 
-  Future signIn() async{
+  Future signIn() async {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder:(context)=>Center(child: CircularProgressIndicator()),
-      );
+      builder: (context) => Center(child: CircularProgressIndicator()),
+    );
 
-    try{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
-    );} on FirebaseAuthException catch (e){
-      print (e);
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e);
     }
-    navigatorKey.currentState!.popUntil((route)=>route.isFirst);
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
-  Future signUp() async{
+  Future signUp() async {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder:(context)=>Center(child: CircularProgressIndicator()),
-      );
-
-    try{
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
+      builder: (context) => Center(child: CircularProgressIndicator()),
     );
-    //await UserDatabaseService(FirebaseAuth.instance.currentUser!.uid).addNewUser(emailController.text, emailController.text, int.parse(emailController.text));
-    } on FirebaseAuthException catch (e){
-      print (e);
+
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+      //await UserDatabaseService(FirebaseAuth.instance.currentUser!.uid).addNewUser(emailController.text, emailController.text, int.parse(emailController.text));
+    } on FirebaseAuthException catch (e) {
+      print(e);
     }
     //navigator needs to change
-    navigatorKey.currentState!.popUntil((route)=>route.isFirst);
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
-
-  
 }
-
-
