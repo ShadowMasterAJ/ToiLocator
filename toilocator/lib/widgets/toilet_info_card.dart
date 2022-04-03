@@ -68,7 +68,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     print(
         'Comment: createReviewList: index is ${widget.toiletList[widget.index].index.toString()}');
     List? textReviewList = await getReviewList(
-        widget.toiletList[widget.index].index.toString(), 10);
+        widget.toiletList[widget.index].index.toString(), 100);
     // 2nd parameter is the limit of numOfReview
     // List? textReviewList = [];
     // try {
@@ -97,7 +97,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
   Widget UserReviewInfo(String userID, int userRating, String userComment) {
     //ListView builder probably needed, refer to bottom_panel line 93
     return Container(
-      height: 80,
+      // height: 80,
       // child: Card(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
           Widget>[
@@ -116,7 +116,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
             child: Text(
               userComment,
-              maxLines: 5,
+              maxLines: 10,
               textAlign: TextAlign.left,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(color: Color.fromARGB(255, 136, 136, 136)),
