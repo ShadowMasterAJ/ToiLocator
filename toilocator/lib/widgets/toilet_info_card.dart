@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:toilocator/services/directions.dart';
 import '../palette.dart';
 import 'bottom_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import 'toilet_card.dart';
+import 'map_stack.dart';
+import '../services/directions.dart';
 
 class toiletInfoCard extends StatefulWidget {
   final Map indices;
   final List toiletList;
   final int index;
+  final void Function( double startLatitude,
+    double startLongitude,
+    double destinationLatitude,
+    double destinationLongitude) displayDir;
 
   @override
   State<toiletInfoCard> createState() => _toiletInfoCardState();
@@ -17,6 +28,7 @@ class toiletInfoCard extends StatefulWidget {
     required this.indices,
     required this.toiletList,
     required this.index,
+    required this.displayDir,
   }) : super(key: key);
 }
 
@@ -36,33 +48,34 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     }
     return childrenList;
   }
-@override
-void initState() {
-  super.initState();
-  
-}
-  Widget createImageList() {
-    return SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            // replace contents with list of images to parse
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.blue),
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.amber),
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.pink),
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.grey),
-            Container(
-                margin: EdgeInsets.all(10), width: 100, color: Colors.brown)
-          ],
-        ));
+
+  @override
+  void initState() {
+    super.initState();
   }
 
+  Widget createImageList() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          // replace contents with list of images to parse
+          Container(margin: EdgeInsets.all(10), width: 100, color: Colors.blue),
+          Container(
+              margin: EdgeInsets.all(10), width: 100, color: Colors.amber),
+          Container(margin: EdgeInsets.all(10), width: 100, color: Colors.pink),
+          Container(margin: EdgeInsets.all(10), width: 100, color: Colors.grey),
+          Container(margin: EdgeInsets.all(10), width: 100, color: Colors.brown)
+        ],
+      ),
+    );
+  }
+
+  // void directions(){
+  //   Directions.getDirections(this.getCurrentLocation,widget.indices['coords']);
+  // }
   Widget UserReviewInfo() {
     //ListView builder probably needed, refer to bottom_panel line 93
     return Container(
@@ -117,7 +130,30 @@ void initState() {
                         // no splashcolour here
                         "Directions",
                       ),
-                      onPressed: null,
+                      // TODO: main shit
+                      onPressed: () async {
+                        await Geolocator.requestPermission();
+                        Position position = await Geolocator.getCurrentPosition(
+                            desiredAccuracy: LocationAccuracy.high);
+
+                        var latSrc = position.latitude;
+                        var longSrc = position.longitude;
+                        var latDest = widget.indices['coords'][0];
+                        var longDest = widget.indices['coords'][1];
+                        widget.displayDir(latSrc, longSrc, latDest, longDest);
+                        
+                        // print(widget.toiletList[widget.index].address);
+                        // Directions.getDirections(
+                        //     widget.toiletList[widget.index].address);
+
+                        // String url =
+                        //     'https://www.google.com/maps/dir/"Marina Bay Sands"/${widget.toiletList[widget.index].address}/@${widget.toiletList[widget.index].coords},17z/data=!3m1!5s0x310201012d79a381:0xd2f04a205dcc65f0!4m14!4m13!1m5!1m1!1s0x31da190ed6203605:0x66ad5eee6e01f3a7!2m2!1d103.8543872!2d1.2867449!1m5!1m1!1s0x31da19ee4cc09203:0x26c9afefa555dd7!2m2!1d103.8609937!2d1.2846547!3e2';
+                        // if (await canLaunch(url)) {
+                        //   await launch(url, forceSafariVC: false);
+                        // } else {
+                        //   throw 'Could not launch $url';
+                        // }
+                      },
                       style: ButtonStyle(
                           padding: MaterialStateProperty.all<EdgeInsets>(
                               EdgeInsets.all(15)),
@@ -164,9 +200,8 @@ void initState() {
             ])),
         body: SingleChildScrollView(
             physics: ScrollPhysics(),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(mainAxisAlignment: MainAxisAlignment.start,
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                     height: 12.0,
@@ -206,7 +241,7 @@ void initState() {
                     height: 18,
                     child: Text(
                       widget.toiletList[widget.index]
-                          .address, //change colour one day
+                          .address, //TODO: change colour one day
                       style: Theme.of(context).textTheme.bodyText2,
                       maxLines: 2,
                       textAlign: TextAlign.center,
@@ -290,7 +325,7 @@ void initState() {
                       color: Color.fromARGB(255, 114, 114, 114),
                       thickness: 4,
                       indent: 30,
-                      endIndent: 30),
+                      endIndent: 20),
                   SizedBox(height: 12),
                   Padding(
                       padding: const EdgeInsets.only(left: 20),

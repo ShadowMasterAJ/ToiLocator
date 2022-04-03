@@ -41,6 +41,10 @@ dependencies:
   http: ^0.13.4
   html: ^0.15.0
   google_directions_api: ^0.9.1
+  geocoding: ^2.0.4
+  url_launcher: ^6.0.20
+  flutter_polyline_points: ^1.0.0
+
 
   # network_image_to_byte: ^0.0.1 # TAKE NOTE!!!  
   

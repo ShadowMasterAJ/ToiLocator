@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'dart:math' show cos, sqrt, asin;
 
 //files
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:toilocator/widgets/toilet_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -86,7 +88,6 @@ class _MapStackState extends State<MapStack> {
           //   infoDrawerPopup = true;
           // });
           // print("toilet is tapped!");
-          print("what");
           Navigator.of(context)
               .push(createRoute(markerId)); // future function to push info here
           // bool frommap = true;
@@ -222,15 +223,19 @@ class _MapStackState extends State<MapStack> {
     // run the marknesrestest toilets here
   }
 
-  void getCurrentLocation() async {
+  Future<LatLng> getCurrentLocation() async {
     await Geolocator.requestPermission();
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
     var lat = position.latitude;
     var long = position.longitude;
+    return LatLng(lat, long);
+  }
 
-    centerToPositionandMark(lat, long);
+  void centerToCurrentLocation() async {
+    LatLng latlng = await getCurrentLocation();
+    centerToPositionandMark(latlng.latitude, latlng.longitude);
   }
 
   void _onMapCreated(GoogleMapController _cntlr) {
@@ -245,7 +250,13 @@ class _MapStackState extends State<MapStack> {
         secondaryAnimation,
       ) =>
           toiletInfoCard(
-              indices: indices, toiletList: _toiletList, index: markerId),
+        indices: indices,
+        toiletList: _toiletList,
+        index: markerId,
+        displayDir: (double lat, double long, double latt, double longg) {
+          createPolylines(0, 0, 0, 0);
+        },
+      ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;
@@ -262,6 +273,42 @@ class _MapStackState extends State<MapStack> {
     );
   }
 
+  late PolylinePoints polylinePoints;
+  Map<PolylineId, Polyline> polylines = {};
+  List<LatLng> polylineCoordinates = [];
+
+  createPolylines(
+    double startLatitude,
+    double startLongitude,
+    double destinationLatitude,
+    double destinationLongitude,
+  ) async {
+    polylinePoints = PolylinePoints();
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      'AIzaSyB9M5K3SIOoxo2PBhiUsqQ4lGcksjDy-IQ', // Google Maps API Key
+      PointLatLng(startLatitude, startLongitude),
+      PointLatLng(destinationLatitude, destinationLongitude),
+      travelMode: TravelMode.walking,
+    );
+
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    }
+
+    PolylineId id = PolylineId('poly');
+    Polyline polyline = Polyline(
+      polylineId: id,
+      color: Colors.red,
+      points: polylineCoordinates,
+      width: 3,
+    );
+    setState(() {
+      polylines[id] = polyline;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     _panelHeightOpen = MediaQuery.of(context).size.height * .8;
@@ -276,15 +323,18 @@ class _MapStackState extends State<MapStack> {
               target: _initialcameraposition,
               zoom: 11.0,
             ),
-            compassEnabled: true,
+            buildingsEnabled: true,
+            mapType: MapType.normal,
             zoomControlsEnabled: true,
             markers: Set.from(_markers),
+            polylines: Set<Polyline>.of(polylines.values),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
             child: TextField(
               onSubmitted: (value) async {
                 var addr = await Geocoder.local.findAddressesFromQuery(value);
+                // var addr = await locationFromAddress(value);
                 centerToPositionandMark(addr.first.coordinates.latitude,
                     addr.first.coordinates.longitude);
                 entered = true;
@@ -353,7 +403,7 @@ class _MapStackState extends State<MapStack> {
               tooltip: "Center to your location",
               elevation: 10,
               backgroundColor: Palette.beige[200],
-              onPressed: getCurrentLocation,
+              onPressed: centerToCurrentLocation,
               child: Icon(
                 Icons.gps_fixed,
                 size: 25,
