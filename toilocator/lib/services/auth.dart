@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:flutter/cupertino.dart';
 import '../models/user.dart';
 
 class AuthService {
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
+  final _formkey = GlobalKey<FormState>();
 
   User? _userFromFirebase(auth.User? user){
       if (user==null) return null;
@@ -10,9 +12,11 @@ class AuthService {
   }
 
 
+/// the stream that parent widgets listen to, to be notified of authentication changes.
+/// Returns a firebase user, mapped to custom `User` object when change in auth- sign in or out.
 Stream<User?>? get user {
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
-}
+     }
 
 Future<User?> signInWithEmailAndPassword(
   String email,
@@ -24,6 +28,23 @@ Future<User?> signInWithEmailAndPassword(
 
   return _userFromFirebase(credential.user);
 }
+
+
+// void signIn(String email, String password) async{
+//   if(_formkey.currentState!.validate()){
+//     await _firebaseAuth
+//     .signInWithEmailAndPassword(email: email, password: password)
+//     .then((uid)=>{
+//       Fluttertoast.showToast(msg: "Login Successfully"),
+//       Navigator.of(context).pushReplacement(MaterialPageRoute:(builder:(context)=>HomeMapScreen)),
+//     }).catchError((e){
+//       Fluttertoast.showToast(msg: e!.message);
+//     }
+//     );
+
+//   }
+// }
+
 
 
 Future<User?> createUserWithEmailAndPassword(
@@ -40,6 +61,17 @@ Future<void> signOut() async {
   return await _firebaseAuth.signOut();
 }
 
+// Future<void> userState() async{
+//   await _firebaseAuth.authStateChanges()
+//   .listen((User? user) {
+//     if (user == null) {
+//       print('User is currently signed out!');
+     
+//     } else {
+//       print('User is signed in!');
+//     }
+//   });
+}
 
 //auth state change
 // FirebaseAuth.instance
@@ -52,4 +84,3 @@ Future<void> signOut() async {
 //     }
 //   });
 
-}

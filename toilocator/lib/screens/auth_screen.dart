@@ -11,7 +11,7 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(25.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -23,7 +23,9 @@ class _AuthScreenState extends State<AuthScreen> {
                 style: Theme.of(context).textTheme.headline1,
               ),
             ),
-            AuthForm(),
+            AuthForm(
+              
+            ),
             Spacer(),
             Spacer(),
           ],

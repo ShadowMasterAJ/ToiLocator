@@ -6,9 +6,10 @@ import '../models/user.dart';
 class UserDatabaseService {
 
 final String uid;
-final String gender;
-final int age;
-UserDatabaseService(this.uid, this.gender, this.age);
+// final String userName;
+// final String gender;
+// final int age;
+UserDatabaseService(this.uid);
 
 // // collection reference
 final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
@@ -19,11 +20,13 @@ Future<bool> checkIfUserExists(String uid) async {
     return snapshot.exists;
   }
 
-Future<void> addNewUser(String uid, String gender, int age) {
+Future<void> addNewUser(String userName, String userEmail, bool gender, int age) {
       // Call the user's CollectionReference to add a new user
       return usersCollection
           .add({
-            'uid': uid, // John Doe
+            // 'uid': uid, // John Doe
+            'name' : userName,
+            'email': userEmail,
             'gender': gender, // Stokes and Sons
             'age': age // 42
           })
@@ -32,10 +35,12 @@ Future<void> addNewUser(String uid, String gender, int age) {
 
 }
 
- Future<void> updateUser(String uid, String gender, int age) {
+ Future<void> updateUser(String uid, String userName, String userEmail, bool gender, int age) {
   return usersCollection
     .doc(uid)
-    .update({'gender': gender,
+    .update({ 'name' : userName,
+              'email':userEmail,
+              'gender': gender,
               'age': age})
     .then((value) => print("User Updated"))
     .catchError((error) => print("Failed to update user: $error"));

@@ -84,13 +84,8 @@ class _MapStackState extends State<MapStack> {
         markerId: MarkerId(_position.toString()),
         position: _position,
         onTap: () {
-          // setState(() {
-          //   infoDrawerPopup = true;
-          // });
-          // print("toilet is tapped!");
-          Navigator.of(context)
-              .push(createRoute(markerId)); // future function to push info here
-          // bool frommap = true;
+          print("what");
+          Navigator.of(context).push(createRoute(markerId));
         },
         icon: toiletIcon);
     _markers.add(marker);
@@ -155,7 +150,6 @@ class _MapStackState extends State<MapStack> {
           coords: coords,
           awardInt: award);
       _toiletList.add(toilet);
-      debugPrint('Getting toilet ${i}');
     }
     print('fetched from json');
   }
@@ -339,6 +333,7 @@ class _MapStackState extends State<MapStack> {
                     addr.first.coordinates.longitude);
                 entered = true;
                 print(entered);
+                uploadingData(value);
               },
               decoration: InputDecoration(
                 prefixIcon: IconButton(
@@ -416,8 +411,9 @@ class _MapStackState extends State<MapStack> {
 }
 
 Future<void> uploadingData(value) async {
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  await firestore.collection('userInput').add({
-    'input': value,
+  await FirebaseFirestore.instance.collection('userInput').add({
+    'location': value,
+    'dateTime': DateTime.now(),
   });
+  print('Comment: value added');
 }

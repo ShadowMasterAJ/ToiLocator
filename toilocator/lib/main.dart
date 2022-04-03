@@ -10,6 +10,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:toilocator/services/userDatabase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
+
 //the app will always initialise firebase when it starts
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +38,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'ToiLocator',
         theme: ThemeData(
+          fontFamily: 'Avenir',
           backgroundColor: Palette.beige[50],
           textTheme: const TextTheme(
             headline1: TextStyle(
