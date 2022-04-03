@@ -8,25 +8,25 @@ import 'package:toilocator/models/review.dart';
 
 // DO NOT DELETE
 // Must press run to initialise app
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp();
 
-  addReview(DateTime.now(), 'user2', '0', 5, "High class toilet, enjoyed it!");
-  getReviewList('0', 1);
-  test('hi2');
-//   helperConvertToiletJSON();
+//   addReview(DateTime.now(), 'user2', '0', 5, "High class toilet, enjoyed it!");
+//   getReviewList('0', 1);
+//   test('hi2');
+// //   helperConvertToiletJSON();
 
-    // put this in addMarker map_stack
-    // print("Comment: main running");
-    // print('----------------------');
-    // print('----------------------');
-    // print('----------------------');
-    // print('----------------------');
-    // helperConvertToiletJSON(); ady converted, don't use anymore
+//     // put this in addMarker map_stack
+//     // print("Comment: main running");
+//     // print('----------------------');
+//     // print('----------------------');
+//     // print('----------------------');
+//     // print('----------------------');
+//     // helperConvertToiletJSON(); ady converted, don't use anymore
   
 
-}
+// }
 
 //test
 Future<void> test(String test) async {
@@ -104,7 +104,7 @@ Future<void> addReview(DateTime dateTime,
     'userRating': userRating,
     'userComment': userComment
     });
-  
+    print('Comment: review added');
 }
 
 Future<List> getReviewList(String toiletID, int numOfReview) async {
@@ -127,7 +127,7 @@ Future<List> getReviewList(String toiletID, int numOfReview) async {
           reviewList.add(review);
         });
       });
-    print(reviewList[0].dateTime);
+    print("Comment: $reviewList[0].dateTime");
     return reviewList;
       // THIS IS FOR ONE DOCUMENT
       // .then((DocumentSnapshot documentSnapshot) { // only for one document

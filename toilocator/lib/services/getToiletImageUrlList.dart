@@ -15,7 +15,7 @@ Future<List?> getToiletImageUrlList(String toiletAlbumLink) async {
 
     // Html package guarantees a parsing of any HTML
     var document = parse(html);
-    print(document.outerHtml);
+    // print(document.outerHtml);
 
     // Get the TagName, ClassName, or Id in the DOM
 
@@ -33,7 +33,7 @@ Future<List?> getToiletImageUrlList(String toiletAlbumLink) async {
         http.Response response1 = await http.get(Uri.parse(toiletImagesLink));
         if (response1.statusCode == 200) {
           ImageURLList.add(toiletImagesLink);
-          print("Comment: One toilet image link added to list");
+          // print("Comment: One toilet image link added to list");
         }
 
         else {
@@ -49,7 +49,7 @@ Future<List?> getToiletImageUrlList(String toiletAlbumLink) async {
       } 
       
     }
-    print(ImageURLList);
+    // print(ImageURLList);
     return  ImageURLList;
     
   } else {
