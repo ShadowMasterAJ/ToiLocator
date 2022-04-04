@@ -245,8 +245,7 @@ class _AuthFormState extends State<AuthForm> {
                       DropdownButton<String>(
                         value: dropDownValue,
                         elevation: 16,
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 94, 55, 17)),
+                        style: Theme.of(context).textTheme.bodyText2,
                         onChanged: (String? newValue) {
                           setState(() {
                             dropDownValue =
@@ -258,7 +257,8 @@ class _AuthFormState extends State<AuthForm> {
                           color: Palette.beige[100],
                         ),
                         icon: const Icon(Icons.arrow_downward),
-                        items: <String>['Female', 'Male'].map((String value) {
+                        items: <String>['Female', 'Male']
+                            .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
