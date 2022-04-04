@@ -99,7 +99,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     // print("Comment: createReviewList textReviewList: ${textReviewList[0].userComment}");
     try {
       for (var item in textReviewList) {
-        // print('Comment: createReviewList: item in textReviewList ${item.userComment}');
+        print('Comment: createReviewList: item in textReviewList ${item.userComment}');
         tempReviewList.add(
             UserReviewInfo(item.userID, item.userRating, item.userComment));
         sumRating += item.userRating as int;
@@ -549,6 +549,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                           Container(
                             height: 300,
                             child: FutureBuilder(
+                              future: createReviewList(),
                               builder: (BuildContext context,
                                   AsyncSnapshot<dynamic> snapshot) {
                                 return SingleChildScrollView(
