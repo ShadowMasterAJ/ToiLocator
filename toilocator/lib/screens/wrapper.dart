@@ -34,24 +34,29 @@ class ProfileView extends StatelessWidget {
     final user = snapshot.data;
     print(user);
 
+
     return Column(
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            "Name: ${user.userName ?? 'Anonymous'}", style: TextStyle(fontSize: 20),),
+            "Name: ${user.userName}", style: TextStyle(fontSize: 20),),
         ),
 
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text("Email: ${user.userEmail ?? 'Anonymous'}", style: TextStyle(fontSize: 20),),
+          child: Text("Email: ${user.userEmail}", style: TextStyle(fontSize: 20),),
         ),
 
-        // Padding(
-        //   padding: const EdgeInsets.all(8.0),
-        //   child: Text("Created: ${DateFormat('MM/dd/yyyy').format(
-        //       user.metadata.creationTime)}", style: TextStyle(fontSize: 20),),
-        // ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text("Gender: ${user.gender}", style: TextStyle(fontSize: 20),),
+        ),
+
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text("Age: ${user.age}", style: TextStyle(fontSize: 20),),
+        ),
 
       ],
     );

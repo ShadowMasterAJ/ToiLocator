@@ -5,11 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:toilocator/models/user.dart';
 import 'package:toilocator/palette.dart';
 import 'package:toilocator/screens/home_map_screen.dart';
-import 'package:toilocator/screens/profileScreen.dart';
 import 'package:toilocator/screens/profile_screen.dart';
 import 'package:toilocator/screens/wrapper.dart';
 import '../services/auth.dart';
 import 'package:toilocator/services/auth.dart';
+
 
 class AuthForm extends StatefulWidget {
   @override
@@ -353,7 +353,7 @@ class _AuthFormState extends State<AuthForm> {
       print(e);
     }
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => ProfileView()));
+        MaterialPageRoute(builder: (context) => HomeMapScreen()));
   }
 
   Future signUp() async {
@@ -376,7 +376,7 @@ class _AuthFormState extends State<AuthForm> {
     }
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => ProfileView()),
+        MaterialPageRoute(builder: (context) => HomeMapScreen()),
         (route) => false);
   }
 
