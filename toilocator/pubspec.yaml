@@ -76,15 +76,15 @@ flutter:
   #   - images/a_dot_ham.jpeg
 
 
-  fonts:
-    - family: Avenir
-      fonts:
+  # fonts:
+  #   - family: Avenir
+  #     fonts:
         # - asset: lib/fonts/AvenirLTStd-Book.otf
         # - asset: lib/fonts/AvenirLTStd-Light.otf
         # - asset: lib/fonts/AvenirLTStd-Roman.otf
-        - asset: lib/fonts/AvenirLTStd-Book.ttf
-        - asset: lib/fonts/AvenirLTStd-Light.ttf
-        - asset: lib/fonts/AvenirLTStd-Roman.ttf
+        # - asset: lib/fonts/AvenirLTStd-Book.ttf
+        # - asset: lib/fonts/AvenirLTStd-Light.ttf
+        # - asset: lib/fonts/AvenirLTStd-Roman.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
