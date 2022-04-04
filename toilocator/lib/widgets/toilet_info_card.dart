@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:toilocator/screens/auth_screen.dart';
 import 'package:toilocator/services/getToiletImageUrlList.dart';
 import 'package:toilocator/services/getToiletInfo.dart';
 import '../palette.dart';
@@ -271,10 +273,19 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: TextButton(
-                          onPressed: () => Navigator.of(context).push(createRoute(
+                          onPressed: () {
+                            FirebaseAuth.instance.authStateChanges()
+                            .listen((User? user) {
+                              if(FirebaseAuth.instance.currentUser == null){
+                                Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (context) => AuthScreen()));
+
+                              }
+                              else{
+                              Navigator.of(context).push(createRoute(
                               widget.index,
                               widget
-                                  .toiletList)), // ONLY IF USER IS AUTHENTICATED
+                              .toiletList));}});}, // ONLY IF USER IS AUTHENTICATED
                           child: Text(
                             "Write Review...",
                             style: TextStyle(

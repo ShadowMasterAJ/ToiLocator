@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:toilocator/services/getToiletImageUrlList.dart';
 import 'package:toilocator/services/getToiletInfo.dart';
 import '../palette.dart';
 import 'toilet_info_card.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 class InputReviewPage extends StatefulWidget {
   final List toiletList;
   final int index;
@@ -167,7 +168,12 @@ class _InputReviewPageState extends State<InputReviewPage> {
 
                     userComment = myController.text;
                     print('Comment: User gave review: $userComment');
-                    addReview(DateTime.now(), 'userABC', widget.toiletList[widget.index].index.toString(), userRating, userComment);
+
+                    
+                    var user = await auth.FirebaseAuth.instance.currentUser;
+                    // ignore: unused_local_variable
+                    var userData = FirebaseFirestore.instance.collection("users").doc(user?.uid).get();
+                    addReview(DateTime.now(), user!.uid, widget.toiletList[widget.index].index.toString(), userRating, userComment);
                   },
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsets>(
