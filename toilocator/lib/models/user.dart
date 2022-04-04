@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 class User{
-  String uid;
+  String? uid;
+  String? userName;
+  String? userEmail;
+  String? gender;
+  int? age;
 
-  User({required this.uid});
+User({ this.uid, this.userName, this.userEmail, this.gender, this.age});
+
+  //User({required this.uid});
 }
 
 class UserRecord {

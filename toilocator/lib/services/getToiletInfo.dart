@@ -122,7 +122,7 @@ Future<List<Review>> getReviewList(String toiletID, int numOfReview) async {
   await toilets
       .doc(toiletID)
       .collection('reviews')
-      .orderBy("dateTime", descending: true)
+      .orderBy("dateTime")
       .limit(numOfReview)
       .get() // get all the documents
       .then((QuerySnapshot querySnapshot) {

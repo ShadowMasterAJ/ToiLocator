@@ -6,6 +6,7 @@ import 'package:toilocator/models/user.dart';
 import 'package:toilocator/palette.dart';
 import 'package:toilocator/screens/home_map_screen.dart';
 import 'package:toilocator/screens/profile_screen.dart';
+import 'package:toilocator/screens/wrapper.dart';
 import '../services/auth.dart';
 import 'package:toilocator/services/auth.dart';
 
@@ -369,9 +370,11 @@ class _AuthFormState extends State<AuthForm> {
     } on auth.FirebaseAuthException catch (e) {
       print('Error in auth: $e\n----------------------');
     }
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => HomeMapScreen()));
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (BuildContext context) => HomeMapScreen()));
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => ProfileView()));
   }
 
   Future signUp() async {
@@ -394,7 +397,7 @@ class _AuthFormState extends State<AuthForm> {
     }
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => ProfileScreen()),
+        MaterialPageRoute(builder: (context) => ProfileView()),
         (route) => false);
   }
 
