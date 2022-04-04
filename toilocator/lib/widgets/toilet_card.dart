@@ -96,17 +96,17 @@ class toiletCard extends StatelessWidget {
                                 'Official Rating    ',
                                 toiletList[index].awardInt),
                           ),
-                          Row(
-                            children: displayStarRating(
-                                context,
-                                'User Rating        ',
-                                (toiletList[index] // this is placeholder variable
-                                        .userRating)
-                                    .ceil()) // i'll probably create another variable for user rating in entity class
-                            ,
-                          ),
+                          // Row(
+                          //   children: displayStarRating(
+                          //       context,
+                          //       'User Rating        ',
+                          //       (toiletList[index] // this is placeholder variable
+                          //               .userRating)
+                          //           .ceil()) //
+                          //   ,
+                          // ),
                           SizedBox(
-                            height: 10,
+                            height: 15,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 10),
@@ -119,7 +119,16 @@ class toiletCard extends StatelessWidget {
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Icon(Icons.baby_changing_station)
+                                Icon(Icons.baby_changing_station),
+                                SizedBox(width: 150),
+                                Text(
+                                  "Tap for more info...",
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Color.fromARGB(255, 182, 182, 182),
+                                  ),
+                                  textAlign: TextAlign.right,
+                                ),
                               ],
                             ),
                           ),
@@ -132,10 +141,6 @@ class toiletCard extends StatelessWidget {
                         child: Container(
                           height: MediaQuery.of(context).size.width * 0.2,
                           decoration: BoxDecoration(
-                              //? PROBLEM: boxdeco size (the brown partition) is dependednt on the wording size. want to make it consistent for all cards.
-
-                              //? PROBLEM 2: overflow of wording. i've already tried reducing the wording sizes but some names are too damn long. not just names, addresses also
-                              //FIXED Both problems.
                               color: Palette.beige[200],
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),

@@ -17,7 +17,6 @@ class AuthForm extends StatefulWidget {
 bool _isObscure = true;
 enum AuthMode { Signup, Login }
 
-
 class _AuthFormState extends State<AuthForm> {
   AuthMode _authMode = AuthMode.Login;
 
@@ -36,7 +35,7 @@ class _AuthFormState extends State<AuthForm> {
     //   this.userRecord = UserRecord.fromMap(value.data());
     //   setState(() {});
     _authMode = AuthMode.Signup;
-  // });
+    // });
   }
 
   final TextEditingController nameController = TextEditingController();
@@ -58,6 +57,8 @@ class _AuthFormState extends State<AuthForm> {
       child: Form(
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _authMode == AuthMode.Signup
                 ? Card(
@@ -66,7 +67,8 @@ class _AuthFormState extends State<AuthForm> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: TextField(
-                      controller : nameController,
+                      maxLength: 15,
+                      controller: nameController,
                       decoration: InputDecoration(
                         isDense: true,
                         hintText: 'Username',
@@ -340,47 +342,48 @@ class _AuthFormState extends State<AuthForm> {
       builder: (context) => Center(child: CircularProgressIndicator()),
     );
 
-    try{
-    await auth.FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
-    );} on auth.FirebaseAuthException catch (e){
-      print (e);
+    try {
+      await auth.FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+    } on auth.FirebaseAuthException catch (e) {
+      print(e);
     }
-   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => HomeMapScreen()));
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HomeMapScreen()));
   }
 
   Future signUp() async {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder:(context)=>Center(child: CircularProgressIndicator()),
-      );
+      builder: (context) => Center(child: CircularProgressIndicator()),
+    );
 
-    try{
-    await auth.FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
-    )
-    .then((value) => {postDetailsToFirestore()})
-     ;
-    //await UserDatabaseService(FirebaseAuth.instance.currentUser!.uid).addNewUser(emailController.text, emailController.text, int.parse(emailController.text));
-    } on auth.FirebaseAuthException catch (e){
-      print (e);
+    try {
+      await auth.FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: emailController.text.trim(),
+            password: passwordController.text.trim(),
+          )
+          .then((value) => {postDetailsToFirestore()});
+      //await UserDatabaseService(FirebaseAuth.instance.currentUser!.uid).addNewUser(emailController.text, emailController.text, int.parse(emailController.text));
+    } on auth.FirebaseAuthException catch (e) {
+      print(e);
     }
-     Navigator.pushAndRemoveUntil(
+    Navigator.pushAndRemoveUntil(
         (context),
         MaterialPageRoute(builder: (context) => ProfileScreen()),
         (route) => false);
   }
 
-postDetailsToFirestore() async {
+  postDetailsToFirestore() async {
     // calling our firestore, calling our user record, sending these values
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     // writing all the values
     userRecord.uid = auth.FirebaseAuth.instance.currentUser!.uid;
-    userRecord.userName= nameController.text;
+    userRecord.userName = nameController.text;
     userRecord.userEmail = emailController.text;
     userRecord.gender = 'Female';
     userRecord.age = int.parse(ageController.text);
@@ -389,9 +392,5 @@ postDetailsToFirestore() async {
         .collection("users")
         .doc(user?.uid)
         .set(userRecord.toMap());
-  
+  }
 }
-
-}
-
-
