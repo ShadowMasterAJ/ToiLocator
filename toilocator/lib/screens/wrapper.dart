@@ -4,9 +4,10 @@ import 'package:toilocator/screens/home_map_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:toilocator/services/auth.dart';
+import 'package:toilocator/services/userDatabase.dart' as ud;
 
 //starting screen switching, not necessary for our app
-class Wrapper extends StatelessWidget {
+class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
@@ -15,7 +16,7 @@ class Wrapper extends StatelessWidget {
       builder: (_, AsyncSnapshot<User?> snapshot){
         if (snapshot.connectionState == ConnectionState.active){
           final User? user=snapshot.data;
-          return user==null? AuthScreen(): HomeMapScreen();
+          return displayUserInformation(context, snapshot);
         }
         else{
           return Scaffold(
@@ -27,7 +28,32 @@ class Wrapper extends StatelessWidget {
       }
       );
     // return either the Home or Authenticate widget
+  }
 
-    
+ Widget displayUserInformation(context, snapshot) {
+    final user = snapshot.data;
+    print(user);
+
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            "Name: ${user.userName ?? 'Anonymous'}", style: TextStyle(fontSize: 20),),
+        ),
+
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text("Email: ${user.userEmail ?? 'Anonymous'}", style: TextStyle(fontSize: 20),),
+        ),
+
+        // Padding(
+        //   padding: const EdgeInsets.all(8.0),
+        //   child: Text("Created: ${DateFormat('MM/dd/yyyy').format(
+        //       user.metadata.creationTime)}", style: TextStyle(fontSize: 20),),
+        // ),
+
+      ],
+    );
   }
 }

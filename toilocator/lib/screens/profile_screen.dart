@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../palette.dart';
 import '../widgets/side_drawer_button.dart';
 import './home_map_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:toilocator/services/userDatabase.dart' as ud;
 
-class ProfileScreen extends StatelessWidget {
+
+class ProfileScreen extends StatelessWidget  {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +65,7 @@ class ProfileScreen extends StatelessWidget {
                 height: 60,
               ),
               Text(
-                "Abdul Bari",
+                "name",
                 style: TextStyle(
                     fontSize: 25.0,
                     color: Colors.black,
@@ -87,7 +91,7 @@ class ProfileScreen extends StatelessWidget {
               SizedBox(height: 30),
               Text('Email', style: Theme.of(context).textTheme.headline2),
               SizedBox(height: 10),
-              Text('ilovedick42069@scatmail.com',
+              Text('ilovetoilet@gmail.com',
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95))),
                   maxLines: 1,

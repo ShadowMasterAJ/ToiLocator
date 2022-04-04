@@ -23,7 +23,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     'Welcome!',
-                    style: Theme.of(context).textTheme.headline1,
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
                 AuthForm(),
