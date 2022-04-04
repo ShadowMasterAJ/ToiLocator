@@ -35,7 +35,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   child: Text(
                     'Welcome!',
                     // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                    style: Theme.of(context).textTheme.headline2,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
                 SizedBox(height: 10),
