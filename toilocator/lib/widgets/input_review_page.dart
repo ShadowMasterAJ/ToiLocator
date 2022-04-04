@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:toilocator/screens/home_map_screen.dart';
 import 'package:toilocator/services/getToiletImageUrlList.dart';
 import 'package:toilocator/services/getToiletInfo.dart';
 import '../palette.dart';
@@ -7,12 +8,7 @@ import 'package:toilocator/widgets/map_stack.dart';
 import '/models/toilet.dart';
 import '/widgets/toilet_info_card.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-<<<<<<< HEAD
 import 'package:firebase_auth/firebase_auth.dart' as auth;
-=======
-import '../screens/home_map_screen.dart';
-
->>>>>>> 0d0540af065da63d1ba31aff8cc9828251fb1d4b
 class InputReviewPage extends StatefulWidget {
   final int reviewCount;
   final List toiletList;
@@ -246,23 +242,12 @@ class _InputReviewPageState extends State<InputReviewPage> {
 
                     userComment = myController.text;
                     print('Comment: User gave review: $userComment');
-<<<<<<< HEAD
 
                     
                     var user = await auth.FirebaseAuth.instance.currentUser;
                     // ignore: unused_local_variable
                     var userData = FirebaseFirestore.instance.collection("users").doc(user?.uid).get();
                     addReview(DateTime.now(), user!.uid, widget.toiletList[widget.index].index.toString(), userRating, userComment);
-=======
-                    addReview(
-                        DateTime.now(),
-                        'userABC',
-                        widget.toiletList[widget.index].index.toString(),
-                        userRating,
-                        userComment);
-                    print("HELLO PLEASE CALL THIS");
-                    // updateAveUserRating(userRating);
->>>>>>> 0d0540af065da63d1ba31aff8cc9828251fb1d4b
                   },
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsets>(
