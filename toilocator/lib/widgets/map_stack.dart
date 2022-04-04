@@ -244,6 +244,7 @@ class _MapStackState extends State<MapStack> {
 
   Route createRoute(int markerId) {
     return PageRouteBuilder(
+      settings: RouteSettings(name: "/toiletInfo"),
       pageBuilder: (
         context,
         animation,

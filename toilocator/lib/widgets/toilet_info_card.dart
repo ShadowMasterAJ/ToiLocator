@@ -34,12 +34,17 @@ class toiletInfoCard extends StatefulWidget {
 }
 
 class _toiletInfoCardState extends State<toiletInfoCard> {
+  var reviewCount = 0;
+
   List<Widget> imageList = [];
   bool isLoading = false;
   Directions directions = new Directions();
 
   List<Widget> reviewList = [];
+
   List<Widget> displayStarRating(int awardInt) {
+    print("AT THE star rating THERE?????");
+    print(widget.toiletList[widget.index].userRating);
     List<Widget> childrenList = [];
     if (awardInt > 5) {
       awardInt = 5;
@@ -54,6 +59,20 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     }
     return childrenList;
   }
+
+  // void updateAveUserRating(int newUserRating) {
+  //   // print("HELLO LOOK HERE");
+  //   int updatedAveUserRating = widget.toiletList[widget.index].userRating;
+  //   print(updatedAveUserRating);
+  //   updatedAveUserRating =
+  //       ((updatedAveUserRating * (reviewCount - 1) + newUserRating) /
+  //               reviewCount)
+  //           .ceil();
+
+  //   widget.toiletList[widget.index].userRating = updatedAveUserRating;
+  //   // print("IN THE TOILET:");
+  //   // print(widget.toiletList[widget.index].userRating);
+  // }
 
   Future createImageList() async {
     // Convert URL links to realToiletImage
@@ -103,12 +122,16 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     }
 
     reviewList = tempReviewList;
+    reviewCount = reviewList.length;
+    print("PRINTING USER HYGIVENE RATING FROM TOILET INFO CARD:");
+    print(widget.toiletList[widget.index].userRating);
 
     return Future.value();
   }
 
   Widget UserReviewInfo(String userID, int userRating, String userComment) {
     //ListView builder probably needed, refer to bottom_panel line 93
+
     return Container(
       // height: 80,
       // child: Card(
@@ -149,7 +172,10 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
         animation,
         secondaryAnimation,
       ) =>
-          InputReviewPage(index: index, toiletList: toiletList),
+          InputReviewPage(
+              index: index,
+              toiletList: toiletList,
+              reviewCount: reviewList.length),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;
@@ -219,6 +245,8 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
 
   @override
   Widget build(BuildContext context) {
+    print("AT THE WIDGET THERE?????");
+    print(widget.toiletList[widget.index].userRating);
     return isLoading
         ? const CircularProgressIndicator()
         : Scaffold(
@@ -442,9 +470,9 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                       ),
                       Padding(padding: const EdgeInsets.only(right: 110.0)),
                       Row(
-                          children: displayStarRating(widget
+                          children: displayStarRating((widget
                               .toiletList[widget.index]
-                              .awardInt)) //placeholder value
+                              .userRating))) //placeholder value
                     ]),
                     SizedBox(height: 15),
                     Row(children: [

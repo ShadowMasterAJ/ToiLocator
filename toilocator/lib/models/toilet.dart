@@ -1,5 +1,3 @@
-
-
 import 'package:toilocator/models/review.dart';
 
 class Toilet {
@@ -13,13 +11,17 @@ class Toilet {
   var userRating = 0;
   List<Review> reviewList = [];
 
-  Toilet(
-      {required this.index,
-      required this.type,
-      required this.image,
-      required this.address,
-      required this.toiletName,
-      required this.coords,
-      required this.awardInt,
-      });
+  Toilet({
+    required this.index,
+    required this.type,
+    required this.image,
+    required this.address,
+    required this.toiletName,
+    required this.coords,
+    required this.awardInt,
+  });
+
+  void updateUserRating(int newUserRating) {
+    userRating = newUserRating;
+  }
 }
