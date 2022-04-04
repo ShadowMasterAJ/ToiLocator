@@ -279,18 +279,20 @@ class _AuthFormState extends State<AuthForm> {
             SizedBox(
               height: 5,
             ),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                'Forgot Password?',
-                style: Theme.of(context).textTheme.bodyText1?.merge(
-                    TextStyle(color: Color.fromARGB(255, 155, 155, 155))),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Forgot Password?',
+                  style: Theme.of(context).textTheme.bodyText1?.merge(
+                      TextStyle(color: Color.fromARGB(255, 155, 155, 155))),
+                ),
+                style: ButtonStyle(
+                  overlayColor: MaterialStateColor.resolveWith(
+                      (states) => Palette.beige[100] as Color),
+                ),
               ),
-              style: ButtonStyle(
-                overlayColor: MaterialStateColor.resolveWith(
-                    (states) => Palette.beige[100] as Color),
-              ),
-            ),
+            ]),
             Divider(
               thickness: 2,
               indent: 15,

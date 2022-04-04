@@ -36,7 +36,9 @@ class HomeMapScreen extends StatelessWidget {
                   Navigator.pop(context);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AuthScreen()),
+                    MaterialPageRoute(
+                        settings: RouteSettings(name: "/loginPage"),
+                        builder: (context) => AuthScreen()),
                   );
                 }),
                 Spacer(),
@@ -58,7 +60,10 @@ class HomeMapScreen extends StatelessWidget {
         resizeToAvoidBottomInset: false,
 
         // appBar: AppBar(title: Text('Toilocator')),
-        body: SafeArea(child: MapStack(getLocFromInfo: (double lat, double long) {  },)),
+        body: SafeArea(
+            child: MapStack(
+          getLocFromInfo: (double lat, double long) {},
+        )),
         drawer: SafeArea(
           child: Container(
             width: 100,
