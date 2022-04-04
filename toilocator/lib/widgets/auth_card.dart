@@ -7,6 +7,7 @@ import 'package:toilocator/palette.dart';
 import 'package:toilocator/screens/home_map_screen.dart';
 import 'package:toilocator/screens/profile_screen.dart';
 import '../services/auth.dart';
+import 'package:toilocator/services/auth.dart';
 
 class AuthForm extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class AuthForm extends StatefulWidget {
 
 bool _isObscure = true;
 enum AuthMode { Signup, Login }
+
 
 class _AuthFormState extends State<AuthForm> {
   AuthMode _authMode = AuthMode.Login;
@@ -26,22 +28,24 @@ class _AuthFormState extends State<AuthForm> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(user!.uid)
-        .get()
-        .then((value) {
-      this.userRecord = UserRecord.fromMap(value.data());
-      setState(() {});
+    // FirebaseFirestore.instance
+    //     .collection("users")
+    //     .doc(user?.uid)
+    //     .get()
+    //     .then((value) {
+    //   this.userRecord = UserRecord.fromMap(value.data());
+    //   setState(() {});
     _authMode = AuthMode.Signup;
-  });
+  // });
   }
 
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController genderController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final navigatorKey = GlobalKey<NavigatorState>();
+  final authService = AuthService();
   final _auth = auth.FirebaseAuth.instance;
 
   @override
@@ -62,6 +66,7 @@ class _AuthFormState extends State<AuthForm> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: TextField(
+                      controller : nameController,
                       decoration: InputDecoration(
                         isDense: true,
                         hintText: 'Username',
@@ -202,6 +207,7 @@ class _AuthFormState extends State<AuthForm> {
                         child: Flexible(
                           child: TextField(
                             // textAlignVertical: TextAlignVertical.top,
+                            controller: ageController,
                             maxLines: null,
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
@@ -255,6 +261,8 @@ class _AuthFormState extends State<AuthForm> {
                     signUp();
                   } else {
                     signIn();
+                    //authService.signInUser(emailController.text, passwordController.text);
+
                   }
                 },
                 child: Padding(
@@ -366,17 +374,16 @@ class _AuthFormState extends State<AuthForm> {
         MaterialPageRoute(builder: (context) => ProfileScreen()),
         (route) => false);
   }
+
 postDetailsToFirestore() async {
     // calling our firestore, calling our user record, sending these values
-
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     // writing all the values
-    //userRecord.userEmail = user!.email;
     userRecord.uid = auth.FirebaseAuth.instance.currentUser!.uid;
-    //userRecord.uid = user?.uid;
+    userRecord.userName= nameController.text;
     userRecord.userEmail = emailController.text;
-    // userRecord.gender = genderController.text;
-    // userRecord.age = ageController.text;
+    userRecord.gender = 'Female';
+    userRecord.age = int.parse(ageController.text);
 
     await firebaseFirestore
         .collection("users")

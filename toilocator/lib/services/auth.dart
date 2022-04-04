@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/cupertino.dart';
 import '../models/user.dart';
+import 'package:flushbar/flushbar.dart';
+import 'package:flushbar/flushbar_helper.dart';
 
 class AuthService {
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
@@ -18,6 +20,37 @@ Stream<User?>? get user {
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
      }
 
+
+Future signInUser(String email, String pwd, {context}) async {
+    try {
+      await _firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: pwd)
+          .then((result) {
+        auth.User? user = result.user;
+        return _userFromFirebase(user);
+      }).catchError((err) {
+        if (err.code == 'user-not-found') {
+          Flushbar(
+            message: "No user found for that email.",
+            duration: Duration(seconds: 7),
+          )..show(context);
+        } else if (err.code == 'wrong-password') {
+          Flushbar(
+            message: "Wrong password provided for that user.",
+            duration: Duration(seconds: 7),
+          )..show(context);
+        } else {
+          Flushbar(
+            message: "Internal Error: Something went wrong.",
+            duration: Duration(seconds: 7),
+          )..show(context);
+        }
+      });
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 Future<User?> signInWithEmailAndPassword(
   String email,
   String password,
@@ -56,6 +89,8 @@ Future<User?> createUserWithEmailAndPassword(
     );
     return _userFromFirebase(credential.user);
 }
+
+
 
 Future<void> signOut() async {
   return await _firebaseAuth.signOut();
