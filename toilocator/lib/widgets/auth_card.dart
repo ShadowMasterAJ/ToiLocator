@@ -10,6 +10,7 @@ import 'package:toilocator/screens/wrapper.dart';
 import '../services/auth.dart';
 import 'package:toilocator/services/auth.dart';
 
+
 class AuthForm extends StatefulWidget {
   @override
   _AuthFormState createState() => _AuthFormState();
@@ -374,7 +375,7 @@ class _AuthFormState extends State<AuthForm> {
     //   context,
     //   MaterialPageRoute(builder: (BuildContext context) => HomeMapScreen()));
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => ProfileView()));
+        MaterialPageRoute(builder: (context) => HomeMapScreen()));
   }
 
   Future signUp() async {
@@ -397,7 +398,7 @@ class _AuthFormState extends State<AuthForm> {
     }
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => ProfileView()),
+        MaterialPageRoute(builder: (context) => HomeMapScreen()),
         (route) => false);
   }
 
