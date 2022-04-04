@@ -43,6 +43,7 @@ class _AuthFormState extends State<AuthForm> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController genderController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
+
   final navigatorKey = GlobalKey<NavigatorState>();
   final authService = AuthService();
   final _auth = auth.FirebaseAuth.instance;
@@ -202,25 +203,41 @@ class _AuthFormState extends State<AuthForm> {
             _authMode == AuthMode.Signup
                 ? Column(children: [
                     SizedBox(height: 10),
-                    Row(children: [
-                      SizedBox(
-                        // FIGURE OUT HOW TO RETRIEVE AGE INPUT
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                      Container(
                         width: 100,
-                        child: Flexible(
-                          child: TextField(
-                            // textAlignVertical: TextAlignVertical.top,
-                            controller: ageController,
-                            maxLines: null,
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              hintText: 'Age',
-                              alignLabelWithHint: true,
-                              // contentPadding:
-                              //     EdgeInsets.symmetric(vertical: 80, horizontal: 20),
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF3F3F3),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: TextField(
+                          // textAlignVertical: TextAlignVertical.top,
+                          controller: ageController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.white54, width: 1.0),
+                              borderRadius: BorderRadius.circular(15.0),
                             ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 2.0),
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                                borderSide:
+                                    BorderSide(width: 1, color: Colors.red)),
+                            // border: OutlineInputBorder(
+                            //   borderRadius: BorderRadius.circular(20.0),
+                            // ),
+                            hintText: 'Age',
+                            alignLabelWithHint: true,
+                            // contentPadding:
+                            //     EdgeInsets.symmetric(vertical: 80, horizontal: 20),
                           ),
                         ),
                       ),
@@ -350,7 +367,7 @@ class _AuthFormState extends State<AuthForm> {
         password: passwordController.text.trim(),
       );
     } on auth.FirebaseAuthException catch (e) {
-      print(e);
+      print('Error in auth: $e\n----------------------');
     }
     Navigator.pushReplacement(
       context,
