@@ -139,6 +139,7 @@ Future<List<Review>> getReviewList(String toiletID, int numOfReview) async {
           doc['toiletID'],
           doc['userRating'],
           doc['userComment']);
+      reviewList.add(review);
     });
   });
       // print("Comment: getReviewList ${review.dateTime}");
