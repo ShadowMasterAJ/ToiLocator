@@ -71,7 +71,7 @@ flutter:
   assets:
     - lib/assets/toilet.png
     - lib/assets/toilet_marker.png
-    - lib/data/toilets.json
+    #- lib/data/toilets.json
     - lib/assets/no_toilets.png
     - lib/assets/login_image.png
   #   - images/a_dot_ham.jpeg

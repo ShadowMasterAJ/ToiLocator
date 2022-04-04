@@ -36,12 +36,17 @@ class toiletInfoCard extends StatefulWidget {
 }
 
 class _toiletInfoCardState extends State<toiletInfoCard> {
+  var reviewCount = 0;
+
   List<Widget> imageList = [];
   bool isLoading = false;
   Directions directions = new Directions();
 
   List<Widget> reviewList = [];
+
   List<Widget> displayStarRating(int awardInt) {
+    print("AT THE star rating THERE?????");
+    print(widget.toiletList[widget.index].userRating);
     List<Widget> childrenList = [];
     if (awardInt > 5) {
       awardInt = 5;
@@ -56,6 +61,20 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     }
     return childrenList;
   }
+
+  // void updateAveUserRating(int newUserRating) {
+  //   // print("HELLO LOOK HERE");
+  //   int updatedAveUserRating = widget.toiletList[widget.index].userRating;
+  //   print(updatedAveUserRating);
+  //   updatedAveUserRating =
+  //       ((updatedAveUserRating * (reviewCount - 1) + newUserRating) /
+  //               reviewCount)
+  //           .ceil();
+
+  //   widget.toiletList[widget.index].userRating = updatedAveUserRating;
+  //   // print("IN THE TOILET:");
+  //   // print(widget.toiletList[widget.index].userRating);
+  // }
 
   Future createImageList() async {
     // Convert URL links to realToiletImage
@@ -95,22 +114,26 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     // print("Comment: createReviewList textReviewList: ${textReviewList[0].userComment}");
     try {
       for (var item in textReviewList) {
-        print(
-            'Comment: createReviewList: item in textReviewList ${item.userComment}');
+        // print('Comment: createReviewList: item in textReviewList ${item.userComment}');
         tempReviewList.add(
             UserReviewInfo(item.userID, item.userRating, item.userComment));
+        print('Comment: Review widgets added to textReviewList');
       }
     } catch (e) {
       throw ('Something went wrong getting item in textReviewList, $e');
     }
 
     reviewList = tempReviewList;
+    reviewCount = reviewList.length;
+    print("PRINTING USER HYGIVENE RATING FROM TOILET INFO CARD:");
+    print(widget.toiletList[widget.index].userRating);
 
     return Future.value();
   }
 
   Widget UserReviewInfo(String userID, int userRating, String userComment) {
     //ListView builder probably needed, refer to bottom_panel line 93
+
     return Container(
       // height: 80,
       // child: Card(
@@ -151,7 +174,10 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
         animation,
         secondaryAnimation,
       ) =>
-          InputReviewPage(index: index, toiletList: toiletList),
+          InputReviewPage(
+              index: index,
+              toiletList: toiletList,
+              reviewCount: reviewList.length),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;
@@ -221,6 +247,8 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
 
   @override
   Widget build(BuildContext context) {
+    print("AT THE WIDGET THERE?????");
+    print(widget.toiletList[widget.index].userRating);
     return isLoading
         ? const CircularProgressIndicator()
         : Scaffold(
@@ -453,9 +481,9 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                       ),
                       Padding(padding: const EdgeInsets.only(right: 110.0)),
                       Row(
-                          children: displayStarRating(widget
+                          children: displayStarRating((widget
                               .toiletList[widget.index]
-                              .awardInt)) //placeholder value
+                              .userRating))) //placeholder value
                     ]),
                     SizedBox(height: 15),
                     Row(children: [
@@ -503,7 +531,8 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                         builder: (context, snapshot) {
                           return snapshot.connectionState ==
                                   ConnectionState.waiting
-                              ? Center(child: CircularProgressIndicator())
+                              ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>((
+                                Palette.beige[300] as Color))))
                               : SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   padding:
@@ -540,16 +569,56 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                               future: createReviewList(),
                               builder: (BuildContext context,
                                   AsyncSnapshot<dynamic> snapshot) {
-                                return SingleChildScrollView(
-                                  scrollDirection: Axis.vertical,
-                                  padding:
-                                      EdgeInsets.fromLTRB(8.0, 0.0, 10.0, 0.0),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: reviewList,
-                                  ),
-                                );
+                                    if (snapshot.connectionState !=
+                                      ConnectionState.waiting && reviewList.length != 0) {
+                                      print('has data');
+                                      return SingleChildScrollView(
+                                        scrollDirection: Axis.vertical,
+                                        padding:
+                                            EdgeInsets.fromLTRB(8.0, 0.0, 10.0, 0.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: reviewList,
+                                        ),
+                                      );
+                                    }
+                                    else if (snapshot.connectionState !=
+                                      ConnectionState.waiting && reviewList.length == 0) {
+                                      print('Comment: no reviews');
+                                      return Column(
+                                        children: [
+                                          Image.asset(
+                                            'lib/assets/no_toilets.png',
+                                            width: 100,
+                                            height: 100,
+                                            //scale: 0.1,
+                                          ),
+                                          Text('No reviews, waiting for yours!',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6
+                                                  ?.copyWith(color: Colors.black),
+                                              textAlign: TextAlign.center),
+                                        ],
+                                      );
+                                    }
+                                    // no date might return some query documents
+                                    // else if (!snapshot.hasData) {
+                                    //   print('Comment: get review snapshot no data');
+                                    //   return Container();
+
+                                    // }
+                                    else if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                      //else {
+                                        print('connecting');
+                                        return Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>((
+                                         Palette.beige[300] as Color))));}
+                                    else {
+                                      print('snapshot Else statement');
+                                      return Container();
+                                    }
                               },
                             ),
                           ),

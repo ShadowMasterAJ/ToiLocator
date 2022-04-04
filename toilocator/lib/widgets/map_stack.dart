@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:math' show cos, sqrt, asin;
 
 //files
+import 'package:toilocator/services/getToiletInfo.dart';
 import 'package:toilocator/widgets/toilet_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -60,8 +61,12 @@ class _MapStackState extends State<MapStack> {
     super.initState();
     _fabHeight = _initFabHeight;
     retrieveIcon();
-    readJson();
-    //downloadJSON();
+    // readJson();
+    prepareToilets();
+  }
+
+  void prepareToilets() async {
+    _toiletList = await getToiletList();
   }
 
   void addMarker() {
@@ -112,53 +117,35 @@ class _MapStackState extends State<MapStack> {
   //     print("firebaseException");
   //   }
   // }
-  void readJson() async {
-    print('fetching from json...');
-    final String toiletJson =
-        await rootBundle.loadString('lib/data/toilets.json');
-    final toiletParsed = await json.decode(toiletJson);
-
-    // final toiletJson =
-    //   await http.get('gs://cz2006-swe-43eae.appspot.com/toilets.json');
-    // final toiletParsed = await json.decode(toiletJson.body);
-
-    //firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance.ref('/toilets.json');
-
-    // storage.ref('toilets.json').getDownloadURL()
-    //   .then((url) => {
-    //     final toiletJson =
-    //       await http.get(url);
-    //     final toiletParsed = await json.decode(toiletJson.body);
-    //   })
-    // Directory appDocDir = await getApplicationDocumentsDirectory();
-
-    // final String toiletJson =
-    //   await rootBundle.loadString('{appDocDir.path}/toilets.json');
-    // final toiletParsed = await json.decode(toiletJson);
-    _toiletTemp = toiletParsed["toilets"];
-    debugPrint('toiletJson.statusCode');
-    for (int i = 0; i < _toiletTemp.length; i++) {
-      int index = _toiletTemp[i]["index"];
-      String type = _toiletTemp[i]["type"];
-      String image = _toiletTemp[i]["image_link-href"];
-      String address = _toiletTemp[i]["address"];
-      String name = _toiletTemp[i]["toilet_name"];
-      //String district = _toiletTemp[i]["district_name"];
-      List coords = _toiletTemp[i]["coords"];
-      int award = _toiletTemp[i]["award_int"];
-      Toilet toilet = new Toilet(
-          index: index,
-          type: type,
-          image: image,
-          address: address,
-          toiletName: name,
-          //district: district,
-          coords: coords,
-          awardInt: award);
-      _toiletList.add(toilet);
-    }
-    print('fetched from json');
-  }
+  // void readJson() async {
+  //   print('fetching from json...');
+  //   final String toiletJson =
+  //       await rootBundle.loadString('lib/data/toilets.json');
+  //   final toiletParsed = await json.decode(toiletJson);
+  //   _toiletTemp = toiletParsed["toilets"];
+  //   debugPrint('toiletJson.statusCode');
+  //   for (int i = 0; i < _toiletTemp.length; i++) {
+  //     int index = _toiletTemp[i]["index"];
+  //     String type = _toiletTemp[i]["type"];
+  //     String image = _toiletTemp[i]["image_link-href"];
+  //     String address = _toiletTemp[i]["address"];
+  //     String name = _toiletTemp[i]["toilet_name"];
+  //     //String district = _toiletTemp[i]["district_name"];
+  //     List coords = _toiletTemp[i]["coords"];
+  //     int award = _toiletTemp[i]["award_int"];
+  //     Toilet toilet = new Toilet(
+  //         index: index,
+  //         type: type,
+  //         image: image,
+  //         address: address,
+  //         toiletName: name,
+  //         //district: district,
+  //         coords: coords,
+  //         awardInt: award);
+  //     _toiletList.add(toilet);
+  //   }
+  //   print('fetched from json');
+  // }
 
   void markNearestToilets(double lat, double long) {
     indices.clear();
@@ -244,6 +231,7 @@ class _MapStackState extends State<MapStack> {
 
   Route createRoute(int markerId) {
     return PageRouteBuilder(
+      settings: RouteSettings(name: "/toiletInfo"),
       pageBuilder: (
         context,
         animation,

@@ -3,10 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:toilocator/services/getToiletImageUrlList.dart';
 import 'package:toilocator/services/getToiletInfo.dart';
 import '../palette.dart';
-import 'toilet_info_card.dart';
+import 'package:toilocator/widgets/map_stack.dart';
+import '/models/toilet.dart';
+import '/widgets/toilet_info_card.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+<<<<<<< HEAD
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+=======
+import '../screens/home_map_screen.dart';
+
+>>>>>>> 0d0540af065da63d1ba31aff8cc9828251fb1d4b
 class InputReviewPage extends StatefulWidget {
+  final int reviewCount;
   final List toiletList;
   final int index;
   @override
@@ -14,6 +22,7 @@ class InputReviewPage extends StatefulWidget {
 
   const InputReviewPage({
     Key? key,
+    required this.reviewCount,
     required this.toiletList,
     required this.index,
   }) : super(key: key);
@@ -30,6 +39,17 @@ class _InputReviewPageState extends State<InputReviewPage> {
     myController.dispose();
     super.dispose();
   }
+
+  // void updateAveUserRating(int newUserRating) {
+  //   print("HELLO LOOK HERE");
+  //   int updatedAveUserRating = widget.toiletList[widget.index].userRating;
+  //   print(updatedAveUserRating);
+  //   updatedAveUserRating =
+  //       ((updatedAveUserRating * (widget.reviewCount - 1) + newUserRating) /
+  //               widget.reviewCount)
+  //           .ceil();
+  //   updateUserRating(widget.index, updatedAveUserRating);
+  // }
 
   Widget ratingBarBuilder() {
     return RatingBar.builder(
@@ -121,11 +141,9 @@ class _InputReviewPageState extends State<InputReviewPage> {
                 SizedBox(height: 20),
                 TextField(
                   controller: myController,
-
-                
                   textAlignVertical: TextAlignVertical.top,
                   keyboardType: TextInputType.multiline,
-                  maxLines: null,
+                  maxLines: 10,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
@@ -149,7 +167,69 @@ class _InputReviewPageState extends State<InputReviewPage> {
                         return AlertDialog(
                           // Retrieve the text the that user has entered by using the
                           // TextEditingController.
-                          content: Text("Review submitted!"),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(32.0))),
+                          contentPadding: EdgeInsets.only(top: 10.0),
+                          content: Container(
+                            width: 300,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 20.0),
+                                        child: Text(
+                                          "Review submitted!",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      )
+                                    ]),
+                                SizedBox(height: 30),
+                                InkWell(
+                                  child: Container(
+                                    width: 400,
+                                    padding: EdgeInsets.only(
+                                        top: 10.0, bottom: 10.0),
+                                    decoration: BoxDecoration(
+                                      color: Palette.beige[500],
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(32.0),
+                                          bottomRight: Radius.circular(32.0)),
+                                    ),
+                                    child: TextButton(
+                                        onPressed: () {
+                                          // Navigator.popUntil(
+                                          //     context,
+                                          //     ModalRoute.withName(
+                                          //         '/toiletInfo'));
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomeMapScreen()),
+                                          ).then((value) => setState(() {}));
+                                        },
+                                        child: Text(
+                                          "Return",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        )),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                         );
                       },
                     );
@@ -163,17 +243,26 @@ class _InputReviewPageState extends State<InputReviewPage> {
                     //   setState((){});
                     //  Navigator.of(context).pushReplacement(
                     //  MaterialPageRoute(builder: (context) => HomeMapScreen()));
-                    
-
 
                     userComment = myController.text;
                     print('Comment: User gave review: $userComment');
+<<<<<<< HEAD
 
                     
                     var user = await auth.FirebaseAuth.instance.currentUser;
                     // ignore: unused_local_variable
                     var userData = FirebaseFirestore.instance.collection("users").doc(user?.uid).get();
                     addReview(DateTime.now(), user!.uid, widget.toiletList[widget.index].index.toString(), userRating, userComment);
+=======
+                    addReview(
+                        DateTime.now(),
+                        'userABC',
+                        widget.toiletList[widget.index].index.toString(),
+                        userRating,
+                        userComment);
+                    print("HELLO PLEASE CALL THIS");
+                    // updateAveUserRating(userRating);
+>>>>>>> 0d0540af065da63d1ba31aff8cc9828251fb1d4b
                   },
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsets>(
