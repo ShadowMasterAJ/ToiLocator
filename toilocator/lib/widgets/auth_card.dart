@@ -57,6 +57,8 @@ class _AuthFormState extends State<AuthForm> {
       child: Form(
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _authMode == AuthMode.Signup
                 ? Card(

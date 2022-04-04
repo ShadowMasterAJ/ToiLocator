@@ -318,6 +318,7 @@ class _MapStackState extends State<MapStack> {
                   entered = true;
                   print(entered);
                   uploadingData(value);
+                  print("NO PROBLEMO");
                 } catch (PlatformException) {
                   print("hihihi");
                   Fluttertoast.showToast(
