@@ -24,6 +24,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MapStack extends StatefulWidget {
   final Function(double lat, double long) getLocFromInfo;
+  // static MapStack _instance;
+  // factory MapStack() => _instance ??= new MapStack();
 
   const MapStack({
     Key? key,
@@ -158,6 +160,11 @@ class _MapStackState extends State<MapStack> {
       _toiletList.add(toilet);
     }
     print('fetched from json');
+  }
+
+  void updateUserRating(int newRating, int index) {
+    _toiletList[index].userRating = newRating;
+    print("updating compelted in mapstack");
   }
 
   void markNearestToilets(double lat, double long) {
