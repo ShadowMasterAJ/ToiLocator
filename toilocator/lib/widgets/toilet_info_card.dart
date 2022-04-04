@@ -93,7 +93,8 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     // print("Comment: createReviewList textReviewList: ${textReviewList[0].userComment}");
     try {
       for (var item in textReviewList) {
-        // print('Comment: createReviewList: item in textReviewList ${item.userComment}');
+        print(
+            'Comment: createReviewList: item in textReviewList ${item.userComment}');
         tempReviewList.add(
             UserReviewInfo(item.userID, item.userRating, item.userComment));
         sumRating += item.userRating as int;
@@ -155,6 +156,31 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
               index: index,
               toiletList: toiletList,
               reviewCount: reviewList.length),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
+  Route createAltRoute() {
+    return PageRouteBuilder(
+      // settings: RouteSettings(name: ""),
+      pageBuilder: (
+        context,
+        animation,
+        secondaryAnimation,
+      ) =>
+          AuthScreen(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;
@@ -277,18 +303,28 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                         padding: const EdgeInsets.all(10.0),
                         child: TextButton(
                           onPressed: () {
-                            FirebaseAuth.instance
-                                .authStateChanges()
-                                .listen((User? user) {
-                              if (FirebaseAuth.instance.currentUser == null) {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) => AuthScreen()));
-                              } else {
-                                Navigator.of(context).push(createRoute(
-                                    widget.index, widget.toiletList));
-                              }
-                            });
+                            // Navigator.pop(context);
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => AuthScreen()),
+                            // );
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AuthScreen()),
+                                ModalRoute.withName("/loginPage"));
+                            // FirebaseAuth.instance
+                            //     .authStateChanges()
+                            //     .listen((User? user) {
+                            //   if (FirebaseAuth.instance.currentUser == null) {
+                            //     Navigator.of(context)
+                            //         .pushReplacement(createAltRoute());
+                            //   } else {
+                            //     Navigator.of(context).push(createRoute(
+                            //         widget.index, widget.toiletList));
+                            //   }
+                            // });
                           }, // ONLY IF USER IS AUTHENTICATED
                           child: Text(
                             "Write Review...",
@@ -406,7 +442,6 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                         widget.toiletList[widget.index].toiletName,
                         maxLines: 2,
                         style: Theme.of(context).textTheme.headline5,
-                        // style: TextStyle(fontFamily: "Avenir"),
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -544,6 +579,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                           Container(
                             height: 300,
                             child: FutureBuilder(
+                              future: createReviewList(),
                               builder: (BuildContext context,
                                   AsyncSnapshot<dynamic> snapshot) {
                                 if (snapshot.connectionState !=

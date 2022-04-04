@@ -49,7 +49,7 @@ class ProfileScreen extends StatelessWidget {
                         backgroundColor: Colors.black,
                         child: CircleAvatar(
                           backgroundImage: NetworkImage(
-                              'https://yt3.ggpht.com/ytc/AKedOLQ0ZzmuKDUAnn9PnXylG707Oii6hd73U8rXbRGW=s900-c-k-c0x00ffffff-no-rj'),
+                              'https://i.pinimg.com/originals/c0/c2/16/c0c216b3743c6cb9fd67ab7df6b2c330.jpg'),
                           radius: 60,
                         ),
                       ),

@@ -47,6 +47,23 @@ Future<void> addNewUser(String userName, String userEmail, String gender, int ag
     .catchError((error) => print("Failed to update user: $error"));
 }
 
+String getUserName(String uid) {
+  String name = "";
+  usersCollection
+    .where('uid', isEqualTo: uid)
+    .get()
+    .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) { 
+        return doc['name'];
+      });
+    });
+    return name;
+    
+    // .then((value) => print("User Updated"))
+    // .catchError((error) => print("Failed to update user: $error"));
+}
+
+
 
 
  Future<void> readUserData(String uid){

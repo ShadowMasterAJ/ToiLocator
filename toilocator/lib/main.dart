@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'ToiLocator',
         theme: ThemeData(
-          fontFamily: 'Avenir',
+          // fontFamily: 'Avenir',
           backgroundColor: Palette.beige[50],
           textTheme: const TextTheme(
             headline1: TextStyle(
