@@ -283,18 +283,19 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                         padding: const EdgeInsets.all(10.0),
                         child: TextButton(
                           onPressed: () {
-                            FirebaseAuth.instance.authStateChanges()
-                            .listen((User? user) {
-                              if(FirebaseAuth.instance.currentUser == null){
+                            FirebaseAuth.instance
+                                .authStateChanges()
+                                .listen((User? user) {
+                              if (FirebaseAuth.instance.currentUser == null) {
                                 Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (context) => AuthScreen()));
-
+                                    MaterialPageRoute(
+                                        builder: (context) => AuthScreen()));
+                              } else {
+                                Navigator.of(context).push(createRoute(
+                                    widget.index, widget.toiletList));
                               }
-                              else{
-                              Navigator.of(context).push(createRoute(
-                              widget.index,
-                              widget
-                              .toiletList));}});}, // ONLY IF USER IS AUTHENTICATED
+                            });
+                          }, // ONLY IF USER IS AUTHENTICATED
                           child: Text(
                             "Write Review...",
                             style: TextStyle(
@@ -552,16 +553,60 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                               future: createReviewList(),
                               builder: (BuildContext context,
                                   AsyncSnapshot<dynamic> snapshot) {
-                                return SingleChildScrollView(
-                                  scrollDirection: Axis.vertical,
-                                  padding:
-                                      EdgeInsets.fromLTRB(8.0, 0.0, 10.0, 0.0),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: reviewList,
-                                  ),
-                                );
+                                if (snapshot.connectionState !=
+                                        ConnectionState.waiting &&
+                                    reviewList.length != 0) {
+                                  print('has data');
+                                  return SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    padding: EdgeInsets.fromLTRB(
+                                        8.0, 0.0, 10.0, 0.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: reviewList,
+                                    ),
+                                  );
+                                } else if (snapshot.connectionState !=
+                                        ConnectionState.waiting &&
+                                    reviewList.length == 0) {
+                                  print('Comment: no reviews');
+                                  return Column(
+                                    children: [
+                                      Image.asset(
+                                        'lib/assets/no_toilets.png',
+                                        width: 100,
+                                        height: 100,
+                                        //scale: 0.1,
+                                      ),
+                                      Text('No reviews, waiting for yours!',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline6
+                                              ?.copyWith(color: Colors.black),
+                                          textAlign: TextAlign.center),
+                                    ],
+                                  );
+                                }
+                                // no date might return some query documents
+                                // else if (!snapshot.hasData) {
+                                //   print('Comment: get review snapshot no data');
+                                //   return Container();
+
+                                // }
+                                else if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  //else {
+                                  print('connecting');
+                                  return Center(
+                                      child: CircularProgressIndicator(
+                                          valueColor: AlwaysStoppedAnimation<
+                                                  Color>(
+                                              (Palette.beige[300] as Color))));
+                                } else {
+                                  print('snapshot Else statement');
+                                  return Container();
+                                }
                               },
                             ),
                           ),
