@@ -1,15 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:toilocator/screens/home_map_screen.dart';
-import 'package:toilocator/services/getToiletImageUrlList.dart';
-import 'package:toilocator/services/getToiletInfo.dart';
-import '../palette.dart';
-import 'package:toilocator/widgets/map_stack.dart';
-import '/models/toilet.dart';
-import '/widgets/toilet_info_card.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:toilocator/services/userDatabase.dart' as ud;
+
+import '../services/userDatabase.dart' as ud;
+import '../services/getToiletInfo.dart';
+import '../screens/home_map_screen.dart';
+import '../palette.dart';
+
 class InputReviewPage extends StatefulWidget {
   final int reviewCount;
   final List toiletList;
