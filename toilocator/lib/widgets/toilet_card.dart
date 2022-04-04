@@ -100,9 +100,9 @@ class toiletCard extends StatelessWidget {
                             children: displayStarRating(
                                 context,
                                 'User Rating        ',
-                                toiletList[
-                                        index] // this is placeholder variable
-                                    .awardInt) // i'll probably create another variable for user rating in entity class
+                                (toiletList[index] // this is placeholder variable
+                                        .userRating)
+                                    .ceil()) // i'll probably create another variable for user rating in entity class
                             ,
                           ),
                           SizedBox(
