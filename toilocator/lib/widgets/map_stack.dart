@@ -43,7 +43,6 @@ class _MapStackState extends State<MapStack> {
 
   Map indices = {}; // key = index of toilet, value = distance
   List<Marker> _markers = [];
-  List _toiletTemp = [];
   List<Toilet> _toiletList = [];
   late BitmapDescriptor toiletIcon;
 
@@ -191,7 +190,6 @@ class _MapStackState extends State<MapStack> {
   }
 
   void centerToPositionandMark(double lat, double long) {
-    print("hi dc check");
     print('fetched in function');
     print("Latitude: $lat and Longitude: $long");
 
@@ -313,9 +311,7 @@ class _MapStackState extends State<MapStack> {
                   entered = true;
                   print(entered);
                   uploadingData(value);
-                  print("NO PROBLEMO");
                 } catch (PlatformException) {
-                  print("hihihi");
                   Fluttertoast.showToast(
                       msg: "Invalid Location, please try again!",
                       toastLength: Toast.LENGTH_SHORT,

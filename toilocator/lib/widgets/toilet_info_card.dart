@@ -585,7 +585,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                                 if (snapshot.connectionState !=
                                         ConnectionState.waiting &&
                                     reviewList.length != 0) {
-                                  print('has data');
+                                  print('reviewlist has data');
                                   return SingleChildScrollView(
                                     scrollDirection: Axis.vertical,
                                     padding: EdgeInsets.fromLTRB(
@@ -633,7 +633,6 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                                                   Color>(
                                               (Palette.beige[300] as Color))));
                                 } else {
-                                  print('snapshot Else statement');
                                   return Container();
                                 }
                               },
