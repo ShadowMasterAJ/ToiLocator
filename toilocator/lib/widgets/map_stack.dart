@@ -22,6 +22,7 @@ import 'package:http/http.dart' as http;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:path_provider/path_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MapStack extends StatefulWidget {
   final Function(double lat, double long) getLocFromInfo;
@@ -195,6 +196,7 @@ class _MapStackState extends State<MapStack> {
   }
 
   void centerToPositionandMark(double lat, double long) {
+    print("hi dc check");
     print('fetched in function');
     print("Latitude: $lat and Longitude: $long");
 
@@ -303,19 +305,31 @@ class _MapStackState extends State<MapStack> {
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
             child: TextField(
               onSubmitted: (value) async {
-                var addr = await Geocoder.local.findAddressesFromQuery(value);
+                try {
+                  var addr = await Geocoder.local.findAddressesFromQuery(value);
+                  var lat = addr.first.coordinates.latitude;
+                  var long = addr.first.coordinates.longitude;
+                  setState(() {
+                    userLat = lat;
+                    userLong = long;
+                  });
+                  print('Mapstack latlng: $lat, $long');
+                  centerToPositionandMark(lat, long);
+                  entered = true;
+                  print(entered);
+                  uploadingData(value);
+                } catch (PlatformException) {
+                  print("hihihi");
+                  Fluttertoast.showToast(
+                      msg: "Invalid Location, please try again!",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 3,
+                      backgroundColor: Color.fromARGB(255, 99, 99, 99),
+                      textColor: Colors.white,
+                      fontSize: 16.0);
+                }
                 // var addr = await locationFromAddress(value);
-                var lat = addr.first.coordinates.latitude;
-                var long = addr.first.coordinates.longitude;
-                setState(() {
-                  userLat = lat;
-                  userLong = long;
-                });
-                print('Mapstack latlng: $lat, $long');
-                centerToPositionandMark(lat, long);
-                entered = true;
-                print(entered);
-                uploadingData(value);
               },
               decoration: InputDecoration(
                 prefixIcon: IconButton(

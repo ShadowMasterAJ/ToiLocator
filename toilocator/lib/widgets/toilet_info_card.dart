@@ -34,7 +34,7 @@ class toiletInfoCard extends StatefulWidget {
 }
 
 class _toiletInfoCardState extends State<toiletInfoCard> {
-  var reviewCount = 0;
+  var averageRating = 0;
 
   List<Widget> imageList = [];
   bool isLoading = false;
@@ -43,8 +43,6 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
   List<Widget> reviewList = [];
 
   List<Widget> displayStarRating(int awardInt) {
-    print("AT THE star rating THERE?????");
-    print(widget.toiletList[widget.index].userRating);
     List<Widget> childrenList = [];
     if (awardInt > 5) {
       awardInt = 5;
@@ -77,10 +75,11 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     return Future.value();
   }
 
+  // void retrieveAverageRating() {}
+
   // Create a list of review widgets
   Future createReviewList() async {
-    // addReview(DateTime.now(), 'user1', widget.toiletList[widget.index].index.toString(), 2, 'Pee everywhere');
-    // Can delete this afterards
+    int sumRating = 0;
 
     List<Widget> tempReviewList = [];
     print(
@@ -101,6 +100,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
         // print('Comment: createReviewList: item in textReviewList ${item.userComment}');
         tempReviewList.add(
             UserReviewInfo(item.userID, item.userRating, item.userComment));
+        sumRating += item.userRating as int;
         print('Comment: Review widgets added to textReviewList');
       }
     } catch (e) {
@@ -108,16 +108,13 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     }
 
     reviewList = tempReviewList;
-    reviewCount = reviewList.length;
-    print("PRINTING USER HYGIVENE RATING FROM TOILET INFO CARD:");
-    print(widget.toiletList[widget.index].userRating);
+    var reviewCount = reviewList.length;
+    averageRating = (sumRating / reviewCount).ceil();
 
     return Future.value();
   }
 
   Widget UserReviewInfo(String userID, int userRating, String userComment) {
-    //ListView builder probably needed, refer to bottom_panel line 93
-
     return Container(
       // height: 80,
       // child: Card(
@@ -453,10 +450,13 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                             )),
                       ),
                       Padding(padding: const EdgeInsets.only(right: 110.0)),
-                      Row(
-                          children: displayStarRating((widget
-                              .toiletList[widget.index]
-                              .userRating))) //placeholder value
+                      FutureBuilder(
+                          future: createReviewList(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<dynamic> snapshot) {
+                            return Row(
+                                children: displayStarRating((averageRating)));
+                          }), //placeholder value
                     ]),
                     SizedBox(height: 15),
                     Row(children: [
@@ -538,7 +538,6 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                           Container(
                             height: 300,
                             child: FutureBuilder(
-                              future: createReviewList(),
                               builder: (BuildContext context,
                                   AsyncSnapshot<dynamic> snapshot) {
                                 return SingleChildScrollView(
