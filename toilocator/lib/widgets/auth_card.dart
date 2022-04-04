@@ -369,8 +369,9 @@ class _AuthFormState extends State<AuthForm> {
     } on auth.FirebaseAuthException catch (e) {
       print('Error in auth: $e\n----------------------');
     }
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomeMapScreen()));
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (BuildContext context) => HomeMapScreen()));
   }
 
   Future signUp() async {
