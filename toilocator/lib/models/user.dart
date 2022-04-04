@@ -9,7 +9,7 @@ class UserRecord {
   String? uid;
   String? userName;
   String? userEmail;
-  bool? gender;
+  String? gender;
   int? age;
 
   UserRecord({ this.uid, this.userName, this.userEmail, this.gender, this.age});

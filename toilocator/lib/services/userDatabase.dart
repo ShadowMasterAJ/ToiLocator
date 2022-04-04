@@ -20,7 +20,7 @@ Future<bool> checkIfUserExists(String uid) async {
     return snapshot.exists;
   }
 
-Future<void> addNewUser(String userName, String userEmail, bool gender, int age) {
+Future<void> addNewUser(String userName, String userEmail, String gender, int age) {
       // Call the user's CollectionReference to add a new user
       return usersCollection
           .add({
@@ -35,7 +35,7 @@ Future<void> addNewUser(String userName, String userEmail, bool gender, int age)
 
 }
 
- Future<void> updateUser(String uid, String userName, String userEmail, bool gender, int age) {
+ Future<void> updateUser(String uid, String userName, String userEmail, String gender, int age) {
   return usersCollection
     .doc(uid)
     .update({ 'name' : userName,
@@ -66,6 +66,19 @@ String getUserName(String uid) {
 
 
  Future<void> readUserData(String uid){
+  return usersCollection
+    .doc(uid)
+    .get()
+    .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        print('Document data: ${documentSnapshot.data()}');
+      } else {
+        print('Document does not exist on the database');
+      }
+    });
+ }
+
+ Future<void> readUserName(String uid){
   return usersCollection
     .doc(uid)
     .get()
