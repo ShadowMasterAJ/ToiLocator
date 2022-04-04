@@ -93,10 +93,10 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     // print("Comment: createReviewList textReviewList: ${textReviewList[0].userComment}");
     try {
       for (var item in textReviewList) {
-        print(
-            'Comment: createReviewList: item in textReviewList ${item.userComment}');
+        // print('Comment: createReviewList: item in textReviewList ${item.userComment}');
         tempReviewList.add(
             UserReviewInfo(item.userID, item.userRating, item.userComment));
+        print('Comment: Review widgets added to textReviewList');
       }
     } catch (e) {
       throw ('Something went wrong getting item in textReviewList, $e');

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:toilocator/models/review.dart';
+import 'package:toilocator/models/toilet.dart';
 
 // can have cupertino
 
@@ -160,22 +161,33 @@ Future<List<Review>> getReviewList(String toiletID, int numOfReview) async {
     // Map data
     // Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
     // try to get the doc ref given index
-    // await toilets.doc(toiletID).collection("reviews").add({
-    // 'dateTime': dateTime,
-    // 'userID': userID,
-    // 'toiletID': toiletID,
-    // 'userRating': userRating,
-    // 'userComment': userComment
-    // });
+}
+// List<Toilet> getToiletList() {
+
+Future<List<Toilet>> getToiletList() async {
+    List<Toilet> toiletList = [];
+    CollectionReference toilets = FirebaseFirestore.instance.collection('toilets');
+    await toilets
+      .get()  // get all the documents
+      .then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+          Toilet toilet = new Toilet(
+          index: int.parse(doc['index']),
+          type: doc['type'],
+          image: doc['albumURL'],
+          address: doc['address'],
+          toiletName: doc['toiletName'],
+          coords: [doc['latitude'], doc['longitude']],
+          awardInt: doc['officialRating']);
+          // print('Comment: alolo ${doc['toiletName']}');
+          toiletList.add(toilet);
+        });
+      });
+      print('Comment: alolo getToiletList length of toiletList: ${toiletList.length}');
+      // print('Comment: alolo ${toiletList[0].toiletName}');
+      return toiletList;
   
 }
-
-
-// getReview for a toilet, maybe filter wrt ratings
-
-
-
-// getToilet
 
 // updateToilet
 
