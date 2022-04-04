@@ -9,6 +9,7 @@ import '/models/toilet.dart';
 import '/widgets/toilet_info_card.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:toilocator/services/userDatabase.dart' as ud;
 class InputReviewPage extends StatefulWidget {
   final int reviewCount;
   final List toiletList;
@@ -246,8 +247,9 @@ class _InputReviewPageState extends State<InputReviewPage> {
                     
                     var user = await auth.FirebaseAuth.instance.currentUser;
                     // ignore: unused_local_variable
-                    var userData = FirebaseFirestore.instance.collection("users").doc(user?.uid).get();
-                    addReview(DateTime.now(), user!.uid, widget.toiletList[widget.index].index.toString(), userRating, userComment);
+                    //var userData = FirebaseFirestore.instance.collection("users").doc(user?.uid).get();
+                    var name= await ud.getUserName(user!.uid);
+                    addReview(DateTime.now(), name, widget.toiletList[widget.index].index.toString(), userRating, userComment);
                   },
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsets>(

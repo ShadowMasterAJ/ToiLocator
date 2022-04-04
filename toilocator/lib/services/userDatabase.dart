@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/user.dart';
+import 'package:flutter/cupertino.dart';
 
 
 class UserDatabaseService {
@@ -95,3 +96,24 @@ Future<void> addNewUser(String userName, String userEmail, String gender, int ag
 //     return usersCollection.snapshots().map(_userListFromSnapshot);
 //   }
 }
+
+
+Future<String> getUserName(String uid) async {
+                      final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
+                      String name = "";
+                      await usersCollection
+                        .where('uid', isEqualTo: uid)
+                        .get()
+                        .then((QuerySnapshot querySnapshot) {
+                          querySnapshot.docs.forEach((doc) { 
+                            name = doc['userName'];
+                          });
+                        });
+                      return name;
+                      
+                        
+                        // .then((value) => print("User Updated"))
+                        // .catchError((error) => print("Failed to update user: $error"));
+                    }
+
+
