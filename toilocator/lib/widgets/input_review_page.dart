@@ -141,6 +141,7 @@ class _InputReviewPageState extends State<InputReviewPage> {
                   textAlignVertical: TextAlignVertical.top,
                   keyboardType: TextInputType.multiline,
                   maxLines: 10,
+                  maxLength: 500,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),

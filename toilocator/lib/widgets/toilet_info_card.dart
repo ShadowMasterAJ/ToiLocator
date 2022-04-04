@@ -36,7 +36,7 @@ class toiletInfoCard extends StatefulWidget {
 }
 
 class _toiletInfoCardState extends State<toiletInfoCard> {
-  var reviewCount = 0;
+  var averageRating = 0;
 
   List<Widget> imageList = [];
   bool isLoading = false;
@@ -45,8 +45,6 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
   List<Widget> reviewList = [];
 
   List<Widget> displayStarRating(int awardInt) {
-    print("AT THE star rating THERE?????");
-    print(widget.toiletList[widget.index].userRating);
     List<Widget> childrenList = [];
     if (awardInt > 5) {
       awardInt = 5;
@@ -61,20 +59,6 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     }
     return childrenList;
   }
-
-  // void updateAveUserRating(int newUserRating) {
-  //   // print("HELLO LOOK HERE");
-  //   int updatedAveUserRating = widget.toiletList[widget.index].userRating;
-  //   print(updatedAveUserRating);
-  //   updatedAveUserRating =
-  //       ((updatedAveUserRating * (reviewCount - 1) + newUserRating) /
-  //               reviewCount)
-  //           .ceil();
-
-  //   widget.toiletList[widget.index].userRating = updatedAveUserRating;
-  //   // print("IN THE TOILET:");
-  //   // print(widget.toiletList[widget.index].userRating);
-  // }
 
   Future createImageList() async {
     // Convert URL links to realToiletImage
@@ -93,10 +77,11 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     return Future.value();
   }
 
+  // void retrieveAverageRating() {}
+
   // Create a list of review widgets
   Future createReviewList() async {
-    // addReview(DateTime.now(), 'user1', widget.toiletList[widget.index].index.toString(), 2, 'Pee everywhere');
-    // Can delete this afterards
+    int sumRating = 0;
 
     List<Widget> tempReviewList = [];
     print(
@@ -117,6 +102,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
         // print('Comment: createReviewList: item in textReviewList ${item.userComment}');
         tempReviewList.add(
             UserReviewInfo(item.userID, item.userRating, item.userComment));
+        sumRating += item.userRating as int;
         print('Comment: Review widgets added to textReviewList');
       }
     } catch (e) {
@@ -124,16 +110,13 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
     }
 
     reviewList = tempReviewList;
-    reviewCount = reviewList.length;
-    print("PRINTING USER HYGIVENE RATING FROM TOILET INFO CARD:");
-    print(widget.toiletList[widget.index].userRating);
+    var reviewCount = reviewList.length;
+    averageRating = (sumRating / reviewCount).ceil();
 
     return Future.value();
   }
 
   Widget UserReviewInfo(String userID, int userRating, String userComment) {
-    //ListView builder probably needed, refer to bottom_panel line 93
-
     return Container(
       // height: 80,
       // child: Card(
@@ -247,8 +230,6 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
 
   @override
   Widget build(BuildContext context) {
-    print("AT THE WIDGET THERE?????");
-    print(widget.toiletList[widget.index].userRating);
     return isLoading
         ? const CircularProgressIndicator()
         : Scaffold(
@@ -480,10 +461,13 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                             )),
                       ),
                       Padding(padding: const EdgeInsets.only(right: 110.0)),
-                      Row(
-                          children: displayStarRating((widget
-                              .toiletList[widget.index]
-                              .userRating))) //placeholder value
+                      FutureBuilder(
+                          future: createReviewList(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<dynamic> snapshot) {
+                            return Row(
+                                children: displayStarRating((averageRating)));
+                          }), //placeholder value
                     ]),
                     SizedBox(height: 15),
                     Row(children: [
@@ -531,8 +515,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                         builder: (context, snapshot) {
                           return snapshot.connectionState ==
                                   ConnectionState.waiting
-                              ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>((
-                                Palette.beige[300] as Color))))
+                              ? Center(child: CircularProgressIndicator())
                               : SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   padding:
@@ -566,59 +549,18 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                           Container(
                             height: 300,
                             child: FutureBuilder(
-                              future: createReviewList(),
                               builder: (BuildContext context,
                                   AsyncSnapshot<dynamic> snapshot) {
-                                    if (snapshot.connectionState !=
-                                      ConnectionState.waiting && reviewList.length != 0) {
-                                      print('has data');
-                                      return SingleChildScrollView(
-                                        scrollDirection: Axis.vertical,
-                                        padding:
-                                            EdgeInsets.fromLTRB(8.0, 0.0, 10.0, 0.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: reviewList,
-                                        ),
-                                      );
-                                    }
-                                    else if (snapshot.connectionState !=
-                                      ConnectionState.waiting && reviewList.length == 0) {
-                                      print('Comment: no reviews');
-                                      return Column(
-                                        children: [
-                                          Image.asset(
-                                            'lib/assets/no_toilets.png',
-                                            width: 100,
-                                            height: 100,
-                                            //scale: 0.1,
-                                          ),
-                                          Text('No reviews, waiting for yours!',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline6
-                                                  ?.copyWith(color: Colors.black),
-                                              textAlign: TextAlign.center),
-                                        ],
-                                      );
-                                    }
-                                    // no date might return some query documents
-                                    // else if (!snapshot.hasData) {
-                                    //   print('Comment: get review snapshot no data');
-                                    //   return Container();
-
-                                    // }
-                                    else if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                      //else {
-                                        print('connecting');
-                                        return Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>((
-                                         Palette.beige[300] as Color))));}
-                                    else {
-                                      print('snapshot Else statement');
-                                      return Container();
-                                    }
+                                return SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  padding:
+                                      EdgeInsets.fromLTRB(8.0, 0.0, 10.0, 0.0),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: reviewList,
+                                  ),
+                                );
                               },
                             ),
                           ),
