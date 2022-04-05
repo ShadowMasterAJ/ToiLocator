@@ -10,7 +10,6 @@ import 'package:toilocator/screens/wrapper.dart';
 import '../services/auth.dart';
 import 'package:toilocator/services/auth.dart';
 
-
 class AuthForm extends StatefulWidget {
   @override
   _AuthFormState createState() => _AuthFormState();
