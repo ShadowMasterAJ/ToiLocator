@@ -6,9 +6,6 @@ import 'package:toilocator/services/auth.dart';
 import '/screens/profile_screen.dart';
 import '/screens/auth_screen.dart';
 import 'palette.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:toilocator/services/userDatabase.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 //the app will always initialise firebase when it starts
 void main() async {

@@ -34,7 +34,8 @@ class _AuthScreenState extends State<AuthScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     'Welcome!',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                    // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
                 SizedBox(height: 10),

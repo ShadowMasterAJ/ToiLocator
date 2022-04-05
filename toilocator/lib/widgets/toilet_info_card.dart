@@ -1,17 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toilocator/screens/auth_screen.dart';
 import 'package:toilocator/services/getToiletImageUrlList.dart';
 import 'package:toilocator/services/getToiletInfo.dart';
 import '../palette.dart';
-import 'bottom_panel.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'input_review_page.dart';
-import 'toilet_card.dart';
-import 'map_stack.dart';
 import '../services/directions.dart';
 
 class toiletInfoCard extends StatefulWidget {
@@ -591,7 +585,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                                 if (snapshot.connectionState !=
                                         ConnectionState.waiting &&
                                     reviewList.length != 0) {
-                                  print('has data');
+                                  print('reviewlist has data');
                                   return SingleChildScrollView(
                                     scrollDirection: Axis.vertical,
                                     padding: EdgeInsets.fromLTRB(
@@ -639,7 +633,6 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                                                   Color>(
                                               (Palette.beige[300] as Color))));
                                 } else {
-                                  print('snapshot Else statement');
                                   return Container();
                                 }
                               },

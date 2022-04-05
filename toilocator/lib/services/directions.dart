@@ -51,9 +51,9 @@ class Directions {
       travelMode: TravelMode.walking,
     );
 
-    print('Results: ${result.points}');
+    // print('Results: ${result.points}');
     if (result.points.isNotEmpty) {
-      print('result not empty');
+      // print('result not empty');
       result.points.forEach((PointLatLng point) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
@@ -70,11 +70,11 @@ class Directions {
       patterns: [PatternItem.dot],
       width: 7,
     );
-    print('polyCoords $polylineCoordinates');
-    print('polyline setstate: ${polyline.points}');
+    // print('polyCoords $polylineCoordinates');
+    // print('polyline setstate: ${polyline.points}');
     polylines[id] = polyline;
 
-    print('polylines setstate: ${polylines.entries}');
+    // print('polylines setstate: ${polylines.entries}');
     return polylines;
   }
 }

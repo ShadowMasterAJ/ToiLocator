@@ -6,8 +6,10 @@ import 'package:toilocator/models/user.dart';
 import 'package:toilocator/palette.dart';
 import 'package:toilocator/screens/home_map_screen.dart';
 import 'package:toilocator/screens/profile_screen.dart';
+import 'package:toilocator/screens/wrapper.dart';
 import '../services/auth.dart';
 import 'package:toilocator/services/auth.dart';
+
 
 class AuthForm extends StatefulWidget {
   @override
@@ -43,6 +45,7 @@ class _AuthFormState extends State<AuthForm> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController genderController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
+
   final navigatorKey = GlobalKey<NavigatorState>();
   final authService = AuthService();
   final _auth = auth.FirebaseAuth.instance;
@@ -202,25 +205,41 @@ class _AuthFormState extends State<AuthForm> {
             _authMode == AuthMode.Signup
                 ? Column(children: [
                     SizedBox(height: 10),
-                    Row(children: [
-                      SizedBox(
-                        // FIGURE OUT HOW TO RETRIEVE AGE INPUT
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                      Container(
                         width: 100,
-                        child: Flexible(
-                          child: TextField(
-                            // textAlignVertical: TextAlignVertical.top,
-                            controller: ageController,
-                            maxLines: null,
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              hintText: 'Age',
-                              alignLabelWithHint: true,
-                              // contentPadding:
-                              //     EdgeInsets.symmetric(vertical: 80, horizontal: 20),
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF3F3F3),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: TextField(
+                          // textAlignVertical: TextAlignVertical.top,
+                          controller: ageController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.white54, width: 1.0),
+                              borderRadius: BorderRadius.circular(15.0),
                             ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 2.0),
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                                borderSide:
+                                    BorderSide(width: 1, color: Colors.red)),
+                            // border: OutlineInputBorder(
+                            //   borderRadius: BorderRadius.circular(20.0),
+                            // ),
+                            hintText: 'Age',
+                            alignLabelWithHint: true,
+                            // contentPadding:
+                            //     EdgeInsets.symmetric(vertical: 80, horizontal: 20),
                           ),
                         ),
                       ),
@@ -228,8 +247,7 @@ class _AuthFormState extends State<AuthForm> {
                       DropdownButton<String>(
                         value: dropDownValue,
                         elevation: 16,
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 94, 55, 17)),
+                        style: Theme.of(context).textTheme.bodyText2,
                         onChanged: (String? newValue) {
                           setState(() {
                             dropDownValue =
@@ -241,7 +259,8 @@ class _AuthFormState extends State<AuthForm> {
                           color: Palette.beige[100],
                         ),
                         icon: const Icon(Icons.arrow_downward),
-                        items: <String>['Female', 'Male'].map((String value) {
+                        items: <String>['Female', 'Male']
+                            .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -350,8 +369,11 @@ class _AuthFormState extends State<AuthForm> {
         password: passwordController.text.trim(),
       );
     } on auth.FirebaseAuthException catch (e) {
-      print(e);
+      print('Error in auth: $e\n----------------------');
     }
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (BuildContext context) => HomeMapScreen()));
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => HomeMapScreen()));
   }
@@ -376,7 +398,7 @@ class _AuthFormState extends State<AuthForm> {
     }
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => ProfileScreen()),
+        MaterialPageRoute(builder: (context) => HomeMapScreen()),
         (route) => false);
   }
 
