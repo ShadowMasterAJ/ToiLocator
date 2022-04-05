@@ -6,13 +6,12 @@ import './home_map_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:toilocator/services/userDatabase.dart' as ud;
 
-
-class ProfileScreen extends StatelessWidget  {
+class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Container(width: 100, child: HomeMapScreen.buildDrawer(context)),
-      backgroundColor: Theme.of(context).backgroundColor,
+      // backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: Builder(builder: (context) {
           return Column(
@@ -41,7 +40,7 @@ class ProfileScreen extends StatelessWidget  {
                               },
                               icon: Icon(Icons.menu_rounded)),
                           Text('Profile',
-                              style: Theme.of(context).textTheme.headline2),
+                              style: Theme.of(context).textTheme.headline4),
                           SizedBox(width: 40),
                         ],
                       ),
@@ -65,9 +64,9 @@ class ProfileScreen extends StatelessWidget  {
                 height: 60,
               ),
               Text(
-                "name",
+                "Name",
                 style: TextStyle(
-                    fontSize: 25.0,
+                    fontSize: 35.0,
                     color: Colors.black,
                     fontWeight: FontWeight.w400),
               ),
@@ -77,19 +76,19 @@ class ProfileScreen extends StatelessWidget  {
               SizedBox(
                 height: 15,
               ),
-              Text('Age', style: Theme.of(context).textTheme.headline2),
+              Text('Age', style: Theme.of(context).textTheme.headline5),
               SizedBox(height: 10),
               Text('69',
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95)))),
               SizedBox(height: 30),
-              Text('Gender', style: Theme.of(context).textTheme.headline2),
+              Text('Gender', style: Theme.of(context).textTheme.headline5),
               SizedBox(height: 10),
               Text('Female',
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95)))),
               SizedBox(height: 30),
-              Text('Email', style: Theme.of(context).textTheme.headline2),
+              Text('Email', style: Theme.of(context).textTheme.headline5),
               SizedBox(height: 10),
               Text('ilovetoilet@gmail.com',
                   style: Theme.of(context).textTheme.subtitle1?.merge(
