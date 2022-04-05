@@ -6,7 +6,7 @@ import 'package:toilocator/models/user.dart';
 import 'package:toilocator/palette.dart';
 import 'package:toilocator/screens/home_map_screen.dart';
 import 'package:toilocator/screens/profile_screen.dart';
-import 'package:toilocator/screens/wrapper.dart';
+import 'package:toilocator/services/wrapper.dart';
 import '../services/auth.dart';
 import 'package:toilocator/services/auth.dart';
 
