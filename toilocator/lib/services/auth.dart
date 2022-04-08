@@ -67,8 +67,7 @@ Future<User> getUser() async {
   }
 
 
-
-  Future<bool> checkIfEmailInUse(String emailAddress) async {
+Future<bool> checkIfEmailInUse(String emailAddress) async {
   try {
     // Fetch sign-in methods for the email address
     final list = await authen.FirebaseAuth.instance.fetchSignInMethodsForEmail(emailAddress);
