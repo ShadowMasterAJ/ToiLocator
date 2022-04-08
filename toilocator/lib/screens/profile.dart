@@ -1,43 +1,30 @@
-import 'package:toilocator/models/user.dart';
-import 'package:toilocator/screens/auth_screen.dart';
-import 'package:toilocator/screens/home_map_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:toilocator/services/auth.dart';
+import 'package:toilocator/models/User.dart';
 import '../palette.dart';
-import 'package:toilocator/services/userDatabase.dart' as ud;
+import '../widgets/side_drawer_button.dart';
+import './home_map_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:toilocator/services/userDatabase.dart' as ud;
 
-//starting screen switching, not necessary for our app
-class ProfileView extends StatelessWidget {
+class UserProfilePage extends StatefulWidget {
+  UserProfilePage({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context);
-    return StreamBuilder<User?>(
-      stream: authService.user,
-      builder: (_, AsyncSnapshot<User?> snapshot){
-      // return FutureBuilder(
-      //   builder: (context, snapshot){
-        if (snapshot.connectionState == ConnectionState.active){
-          return displayUserInformation(context, snapshot);
-        }
-        else{
-          return Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-          ),
-          );
-        }
-      }
-      );
-    // return either the Home or Authenticate widget
+  _UserProfilePageState createState() => _UserProfilePageState();
+}
+
+class _UserProfilePageState extends State<UserProfilePage> {
+  late User user;
+
+  @override
+  void initState() {
+    super.initState();
   }
 
- Widget displayUserInformation(context, snapshot) {
-   User user=snapshot.data;
-   print("the result is" );
-   print(user.age);
-   return Scaffold(
+  @override
+Widget build(BuildContext context) {
+    return Scaffold(
       drawer: Container(width: 100, child: HomeMapScreen.buildDrawer(context)),
       backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
@@ -88,46 +75,62 @@ class ProfileView extends StatelessWidget {
                   ]),
                 ),
               ),
+            
               SizedBox(
                 height: 60,
               ),
-              Text(
-                user.userName,
-                style: TextStyle(
+              TextButton(
+                child: Text(
+                    "View",
+                  ),
+                onPressed: () async{
+
+                  var user = await auth.FirebaseAuth.instance.currentUser;
+                  var name= await ud.getUserName(user!.uid);
+                  print(name);
+                  int age = await ud.getUserAge(user.uid);
+                  print(age);
+                  
+                  Text(
+                    name,
+                    style: TextStyle(
                     fontSize: 25.0,
                     color: Colors.black,
                     fontWeight: FontWeight.w400),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text('Age', style: Theme.of(context).textTheme.headline2),
-              SizedBox(height: 10),
-              Text((user.age).toString(),
-                  style: Theme.of(context).textTheme.subtitle1?.merge(
-                      TextStyle(color: Color.fromARGB(255, 95, 95, 95)))),
-              SizedBox(height: 30),
-              Text('Gender', style: Theme.of(context).textTheme.headline2),
-              SizedBox(height: 10),
-              Text(user.gender,
-                  style: Theme.of(context).textTheme.subtitle1?.merge(
-                      TextStyle(color: Color.fromARGB(255, 95, 95, 95)))),
-              SizedBox(height: 30),
-              Text('Email', style: Theme.of(context).textTheme.headline2),
-              SizedBox(height: 10),
-              Text(user.userEmail,
-                  style: Theme.of(context).textTheme.subtitle1?.merge(
+                     );
+                  SizedBox(
+                     height: 10,
+                  );
+                  SizedBox(
+                      height: 15,
+                    );
+                  Text('Age', style: Theme.of(context).textTheme.headline2);
+                      SizedBox(height: 10);
+                  Text(age.toString(),
+                      style: Theme.of(context).textTheme.subtitle1?.merge(
+                      TextStyle(color: Color.fromARGB(255, 95, 95, 95))));
+                      SizedBox(height: 30);
+                      Text('Gender', style: Theme.of(context).textTheme.headline2);
+                   SizedBox(height: 10);
+                    Text('Female',
+                     style: Theme.of(context).textTheme.subtitle1?.merge(
+                      TextStyle(color: Color.fromARGB(255, 95, 95, 95))));
+                    SizedBox(height: 30);
+                    Text('Email', style: Theme.of(context).textTheme.headline2);
+                    SizedBox(height: 10);
+                    Text('ilovetoilet@gmail.com',
+                      style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95))),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis),
+                       maxLines: 1,
+                        overflow: TextOverflow.ellipsis);
+
+                },
+                ),
+              
             ],
           );
         }),
       ),
     );
- }
-    
+  }
 }

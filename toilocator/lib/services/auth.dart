@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/cupertino.dart';
 import '../models/user.dart';
@@ -8,7 +9,7 @@ class AuthService {
 
   User? _userFromFirebase(auth.User? user){
       if (user==null) return null;
-      else return User(uid:user.uid);
+      else return User(uid:user.uid, userName: '', userEmail: '', password: '', gender: '', age: 0);
   }
 
 
@@ -19,36 +20,6 @@ Stream<User?>? get user {
      }
 
 
-// Future signInUser(String email, String pwd, {context}) async {
-//     try {
-//       await _firebaseAuth
-//           .signInWithEmailAndPassword(email: email, password: pwd)
-//           .then((result) {
-//         auth.User? user = result.user;
-//         return _userFromFirebase(user);
-//       }).catchError((err) {
-//         if (err.code == 'user-not-found') {
-//           Flushbar(
-//             message: "No user found for that email.",
-//             duration: Duration(seconds: 7),
-//           )..show(context);
-//         } else if (err.code == 'wrong-password') {
-//           Flushbar(
-//             message: "Wrong password provided for that user.",
-//             duration: Duration(seconds: 7),
-//           )..show(context);
-//         } else {
-//           Flushbar(
-//             message: "Internal Error: Something went wrong.",
-//             duration: Duration(seconds: 7),
-//           )..show(context);
-//         }
-//       });
-//     } catch (e) {
-//       print(e.toString());
-//       return null;
-//     }
-//   }
 Future<User?> signInWithEmailAndPassword(
   String email,
   String password,
@@ -61,20 +32,6 @@ Future<User?> signInWithEmailAndPassword(
 }
 
 
-// void signIn(String email, String password) async{
-//   if(_formkey.currentState!.validate()){
-//     await _firebaseAuth
-//     .signInWithEmailAndPassword(email: email, password: password)
-//     .then((uid)=>{
-//       Fluttertoast.showToast(msg: "Login Successfully"),
-//       Navigator.of(context).pushReplacement(MaterialPageRoute:(builder:(context)=>HomeMapScreen)),
-//     }).catchError((e){
-//       Fluttertoast.showToast(msg: e!.message);
-//     }
-//     );
-
-//   }
-// }
 
 
 
@@ -94,26 +51,60 @@ Future<void> signOut() async {
   return await _firebaseAuth.signOut();
 }
 
-// Future<void> userState() async{
-//   await _firebaseAuth.authStateChanges()
-//   .listen((User? user) {
-//     if (user == null) {
-//       print('User is currently signed out!');
-     
-//     } else {
-//       print('User is signed in!');
-//     }
-//   });
+  getCurrentUser() async {
+    return await auth.FirebaseAuth.instance.currentUser;
+  }
+
 }
 
-//auth state change
-// FirebaseAuth.instance
-//   .authStateChanges()
-//   .listen((User? user) {
-//     if (user == null) {
-//       print('User is currently signed out!');
-//     } else {
-//       print('User is signed in!');
-//     }
-//   });
 
+
+Future<User> getUser() async {
+    final firebaseUser = await auth.FirebaseAuth.instance.currentUser;
+    return User(uid: firebaseUser!.uid, userName: '', userEmail: '', password: '', gender: '', age: 0);
+  }
+
+
+
+  Future<bool> checkIfEmailInUse(String emailAddress) async {
+  try {
+    // Fetch sign-in methods for the email address
+    final list = await auth.FirebaseAuth.instance.fetchSignInMethodsForEmail(emailAddress);
+
+    // In case list is not empty
+    if (list.isNotEmpty) {
+      // Return true because there is an existing
+      //print("the email is in use.");
+      return true;
+    } else {
+      //print("the email is not in use.");
+      return false;
+    }
+  } catch (error) {
+    // Handle error
+    return true;
+  }
+}
+
+Future<bool> checkIfPasswordCorrect(String email, String password) async{
+            final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
+            String result='';
+            await usersCollection
+            .where('email', isEqualTo: email)
+            .get()
+            .then((QuerySnapshot querySnapshot) {
+            querySnapshot.docs.forEach((doc) { 
+            // if(password==doc['password']){
+            //   print("password is correct!");
+            //   result='true';             
+            // }
+            // else {result='false';
+            // print("password wrong!!!");}
+            result = doc['password'];
+            print("the result is"+result);
+            });      
+            });
+            if(result==password) return true;
+            else return false;
+                    
+}
