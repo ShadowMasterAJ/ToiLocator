@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:toilocator/models/user.dart';
 import 'package:toilocator/screens/auth_screen.dart';
 import 'package:toilocator/screens/home_map_screen.dart';
@@ -7,6 +9,9 @@ import 'package:toilocator/services/auth.dart';
 import '../palette.dart';
 import 'package:toilocator/services/userDatabase.dart' as ud;
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:toilocator/global_variables/my_globals.dart';
+
+import '../services/userDatabase.dart';
 
 //starting screen switching, not necessary for our app
 class ProfileView extends StatelessWidget {
@@ -16,8 +21,6 @@ class ProfileView extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: authService.user,
       builder: (_, AsyncSnapshot<User?> snapshot){
-      // return FutureBuilder(
-      //   builder: (context, snapshot){
         if (snapshot.connectionState == ConnectionState.active){
           return displayUserInformation(context, snapshot);
         }
@@ -34,9 +37,8 @@ class ProfileView extends StatelessWidget {
   }
 
  Widget displayUserInformation(context, snapshot) {
-   User user=snapshot.data;
    print("the result is" );
-   print(user.age);
+   print(snapshot.data.age);
    return Scaffold(
       drawer: Container(width: 100, child: HomeMapScreen.buildDrawer(context)),
       backgroundColor: Theme.of(context).backgroundColor,
@@ -92,7 +94,7 @@ class ProfileView extends StatelessWidget {
                 height: 60,
               ),
               Text(
-                user.userName,
+                globalName,
                 style: TextStyle(
                     fontSize: 25.0,
                     color: Colors.black,
@@ -106,19 +108,19 @@ class ProfileView extends StatelessWidget {
               ),
               Text('Age', style: Theme.of(context).textTheme.headline2),
               SizedBox(height: 10),
-              Text((user.age).toString(),
+              Text((globalAge).toString(),
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95)))),
               SizedBox(height: 30),
               Text('Gender', style: Theme.of(context).textTheme.headline2),
               SizedBox(height: 10),
-              Text(user.gender,
+              Text(globalGender,
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95)))),
               SizedBox(height: 30),
               Text('Email', style: Theme.of(context).textTheme.headline2),
               SizedBox(height: 10),
-              Text(user.userEmail,
+              Text( globalEmail,
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95))),
                   maxLines: 1,

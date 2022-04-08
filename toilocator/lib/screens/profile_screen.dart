@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:toilocator/global_variables/my_globals.dart';
 import '../palette.dart';
 import '../widgets/side_drawer_button.dart';
 import './home_map_screen.dart';
@@ -65,7 +66,7 @@ class ProfileScreen extends StatelessWidget  {
                 height: 60,
               ),
               Text(
-                "name",
+                globalName,
                 style: TextStyle(
                     fontSize: 25.0,
                     color: Colors.black,
@@ -79,19 +80,19 @@ class ProfileScreen extends StatelessWidget  {
               ),
               Text('Age', style: Theme.of(context).textTheme.headline2),
               SizedBox(height: 10),
-              Text('69',
+              Text(globalAge.toString(),
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95)))),
               SizedBox(height: 30),
               Text('Gender', style: Theme.of(context).textTheme.headline2),
               SizedBox(height: 10),
-              Text('Female',
+              Text(globalGender,
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95)))),
               SizedBox(height: 30),
               Text('Email', style: Theme.of(context).textTheme.headline2),
               SizedBox(height: 10),
-              Text('ilovetoilet@gmail.com',
+              Text(globalEmail,
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95))),
                   maxLines: 1,

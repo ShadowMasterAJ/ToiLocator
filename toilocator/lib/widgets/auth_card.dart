@@ -5,11 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:toilocator/models/user.dart';
 import 'package:toilocator/palette.dart';
 import 'package:toilocator/screens/home_map_screen.dart';
-import 'package:toilocator/screens/profile.dart';
 import 'package:toilocator/screens/profile_screen.dart';
 import 'package:toilocator/screens/wrapper.dart';
+import 'package:toilocator/services/userDatabase.dart';
 import '../services/auth.dart';
 import 'package:toilocator/services/auth.dart';
+import 'package:toilocator/global_variables/my_globals.dart';
 
 
 class AuthForm extends StatefulWidget {
@@ -24,7 +25,8 @@ class _AuthFormState extends State<AuthForm> {
   AuthMode _authMode = AuthMode.Login;
 
   auth.User? user = auth.FirebaseAuth.instance.currentUser;
-  UserRecord userRecord = UserRecord(uid: '', userName: '', userEmail: '', password: '', gender: '', age: 0);
+  User currentUser = User(uid: '', userName: '', userEmail: '', password: '', gender: '', age: 0);
+  //UserRecord userRecord = UserRecord(uid: '', userName: '', userEmail: '', password: '', gender: '', age: 0);
 
   @override
   void initState() {
@@ -407,8 +409,13 @@ class _AuthFormState extends State<AuthForm> {
     } on auth.FirebaseAuthException catch (e) {
       print(e);
     }
+    globalEmail=emailController.text;
+    globalAge=await getUserAge(globalEmail);
+    globalName=await getUserNameByEmail(globalEmail);
+    globalGender=await getUserGender(globalEmail);
+    
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => UserProfilePage()));
+        MaterialPageRoute(builder: (context) => ProfileScreen()));
   }
 
   Future signUp() async {
@@ -431,7 +438,7 @@ class _AuthFormState extends State<AuthForm> {
     }
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => UserProfilePage()),
+        MaterialPageRoute(builder: (context) => ProfileScreen()),
         (route) => false);
   }
 
@@ -439,16 +446,26 @@ class _AuthFormState extends State<AuthForm> {
     // calling our firestore, calling our user record, sending these values
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     // writing all the values
-    userRecord.uid = auth.FirebaseAuth.instance.currentUser!.uid;
-    userRecord.userName = nameController.text;
-    userRecord.userEmail = emailController.text;
-    userRecord.password = passwordController.text;
-    userRecord.gender = dropDownValue;
-    userRecord.age = int.parse(ageController.text);
+    currentUser.uid = auth.FirebaseAuth.instance.currentUser!.uid;
+    currentUser.userName = nameController.text;
+    currentUser.userEmail = emailController.text;
+    currentUser.password = passwordController.text;
+    currentUser.gender = dropDownValue;
+    currentUser.age = int.parse(ageController.text);
 
-    await firebaseFirestore
+    globalAge=currentUser.age;
+    globalName=currentUser.userName;
+    globalEmail=currentUser.userEmail;
+    globalGender=currentUser.gender;
+
+    // await firebaseFirestore
+    //     .collection("users")
+    //     .doc(user?.uid)
+    //     .set(userRecord.toMap());
+
+        await firebaseFirestore
         .collection("users")
         .doc(user?.uid)
-        .set(userRecord.toMap());
+        .set(currentUser.toMap());
   }
 }

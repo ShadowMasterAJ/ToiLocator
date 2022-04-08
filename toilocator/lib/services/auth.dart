@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:firebase_auth/firebase_auth.dart' as authen;
 import 'package:flutter/cupertino.dart';
 import '../models/user.dart';
 
 class AuthService {
-  final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
+  final authen.FirebaseAuth _firebaseAuth = authen.FirebaseAuth.instance;
   final _formkey = GlobalKey<FormState>();
 
-  User? _userFromFirebase(auth.User? user){
+  get auth => null;
+
+  User? _userFromFirebase(authen.User? user){
       if (user==null) return null;
       else return User(uid:user.uid, userName: '', userEmail: '', password: '', gender: '', age: 0);
   }
@@ -60,7 +62,7 @@ Future<void> signOut() async {
 
 
 Future<User> getUser() async {
-    final firebaseUser = await auth.FirebaseAuth.instance.currentUser;
+    final firebaseUser = await authen.FirebaseAuth.instance.currentUser;
     return User(uid: firebaseUser!.uid, userName: '', userEmail: '', password: '', gender: '', age: 0);
   }
 
@@ -69,7 +71,7 @@ Future<User> getUser() async {
   Future<bool> checkIfEmailInUse(String emailAddress) async {
   try {
     // Fetch sign-in methods for the email address
-    final list = await auth.FirebaseAuth.instance.fetchSignInMethodsForEmail(emailAddress);
+    final list = await authen.FirebaseAuth.instance.fetchSignInMethodsForEmail(emailAddress);
 
     // In case list is not empty
     if (list.isNotEmpty) {
