@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:toilocator/services/auth.dart' as auth;
 class User{
   String uid;
   String userName;

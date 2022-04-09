@@ -1,17 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:toilocator/models/user.dart';
-import 'package:toilocator/screens/auth_screen.dart';
-import 'package:toilocator/screens/home_map_screen.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:toilocator/screens/auth_screen.dart';
+// import '../services/userDatabase.dart';
+// import 'package:toilocator/services/userDatabase.dart' as ud;
+// import 'package:firebase_auth/firebase_auth.dart' as auth;
+
+import 'package:toilocator/global_variables/my_globals.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:toilocator/services/auth.dart';
-import '../palette.dart';
-import 'package:toilocator/services/userDatabase.dart' as ud;
-import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:toilocator/global_variables/my_globals.dart';
 
-import '../services/userDatabase.dart';
+import '../models/user.dart';
+import '../screens/home_map_screen.dart';
+import 'auth.dart';
+import '../palette.dart';
 
 //starting screen switching, not necessary for our app
 class ProfileView extends StatelessWidget {
@@ -19,27 +20,25 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
     return StreamBuilder<User?>(
-      stream: authService.user,
-      builder: (_, AsyncSnapshot<User?> snapshot){
-        if (snapshot.connectionState == ConnectionState.active){
-          return displayUserInformation(context, snapshot);
-        }
-        else{
-          return Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-          ),
-          );
-        }
-      }
-      );
+        stream: authService.user,
+        builder: (_, AsyncSnapshot<User?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            return displayUserInformation(context, snapshot);
+          } else {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        });
     // return either the Home or Authenticate widget
   }
 
- Widget displayUserInformation(context, snapshot) {
-   print("the result is" );
-   print(snapshot.data.age);
-   return Scaffold(
+  Widget displayUserInformation(context, snapshot) {
+    print("the result is");
+    print(snapshot.data.age);
+    return Scaffold(
       drawer: Container(width: 100, child: HomeMapScreen.buildDrawer(context)),
       backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
@@ -120,7 +119,7 @@ class ProfileView extends StatelessWidget {
               SizedBox(height: 30),
               Text('Email', style: Theme.of(context).textTheme.headline2),
               SizedBox(height: 10),
-              Text( globalEmail,
+              Text(globalEmail,
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95))),
                   maxLines: 1,
@@ -130,6 +129,5 @@ class ProfileView extends StatelessWidget {
         }),
       ),
     );
- }
-    
+  }
 }

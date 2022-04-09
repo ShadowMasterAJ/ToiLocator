@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'toilet_card.dart';
 
+import 'toilet_card.dart';
 import '../models/toilet.dart';
 
 class bottomPanel extends StatelessWidget {

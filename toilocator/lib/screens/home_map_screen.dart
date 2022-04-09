@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:toilocator/palette.dart';
-import 'package:toilocator/widgets/map_stack.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:toilocator/screens/auth_screen.dart';
-import 'package:toilocator/widgets/side_drawer_button.dart';
-import 'package:toilocator/screens/profile_screen.dart';
+
+import '../palette.dart';
+import '../widgets/map_stack.dart';
+import '../widgets/side_drawer_button.dart';
+import 'profile_screen.dart';
+import 'auth_screen.dart';
+
 
 class HomeMapScreen extends StatelessWidget {
   HomeMapScreen({Key? key}) : super(key: key);

@@ -1,6 +1,3 @@
-import 'User.dart';
-import 'Toilet.dart';
-
 /// This class stores all the information of a review that is written by a user
 /// 
 class Review {

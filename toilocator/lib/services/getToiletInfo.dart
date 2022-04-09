@@ -1,11 +1,8 @@
-import 'dart:async';
 import 'dart:core';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:toilocator/models/review.dart';
-import 'package:toilocator/models/toilet.dart';
+
+import '../models/review.dart';
+import '../models/toilet.dart';
 
 // can have cupertino
 

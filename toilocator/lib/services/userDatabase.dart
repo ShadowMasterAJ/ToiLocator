@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../models/user.dart';
-import 'package:flutter/cupertino.dart';
-
 class UserDatabaseService {
   final String uid;
 // final String userName;
@@ -129,72 +126,67 @@ Future<String> getUserName(String uid) async {
 }
 
 Future<String> getUserNameByEmail(String email) async {
-                      final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
-                      String name = "";
-                      await usersCollection
-                        .where('email', isEqualTo: email)
-                        .get()
-                        .then((QuerySnapshot querySnapshot) {
-                          querySnapshot.docs.forEach((doc) { 
-                            name = doc['userName'];
-                          });
-                        });
-                      return name;
-                      
-                        
-                        // .then((value) => print("User Updated"))
-                        // .catchError((error) => print("Failed to update user: $error"));
-                    }
+  final CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('users');
+  String name = "";
+  await usersCollection
+      .where('email', isEqualTo: email)
+      .get()
+      .then((QuerySnapshot querySnapshot) {
+    querySnapshot.docs.forEach((doc) {
+      name = doc['userName'];
+    });
+  });
+  return name;
 
+  // .then((value) => print("User Updated"))
+  // .catchError((error) => print("Failed to update user: $error"));
+}
 
-Future<String> getUserEmail(String uid) async{
-                      final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
-                      String email = "";
-                       usersCollection
-                        .where('uid', isEqualTo: uid)
-                        .get()
-                        .then((QuerySnapshot querySnapshot) {
-                          querySnapshot.docs.forEach((doc) { 
-                            email = doc['email'];
-                          });
-                        });
-                      return email;
-                      
-                        
-                        // .then((value) => print("User Updated"))
-                        // .catchError((error) => print("Failed to update user: $error"));
-                    }
+Future<String> getUserEmail(String uid) async {
+  final CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('users');
+  String email = "";
+  usersCollection
+      .where('uid', isEqualTo: uid)
+      .get()
+      .then((QuerySnapshot querySnapshot) {
+    querySnapshot.docs.forEach((doc) {
+      email = doc['email'];
+    });
+  });
+  return email;
 
-
-
+  // .then((value) => print("User Updated"))
+  // .catchError((error) => print("Failed to update user: $error"));
+}
 
 Future<int> getUserAge(String email) async {
-                      final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
-                      int age = 0;
-                      await usersCollection
-                        .where('email', isEqualTo: email)
-                        .get()
-                        .then((QuerySnapshot querySnapshot) {
-                          querySnapshot.docs.forEach((doc) { 
-                            age = doc['age'];
-                          });
-                        });
-                      return age;
-                    }
+  final CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('users');
+  int age = 0;
+  await usersCollection
+      .where('email', isEqualTo: email)
+      .get()
+      .then((QuerySnapshot querySnapshot) {
+    querySnapshot.docs.forEach((doc) {
+      age = doc['age'];
+    });
+  });
+  return age;
+}
 
 Future<String> getUserGender(String email) async {
-                      final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
-                      String gender = "";
-                      await usersCollection
-                        .where('email', isEqualTo: email)
-                        .get()
-                        .then((QuerySnapshot querySnapshot) {
-                          querySnapshot.docs.forEach((doc) { 
-                            gender = doc['gender'];
-                          });
-                        });
-                      return gender;
-                    }
-
-
-
+  final CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('users');
+  String gender = "";
+  await usersCollection
+      .where('email', isEqualTo: email)
+      .get()
+      .then((QuerySnapshot querySnapshot) {
+    querySnapshot.docs.forEach((doc) {
+      gender = doc['gender'];
+    });
+  });
+  return gender;
+}

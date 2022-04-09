@@ -17,15 +17,15 @@ class ProfileScreen extends StatelessWidget {
       // backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: Builder(builder: (context) {
+          double profileRadius = 60;
           return Column(
             children: [
               Container(
                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20)),
                   color: Palette.beige[500],
-                  // image: DecorationImage(
-                  //     image: NetworkImage(
-                  //         "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.theguardian.com%2Flifeandstyle%2F2019%2Fnov%2F08%2Fexperience-hide-the-pain-harold-face-became-meme-turned-it-into-career&psig=AOvVaw3xRZQ75mtTZuFLknTsTZCQ&ust=1648968747866000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCNiZ47Xl9PYCFQAAAAAdAAAAABAD"),
-                  //     fit: BoxFit.cover),
                 ),
                 child: Container(
                   width: double.infinity,
@@ -49,48 +49,52 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      alignment: Alignment(0.0, 2.5),
+                      alignment: Alignment(0.0, 4.5),
                       child: CircleAvatar(
-                        radius: 50,
+                        radius: profileRadius,
                         backgroundColor: Colors.black,
                         child: CircleAvatar(
                           backgroundImage: NetworkImage(
                               'https://yt3.ggpht.com/ytc/AKedOLQ0ZzmuKDUAnn9PnXylG707Oii6hd73U8rXbRGW=s900-c-k-c0x00ffffff-no-rj'),
-                          radius: 45,
+                          radius: profileRadius - 5,
                         ),
                       ),
                     ),
                   ]),
                 ),
               ),
-              SizedBox(
-                height: 35,
+              Spacer(
+                flex: 2,
               ),
               Text(
                 globalName,
-                style: TextStyle(
-                    fontSize: 35.0,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400),
-              ),
-              SizedBox(
-                height: 8,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline1!
+                    .copyWith(fontSize: 50),
               ),
               SizedBox(
                 height: 10,
               ),
+              Divider(
+                thickness: 2,
+                indent: 15,
+                endIndent: 15,
+                height: 20,
+              ),
+              Spacer(),
               Text('Age', style: Theme.of(context).textTheme.headline2),
               SizedBox(height: 8),
               Text(globalAge.toString(),
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95)))),
-              SizedBox(height: 30),
+              Spacer(),
               Text('Gender', style: Theme.of(context).textTheme.headline2),
               SizedBox(height: 8),
               Text(globalGender,
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95)))),
-              SizedBox(height: 30),
+              Spacer(),
               Text('Email', style: Theme.of(context).textTheme.headline2),
               SizedBox(height: 8),
               Text(globalEmail,
@@ -98,9 +102,13 @@ class ProfileScreen extends StatelessWidget {
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95))),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis),
-              SizedBox(height: 8),
+              Spacer(),
               TextButton(
-                  child: const Text('Sign Out'),
+                  child: Text(
+                    'Sign Out',
+                    style: Theme.of(context).textTheme.headline5!.copyWith(
+                        color: Palette.beige[500], fontWeight: FontWeight.bold),
+                  ),
                   onPressed: () async {
                     await _firebaseAuth.signOut();
                     globalName = "You are not logged in...";
@@ -110,6 +118,7 @@ class ProfileScreen extends StatelessWidget {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => HomeMapScreen()));
                   }),
+              Spacer(),
             ],
           );
         }),

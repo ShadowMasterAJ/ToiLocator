@@ -4,20 +4,20 @@
 import 'dart:math' show cos, sqrt, asin;
 
 //files
+import '/models/toilet.dart';
+
+//packages
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:toilocator/services/getToiletInfo.dart';
 import 'package:toilocator/widgets/toilet_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:toilocator/palette.dart';
 import 'bottom_panel.dart';
-import '/models/toilet.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoder/geocoder.dart';
-
-//packages
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class MapStack extends StatefulWidget {
   final Function(double lat, double long) getLocFromInfo;
@@ -201,6 +201,7 @@ class _MapStackState extends State<MapStack> {
       ),
     ));
     _markers.clear();
+    polylines.clear();
     addMarker();
     print('addMarker called');
 
