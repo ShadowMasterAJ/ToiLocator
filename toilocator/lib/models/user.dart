@@ -1,31 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:toilocator/services/auth.dart' as auth;
 class User{
-  String? uid;
-  String? userName;
-  String? userEmail;
-  String? gender;
-  int? age;
+  String uid;
+  String userName;
+  String userEmail;
+  String password;
+  String gender;
+  int age;
 
-User({ this.uid, this.userName, this.userEmail, this.gender, this.age});
+  User({ required this.uid, required this.userName,required this.userEmail,required this.password,required this.gender, required this.age});
 
-  //User({required this.uid});
-}
-
-class UserRecord {
-  String? uid;
-  String? userName;
-  String? userEmail;
-  String? gender;
-  int? age;
-
-  UserRecord({ this.uid, this.userName, this.userEmail, this.gender, this.age});
-
-
-factory UserRecord.fromMap(map) {
-    return UserRecord(
+    factory User.fromMap(map) {
+    return User(
       uid: map['uid'],
       userName: map['userName'],
       userEmail: map['email'],
+      password: map['password'],
       gender: map['gender'],
       age: map['age'],
     );
@@ -37,29 +27,70 @@ factory UserRecord.fromMap(map) {
       'uid': uid,
       'userName': userName,
       'email': userEmail,
+      'password': password,
       'gender': gender,
       'age': age,
     };
   }
-
-  // String getUid() {
-  //     return this.uid;
-  // }
-
-
-  // String getGender() {
-  //     return this.gender;
-  // }
-
-
-  // int getAge(){
-  //     return this.age;
-  // }
-
-
-
- 
 }
+
+// class UserRecord {
+//   String uid;
+//   String userName;
+//   String userEmail;
+//   String password;
+//   String gender;
+//   int age;
+
+//   UserRecord({ required this.uid, required this.userName,required this.userEmail,required this.password,required this.gender, required this.age});
+
+
+// factory UserRecord.fromMap(map) {
+//     return UserRecord(
+//       uid: map['uid'],
+//       userName: map['userName'],
+//       userEmail: map['email'],
+//       password: map['password'],
+//       gender: map['gender'],
+//       age: map['age'],
+//     );
+//   }
+
+//   // sending data to our server
+//   Map<String, dynamic> toMap() {
+//     return {
+//       'uid': uid,
+//       'userName': userName,
+//       'email': userEmail,
+//       'password': password,
+//       'gender': gender,
+//       'age': age,
+//     };
+//   }
+
+
+
+
+// }
+
+// class UserController {
+//   UserRecord _currentUser;
+//   auth.AuthService _authService = locator.get<auth.AuthService>();
+//   Future init;
+
+//   UserController() {
+//     init = initUser();
+//   }
+
+//   Future<UserRecord> initUser() async {
+//     _currentUser = await _authService.getCurrentUser();
+//     return _currentUser;
+//   }
+
+//   UserRecord get currentUser => _currentUser;}
+
+
+
 
 
 //notes:when a new user registers, the firebase automatically create a unique id for that user

@@ -1,20 +1,47 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:toilocator/global_variables/my_globals.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:toilocator/models/user.dart';
 import 'package:toilocator/screens/auth_screen.dart';
+import 'package:toilocator/screens/home_map_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:toilocator/services/auth.dart';
 import '../palette.dart';
-import '../widgets/side_drawer_button.dart';
-import './home_map_screen.dart';
 import 'package:toilocator/services/userDatabase.dart' as ud;
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:toilocator/global_variables/my_globals.dart';
 
-class ProfileScreen extends StatelessWidget {
+import '../services/userDatabase.dart';
+
+//starting screen switching, not necessary for our app
+class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-    return Scaffold(
+    final authService = Provider.of<AuthService>(context);
+    return StreamBuilder<User?>(
+      stream: authService.user,
+      builder: (_, AsyncSnapshot<User?> snapshot){
+        if (snapshot.connectionState == ConnectionState.active){
+          return displayUserInformation(context, snapshot);
+        }
+        else{
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+          ),
+          );
+        }
+      }
+      );
+    // return either the Home or Authenticate widget
+  }
+
+ Widget displayUserInformation(context, snapshot) {
+   print("the result is" );
+   print(snapshot.data.age);
+   return Scaffold(
       drawer: Container(width: 100, child: HomeMapScreen.buildDrawer(context)),
-      // backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: Builder(builder: (context) {
           return Column(
@@ -29,7 +56,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 child: Container(
                   width: double.infinity,
-                  height: 150,
+                  height: 200,
                   child: Stack(children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -43,7 +70,7 @@ class ProfileScreen extends StatelessWidget {
                               },
                               icon: Icon(Icons.menu_rounded)),
                           Text('Profile',
-                              style: Theme.of(context).textTheme.headline4),
+                              style: Theme.of(context).textTheme.headline2),
                           SizedBox(width: 40),
                         ],
                       ),
@@ -51,12 +78,12 @@ class ProfileScreen extends StatelessWidget {
                     Container(
                       alignment: Alignment(0.0, 2.5),
                       child: CircleAvatar(
-                        radius: 50,
+                        radius: 65,
                         backgroundColor: Colors.black,
                         child: CircleAvatar(
                           backgroundImage: NetworkImage(
                               'https://yt3.ggpht.com/ytc/AKedOLQ0ZzmuKDUAnn9PnXylG707Oii6hd73U8rXbRGW=s900-c-k-c0x00ffffff-no-rj'),
-                          radius: 45,
+                          radius: 60,
                         ),
                       ),
                     ),
@@ -64,56 +91,45 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 35,
+                height: 60,
               ),
               Text(
                 globalName,
                 style: TextStyle(
-                    fontSize: 35.0,
+                    fontSize: 25.0,
                     color: Colors.black,
                     fontWeight: FontWeight.w400),
               ),
               SizedBox(
-                height: 8,
-              ),
-              SizedBox(
                 height: 10,
               ),
+              SizedBox(
+                height: 15,
+              ),
               Text('Age', style: Theme.of(context).textTheme.headline2),
-              SizedBox(height: 8),
-              Text(globalAge.toString(),
+              SizedBox(height: 10),
+              Text((globalAge).toString(),
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95)))),
               SizedBox(height: 30),
               Text('Gender', style: Theme.of(context).textTheme.headline2),
-              SizedBox(height: 8),
+              SizedBox(height: 10),
               Text(globalGender,
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95)))),
               SizedBox(height: 30),
               Text('Email', style: Theme.of(context).textTheme.headline2),
-              SizedBox(height: 8),
-              Text(globalEmail,
+              SizedBox(height: 10),
+              Text( globalEmail,
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95))),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis),
-              SizedBox(height: 8),
-              TextButton(
-                  child: const Text('Sign Out'),
-                  onPressed: () async {
-                    await _firebaseAuth.signOut();
-                    globalName = "You are not logged in...";
-                    globalAge = 0;
-                    globalGender = "";
-                    globalEmail = "";
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => HomeMapScreen()));
-                  }),
             ],
           );
         }),
       ),
     );
-  }
+ }
+    
 }
