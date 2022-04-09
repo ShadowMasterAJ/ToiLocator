@@ -309,22 +309,22 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
                             //   MaterialPageRoute(
                             //       builder: (context) => AuthScreen()),
                             // );
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AuthScreen()),
-                                ModalRoute.withName("/loginPage"));
-                            // FirebaseAuth.instance
-                            //     .authStateChanges()
-                            //     .listen((User? user) {
-                            //   if (FirebaseAuth.instance.currentUser == null) {
-                            //     Navigator.of(context)
-                            //         .pushReplacement(createAltRoute());
-                            //   } else {
-                            //     Navigator.of(context).push(createRoute(
-                            //         widget.index, widget.toiletList));
-                            //   }
-                            // });
+                            // Navigator.pushAndRemoveUntil(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => AuthScreen()),
+                            //     ModalRoute.withName("/loginPage"));
+                            FirebaseAuth.instance
+                                .authStateChanges()
+                                .listen((User? user) {
+                              if (FirebaseAuth.instance.currentUser == null) {
+                                Navigator.of(context)
+                                    .pushReplacement(createAltRoute());
+                              } else {
+                                Navigator.of(context).push(createRoute(
+                                    widget.index, widget.toiletList));
+                              }
+                            });
                           }, // ONLY IF USER IS AUTHENTICATED
                           child: Text(
                             "Write Review...",
