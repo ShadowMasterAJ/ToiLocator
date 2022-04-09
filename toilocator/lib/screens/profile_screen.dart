@@ -1,17 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:toilocator/global_variables/my_globals.dart';
-import 'package:toilocator/screens/auth_screen.dart';
+
 import '../palette.dart';
-import '../widgets/side_drawer_button.dart';
 import './home_map_screen.dart';
-import 'package:toilocator/services/userDatabase.dart' as ud;
-import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
     return Scaffold(
       drawer: Container(width: 100, child: HomeMapScreen.buildDrawer(context)),
       body: SafeArea(

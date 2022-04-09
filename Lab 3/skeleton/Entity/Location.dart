@@ -2,6 +2,5 @@
 /// Geospatial data will be in the datatype of tuple<double> (x, y)
 /// x denotes longitude, y denotes latitude
 
-import 'package:flutter/gestures.dart';
 
 ///
