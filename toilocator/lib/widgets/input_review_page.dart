@@ -202,16 +202,16 @@ class _InputReviewPageState extends State<InputReviewPage> {
                                     ),
                                     child: TextButton(
                                         onPressed: () {
-                                          // Navigator.popUntil(
-                                          //     context,
-                                          //     ModalRoute.withName(
-                                          //         '/toiletInfo'));
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    HomeMapScreen()),
-                                          ).then((value) => setState(() {}));
+                                          Navigator.popUntil(
+                                              context,
+                                              ModalRoute.withName(
+                                                  '/toiletInfo'));
+                                          // Navigator.push(
+                                          //   context,
+                                          //   MaterialPageRoute(
+                                          //       builder: (context) =>
+                                          //           HomeMapScreen()),
+                                          // ).then((value) => setState(() {}));
                                         },
                                         child: Text(
                                           "Return",
@@ -242,12 +242,16 @@ class _InputReviewPageState extends State<InputReviewPage> {
                     userComment = myController.text;
                     print('Comment: User gave review: $userComment');
 
-                    
                     var user = await auth.FirebaseAuth.instance.currentUser;
                     // ignore: unused_local_variable
                     //var userData = FirebaseFirestore.instance.collection("users").doc(user?.uid).get();
-                    var name= await ud.getUserName(user!.uid);
-                    addReview(DateTime.now(), name, widget.toiletList[widget.index].index.toString(), userRating, userComment);
+                    var name = await ud.getUserName(user!.uid);
+                    addReview(
+                        DateTime.now(),
+                        name,
+                        widget.toiletList[widget.index].index.toString(),
+                        userRating,
+                        userComment);
                   },
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsets>(
