@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toilocator/palette.dart';
+
 import '../widgets/auth_card.dart';
 import '../screens/home_map_screen.dart';
 

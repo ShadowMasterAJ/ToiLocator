@@ -2,14 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:toilocator/models/user.dart';
-import 'package:toilocator/palette.dart';
-import 'package:toilocator/screens/home_map_screen.dart';
-import 'package:toilocator/screens/profile_screen.dart';
-import 'package:toilocator/services/userDatabase.dart';
+
+import '../models/user.dart';
+import '../palette.dart';
+import '../screens/profile_screen.dart';
+import '../services/userDatabase.dart';
 import '../services/auth.dart';
-import 'package:toilocator/services/auth.dart';
-import 'package:toilocator/global_variables/my_globals.dart';
+import '../global_variables/my_globals.dart';
 
 class AuthForm extends StatefulWidget {
   @override

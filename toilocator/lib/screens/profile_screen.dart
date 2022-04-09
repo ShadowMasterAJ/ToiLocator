@@ -16,10 +16,14 @@ class ProfileScreen extends StatelessWidget {
       drawer: Container(width: 100, child: HomeMapScreen.buildDrawer(context)),
       body: SafeArea(
         child: Builder(builder: (context) {
+          double profileRadius = 60;
           return Column(
             children: [
               Container(
                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20)),
                   color: Palette.beige[500],
                 ),
                 child: Container(
@@ -44,14 +48,14 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      alignment: Alignment(0.0, 2.5),
+                      alignment: Alignment(0.0, 4.5),
                       child: CircleAvatar(
-                        radius: 50,
+                        radius: profileRadius,
                         backgroundColor: Colors.black,
                         child: CircleAvatar(
                           backgroundImage: NetworkImage(
                               'https://yt3.ggpht.com/ytc/AKedOLQ0ZzmuKDUAnn9PnXylG707Oii6hd73U8rXbRGW=s900-c-k-c0x00ffffff-no-rj'),
-                          radius: 45,
+                          radius: profileRadius - 5,
                         ),
                       ),
                     ),

@@ -1,12 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:toilocator/screens/auth_screen.dart';
-import 'package:toilocator/services/getToiletImageUrlList.dart';
-import 'package:toilocator/services/getToiletInfo.dart';
+
+import '../screens/auth_screen.dart';
+import '../services/getToiletImageUrlList.dart';
+import '../services/getToiletInfo.dart';
 import '../palette.dart';
-import 'input_review_page.dart';
 import '../services/directions.dart';
+
+import 'input_review_page.dart';
+
 
 class toiletInfoCard extends StatefulWidget {
   final Map indices;
