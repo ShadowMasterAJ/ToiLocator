@@ -6,9 +6,10 @@ import 'package:toilocator/models/user.dart';
 import 'package:toilocator/palette.dart';
 import 'package:toilocator/screens/home_map_screen.dart';
 import 'package:toilocator/screens/profile_screen.dart';
-import 'package:toilocator/services/wrapper.dart';
+import 'package:toilocator/services/userDatabase.dart';
 import '../services/auth.dart';
 import 'package:toilocator/services/auth.dart';
+import 'package:toilocator/global_variables/my_globals.dart';
 
 
 class AuthForm extends StatefulWidget {
@@ -23,7 +24,8 @@ class _AuthFormState extends State<AuthForm> {
   AuthMode _authMode = AuthMode.Login;
 
   auth.User? user = auth.FirebaseAuth.instance.currentUser;
-  UserRecord userRecord = UserRecord();
+  User currentUser = User(uid: '', userName: '', userEmail: '', password: '', gender: '', age: 0);
+  //UserRecord userRecord = UserRecord(uid: '', userName: '', userEmail: '', password: '', gender: '', age: 0);
 
   @override
   void initState() {
@@ -43,16 +45,20 @@ class _AuthFormState extends State<AuthForm> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmController = TextEditingController();
   final TextEditingController genderController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
 
   final navigatorKey = GlobalKey<NavigatorState>();
   final authService = AuthService();
   final _auth = auth.FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+  String dropDownValue = "Female";
+  //final _auth = auth.FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
-    String dropDownValue = "Female";
+    
     //navigatorKey: navigatorKey;
     final authService = Provider.of<AuthService>(context);
     return SingleChildScrollView(
@@ -106,7 +112,7 @@ class _AuthFormState extends State<AuthForm> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: TextField(
+              child: TextFormField(
                 controller: emailController,
                 decoration: InputDecoration(
                   isDense: true,
@@ -126,6 +132,7 @@ class _AuthFormState extends State<AuthForm> {
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                       borderSide: BorderSide(width: 1, color: Colors.red)),
                 ),
+
                 keyboardType: TextInputType.emailAddress,
               ),
             ),
@@ -137,7 +144,7 @@ class _AuthFormState extends State<AuthForm> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: TextField(
+              child: TextFormField(
                 controller: passwordController,
                 obscureText: _isObscure,
                 decoration: InputDecoration(
@@ -167,6 +174,7 @@ class _AuthFormState extends State<AuthForm> {
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                       borderSide: BorderSide(width: 1, color: Colors.red)),
                 ),
+                
               ),
             ),
             _authMode == AuthMode.Signup
@@ -176,6 +184,7 @@ class _AuthFormState extends State<AuthForm> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: TextField(
+                      controller: confirmController,
                       obscureText: _isObscure,
                       decoration: InputDecoration(
                         isDense: true,
@@ -277,12 +286,59 @@ class _AuthFormState extends State<AuthForm> {
                 style: ElevatedButton.styleFrom(
                   primary: Palette.beige,
                 ),
-                onPressed: () {
+                onPressed: () async {
+                  bool exist = await checkIfEmailInUse(emailController.text);
                   if (_authMode == AuthMode.Signup) {
-                    signUp();
+                    if(emailController.text.isEmpty || !emailController.text.contains('@')){               
+                      const snackBar = SnackBar(
+                      content: Text('Please enter a valid email.'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                    else if(exist){
+                      const snackBar = SnackBar(
+                      content: Text('Account exists. Please log in.'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                    }
+                    else if(passwordController.text.length<6){
+                      const snackBar = SnackBar(
+                      content: Text('Password must be at least 7 characters long.'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                    else if(confirmController.text != passwordController.text){
+                      const snackBar = SnackBar(
+                      content: Text('Password does not match.'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);                 
+                    }
+                    else if(ageController.text.isEmpty){
+                      const snackBar = SnackBar(
+                      content: Text('Please register with your age.'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                    else signUp();
                   } else {
-                    signIn();
-                    //authService.signInUser(emailController.text, passwordController.text);
+                    bool verified = await checkIfPasswordCorrect(emailController.text, passwordController.text);
+                    print(verified);
+                    if(!exist){
+                      const snackBar = SnackBar(
+                      content: Text('No account found. Please sign up.'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                    else if(!verified){
+                      const snackBar = SnackBar(
+                      content: Text('Wrong password. Please enter again.'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                                  
+                    else signIn();
+                    
 
                   }
                 },
@@ -371,11 +427,13 @@ class _AuthFormState extends State<AuthForm> {
     } on auth.FirebaseAuthException catch (e) {
       print('Error in auth: $e\n----------------------');
     }
-    // Navigator.pushReplacement(
-    //   context,
-    //   MaterialPageRoute(builder: (BuildContext context) => HomeMapScreen()));
+    globalEmail=emailController.text;
+    globalAge=await getUserAge(globalEmail);
+    globalName=await getUserNameByEmail(globalEmail);
+    globalGender=await getUserGender(globalEmail);
+    
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomeMapScreen()));
+        MaterialPageRoute(builder: (context) => ProfileScreen()));
   }
 
   Future signUp() async {
@@ -398,7 +456,7 @@ class _AuthFormState extends State<AuthForm> {
     }
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => HomeMapScreen()),
+        MaterialPageRoute(builder: (context) => ProfileScreen()),
         (route) => false);
   }
 
@@ -406,15 +464,26 @@ class _AuthFormState extends State<AuthForm> {
     // calling our firestore, calling our user record, sending these values
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     // writing all the values
-    userRecord.uid = auth.FirebaseAuth.instance.currentUser!.uid;
-    userRecord.userName = nameController.text;
-    userRecord.userEmail = emailController.text;
-    userRecord.gender = 'Female';
-    userRecord.age = int.parse(ageController.text);
+    currentUser.uid = auth.FirebaseAuth.instance.currentUser!.uid;
+    currentUser.userName = nameController.text;
+    currentUser.userEmail = emailController.text;
+    currentUser.password = passwordController.text;
+    currentUser.gender = dropDownValue;
+    currentUser.age = int.parse(ageController.text);
 
-    await firebaseFirestore
+    globalAge=currentUser.age;
+    globalName=currentUser.userName;
+    globalEmail=currentUser.userEmail;
+    globalGender=currentUser.gender;
+
+    // await firebaseFirestore
+    //     .collection("users")
+    //     .doc(user?.uid)
+    //     .set(userRecord.toMap());
+
+        await firebaseFirestore
         .collection("users")
         .doc(user?.uid)
-        .set(userRecord.toMap());
+        .set(currentUser.toMap());
   }
 }
