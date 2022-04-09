@@ -23,7 +23,8 @@ class _AuthFormState extends State<AuthForm> {
   AuthMode _authMode = AuthMode.Login;
 
   auth.User? user = auth.FirebaseAuth.instance.currentUser;
-  User currentUser = User(uid: '', userName: '', userEmail: '', password: '', gender: '', age: 0);
+  User currentUser = User(
+      uid: '', userName: '', userEmail: '', password: '', gender: '', age: 0);
   //UserRecord userRecord = UserRecord(uid: '', userName: '', userEmail: '', password: '', gender: '', age: 0);
 
   @override
@@ -57,7 +58,6 @@ class _AuthFormState extends State<AuthForm> {
 
   @override
   Widget build(BuildContext context) {
-    
     //navigatorKey: navigatorKey;
     final authService = Provider.of<AuthService>(context);
     return SingleChildScrollView(
@@ -131,7 +131,6 @@ class _AuthFormState extends State<AuthForm> {
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                       borderSide: BorderSide(width: 1, color: Colors.red)),
                 ),
-
                 keyboardType: TextInputType.emailAddress,
               ),
             ),
@@ -173,7 +172,6 @@ class _AuthFormState extends State<AuthForm> {
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                       borderSide: BorderSide(width: 1, color: Colors.red)),
                 ),
-                
               ),
             ),
             _authMode == AuthMode.Signup
@@ -288,57 +286,52 @@ class _AuthFormState extends State<AuthForm> {
                 onPressed: () async {
                   bool exist = await checkIfEmailInUse(emailController.text);
                   if (_authMode == AuthMode.Signup) {
-                    if(emailController.text.isEmpty || !emailController.text.contains('@')){               
+                    if (emailController.text.isEmpty ||
+                        !emailController.text.contains('@')) {
                       const snackBar = SnackBar(
-                      content: Text('Please enter a valid email.'),
+                        content: Text('Please enter a valid email.'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
-                    else if(exist){
+                    } else if (exist) {
                       const snackBar = SnackBar(
-                      content: Text('Account exists. Please log in.'),
+                        content: Text('Account exists. Please log in.'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-                    }
-                    else if(passwordController.text.length<6){
+                    } else if (passwordController.text.length < 6) {
                       const snackBar = SnackBar(
-                      content: Text('Password must be at least 7 characters long.'),
+                        content: Text(
+                            'Password must be at least 7 characters long.'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
-                    else if(confirmController.text != passwordController.text){
+                    } else if (confirmController.text !=
+                        passwordController.text) {
                       const snackBar = SnackBar(
-                      content: Text('Password does not match.'),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);                 
-                    }
-                    else if(ageController.text.isEmpty){
-                      const snackBar = SnackBar(
-                      content: Text('Please register with your age.'),
+                        content: Text('Password does not match.'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
-                    else signUp();
+                    } else if (ageController.text.isEmpty) {
+                      const snackBar = SnackBar(
+                        content: Text('Please register with your age.'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    } else
+                      signUp();
                   } else {
-                    bool verified = await checkIfPasswordCorrect(emailController.text, passwordController.text);
+                    bool verified = await checkIfPasswordCorrect(
+                        emailController.text, passwordController.text);
                     print(verified);
-                    if(!exist){
+                    if (!exist) {
                       const snackBar = SnackBar(
-                      content: Text('No account found. Please sign up.'),
+                        content: Text('No account found. Please sign up.'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
-                    else if(!verified){
+                    } else if (!verified) {
                       const snackBar = SnackBar(
-                      content: Text('Wrong password. Please enter again.'),
+                        content: Text('Wrong password. Please enter again.'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
-                                  
-                    else signIn();
-                    
-
+                    } else
+                      signIn();
                   }
                 },
                 child: Padding(
@@ -412,11 +405,11 @@ class _AuthFormState extends State<AuthForm> {
   }
 
   Future signIn() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator()),
-    );
+    // showDialog(
+    //   context: context,
+    //   barrierDismissible: false,
+    //   builder: (context) => Center(child: CircularProgressIndicator()),
+    // );
 
     try {
       await auth.FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -426,21 +419,21 @@ class _AuthFormState extends State<AuthForm> {
     } on auth.FirebaseAuthException catch (e) {
       print('Error in auth: $e\n----------------------');
     }
-    globalEmail=emailController.text;
-    globalAge=await getUserAge(globalEmail);
-    globalName=await getUserNameByEmail(globalEmail);
-    globalGender=await getUserGender(globalEmail);
-    
+    globalEmail = emailController.text;
+    globalAge = await getUserAge(globalEmail);
+    globalName = await getUserNameByEmail(globalEmail);
+    globalGender = await getUserGender(globalEmail);
+
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => ProfileScreen()));
   }
 
   Future signUp() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator()),
-    );
+    // showDialog(
+    //   context: context,
+    //   barrierDismissible: false,
+    //   builder: (context) => Center(child: CircularProgressIndicator()),
+    // );
 
     try {
       await auth.FirebaseAuth.instance
@@ -470,17 +463,17 @@ class _AuthFormState extends State<AuthForm> {
     currentUser.gender = dropDownValue;
     currentUser.age = int.parse(ageController.text);
 
-    globalAge=currentUser.age;
-    globalName=currentUser.userName;
-    globalEmail=currentUser.userEmail;
-    globalGender=currentUser.gender;
+    globalAge = currentUser.age;
+    globalName = currentUser.userName;
+    globalEmail = currentUser.userEmail;
+    globalGender = currentUser.gender;
 
     // await firebaseFirestore
     //     .collection("users")
     //     .doc(user?.uid)
     //     .set(userRecord.toMap());
 
-        await firebaseFirestore
+    await firebaseFirestore
         .collection("users")
         .doc(user?.uid)
         .set(currentUser.toMap());

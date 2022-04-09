@@ -29,7 +29,9 @@ class toiletInfoCard extends StatefulWidget {
   }) : super(key: key);
 }
 
-class _toiletInfoCardState extends State<toiletInfoCard> {
+class _toiletInfoCardState extends State<toiletInfoCard>
+    with AutomaticKeepAliveClientMixin<toiletInfoCard> {
+  bool get wantKeepAlive => true;
   var averageRating = 0;
 
   List<Widget> imageList = [];
@@ -147,6 +149,7 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
 
   Route createRoute(int index, List toiletList) {
     return PageRouteBuilder(
+      settings: RouteSettings(name: "/inputReview"),
       pageBuilder: (
         context,
         animation,
@@ -250,399 +253,398 @@ class _toiletInfoCardState extends State<toiletInfoCard> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? const CircularProgressIndicator()
-        : Scaffold(
-            bottomNavigationBar: BottomAppBar(
-                color: Palette.beige[100],
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextButton(
-                          child: Text(
-                            // no splashcolour here
-                            "Directions",
-                          ),
-                          onPressed: () async {
-                            print('directions pressed');
+    return
+        // isLoading
+        //     ? const CircularProgressIndicator() :
+        // MaterialApp(
+        // home:
+        Scaffold(
+      bottomNavigationBar: BottomAppBar(
+          color: Palette.beige[100],
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: TextButton(
+                child: Text(
+                  // no splashcolour here
+                  "Directions",
+                ),
+                onPressed: () async {
+                  print('directions pressed');
 
-                            print(
-                                "All LatLng: ${widget.lat}, ${widget.lng} || ${widget.toiletList[widget.index].coords[0]}, ${widget.toiletList[widget.index].coords[1]}");
+                  print(
+                      "All LatLng: ${widget.lat}, ${widget.lng} || ${widget.toiletList[widget.index].coords[0]}, ${widget.toiletList[widget.index].coords[1]}");
 
-                            Map<PolylineId, Polyline> res =
-                                await directions.createPolylines(
-                                    widget.lat,
-                                    widget.lng,
-                                    widget.toiletList[widget.index].coords[0],
-                                    widget.toiletList[widget.index].coords[1]);
-                            widget.getPolyLines(res);
-                            Navigator.pop(context);
-                          },
-                          style: ButtonStyle(
-                              padding: MaterialStateProperty.all<EdgeInsets>(
-                                  EdgeInsets.all(15)),
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  Palette.beige[300] as Color),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Color.fromARGB(255, 255, 255, 255)),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                  side: BorderSide(
-                                    color: Color.fromARGB(255, 255, 255, 255),
-                                  ),
-                                ),
-                              )),
+                  Map<PolylineId, Polyline> res =
+                      await directions.createPolylines(
+                          widget.lat,
+                          widget.lng,
+                          widget.toiletList[widget.index].coords[0],
+                          widget.toiletList[widget.index].coords[1]);
+                  widget.getPolyLines(res);
+                  Navigator.pop(context);
+                },
+                style: ButtonStyle(
+                    padding: MaterialStateProperty.all<EdgeInsets>(
+                        EdgeInsets.all(15)),
+                    foregroundColor: MaterialStateProperty.all<Color>(
+                        Palette.beige[300] as Color),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Color.fromARGB(255, 255, 255, 255)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(
+                          color: Color.fromARGB(255, 255, 255, 255),
                         ),
                       ),
-                      // Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: TextButton(
-                          onPressed: () {
-                            // Navigator.pop(context);
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) => AuthScreen()),
-                            // );
-                            // Navigator.pushAndRemoveUntil(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => AuthScreen()),
-                            //     ModalRoute.withName("/loginPage"));
-                            FirebaseAuth.instance
-                                .authStateChanges()
-                                .listen((User? user) {
-                              if (FirebaseAuth.instance.currentUser == null) {
-                                Navigator.of(context)
-                                    .pushReplacement(createAltRoute());
-                              } else {
-                                Navigator.of(context).push(createRoute(
-                                    widget.index, widget.toiletList));
-                              }
-                            });
-                          }, // ONLY IF USER IS AUTHENTICATED
-                          child: Text(
-                            "Write Review...",
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Color.fromARGB(255, 255, 255, 255),
-                            ),
-                          ),
-                          style: ButtonStyle(
-                            padding: MaterialStateProperty.all<EdgeInsets>(
-                                EdgeInsets.all(15)),
-                            foregroundColor: MaterialStateProperty.all<Color>(
-                                Color.fromARGB(255, 255, 255, 255)),
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Palette.beige[300] as Color),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(
-                                    color: Palette.beige[300] as Color),
-                              ),
-                            ),
+                    )),
+              ),
+            ),
+            // Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: TextButton(
+                onPressed: () {
+                  // Navigator.pop(context);
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => AuthScreen()),
+                  // );
+                  // Navigator.pushAndRemoveUntil(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => AuthScreen()),
+                  //     ModalRoute.withName("/loginPage"));
+                  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+                    ///////////////////////////////////////////////////////////////
+                    if (FirebaseAuth.instance.currentUser == null) {
+                      // if user is not lgged in
+                      Navigator.of(context).pushReplacement(createAltRoute());
+                    } else {
+                      // else login already! go to write review page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => InputReviewPage(
+                                index: widget.index,
+                                toiletList: widget.toiletList,
+                                reviewCount: reviewList.length)),
+                      ).then((value) => setState(() {}));
+                      // Navigator.push(
+                      //   context,
+                      //   createRoute(widget.index, widget.toiletList),
+                      // ).then((value) => setState(() {}));
+                    }
+                    ///////////////////////////////////////////////////////////////
+                  });
+                },
+                child: Text(
+                  "Write Review...",
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
+                ),
+                style: ButtonStyle(
+                  padding:
+                      MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                  foregroundColor: MaterialStateProperty.all<Color>(
+                      Color.fromARGB(255, 255, 255, 255)),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      Palette.beige[300] as Color),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: BorderSide(color: Palette.beige[300] as Color),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // Spacer(),
+            Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(children: [
+                  TextButton(
+                    child: Text(
+                      "Back",
+                    ),
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                          EdgeInsets.all(15)),
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          Palette.beige[300] as Color),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 255, 255, 255)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(
+                            color: Color.fromARGB(255, 255, 255, 255),
                           ),
                         ),
                       ),
-                      // Spacer(),
-                      Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Row(children: [
-                            TextButton(
-                              child: Text(
-                                "Back",
-                              ),
-                              onPressed: () => Navigator.of(context).pop(),
-                              style: ButtonStyle(
-                                padding: MaterialStateProperty.all<EdgeInsets>(
-                                    EdgeInsets.all(15)),
-                                foregroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Palette.beige[300] as Color),
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Color.fromARGB(255, 255, 255, 255)),
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
-                                    side: BorderSide(
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                    ),
+                  ),
+                ])),
+          ])),
+      body: SingleChildScrollView(
+        physics: ScrollPhysics(),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 8.0,
+              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: <Widget>[
+              //     Container(
+              //       width: 30,
+              //       height: 5,
+              //       decoration: BoxDecoration(
+              //           color: Colors.grey[300],
+              //           borderRadius: BorderRadius.all(Radius.circular(12.0))),
+              //     ),
+              //   ],
+              // ),
+              Divider(
+                thickness: 1.5,
+                indent: 10,
+                endIndent: 10,
+              ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: TextButton(
+                    child: Text(
+                      widget.indices[widget.index].toString() + "m",
+                    ),
+                    onPressed: null,
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                          EdgeInsets.all(12)),
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 255, 255, 255)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 179, 152, 112)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(
+                              color: Color.fromARGB(255, 179, 152, 112)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 3),
+              Container(
+                width: MediaQuery.of(context).size.width * 1,
+                child: Text(
+                  widget.toiletList[widget.index].toiletName,
+                  maxLines: 2,
+                  style: Theme.of(context).textTheme.headline5,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              SizedBox(height: 8),
+              Container(
+                width: MediaQuery.of(context).size.width * 1,
+                height: 18,
+                child: Text(
+                  widget.toiletList[widget.index].address,
+                  style: Theme.of(context).textTheme.bodyText2?.merge(
+                      TextStyle(color: Color.fromARGB(255, 87, 87, 87))),
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              SizedBox(height: 30),
+              Row(children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: Container(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      child: Text(
+                        "Official Hygiene Rating    ",
+                        style: Theme.of(context).textTheme.bodyText1,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      )),
+                ),
+                Padding(padding: const EdgeInsets.only(right: 110.0)),
+                Row(
+                    children: displayStarRating(
+                        widget.toiletList[widget.index].awardInt))
+              ]),
+              SizedBox(height: 15),
+              Row(children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: Container(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      child: Text(
+                        "User Hygiene Rating    ",
+                        style: Theme.of(context).textTheme.bodyText1,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      )),
+                ),
+                Padding(padding: const EdgeInsets.only(right: 110.0)),
+                FutureBuilder(
+                    future: createReviewList(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      return Row(children: displayStarRating((averageRating)));
+                    }), //placeholder value
+              ]),
+              SizedBox(height: 15),
+              Row(children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: Container(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      child: Text(
+                        "Accessibility    ",
+                        style: Theme.of(context).textTheme.bodyText1,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      )),
+                ),
+                Padding(padding: const EdgeInsets.only(right: 110.0)),
+                Row(children: [
+                  SizedBox(
+                    width: 60,
+                  ),
+                  Icon(
+                    Icons.wheelchair_pickup,
+                    color: Palette.beige[300],
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Icon(Icons.baby_changing_station)
+                ])
+              ]),
+              SizedBox(height: 15),
+              Padding(
+                padding: const EdgeInsets.only(left: 18.0),
+                child: Text(
+                  "Official Images",
+                  style: Theme.of(context).textTheme.bodyText1?.merge(
+                      TextStyle(color: Color.fromARGB(255, 118, 118, 118))),
+                ),
+              ),
+              SizedBox(
+                // height: 180,
+
+                child: FutureBuilder(
+                  future: createImageList(),
+                  builder: (context, snapshot) {
+                    return snapshot.connectionState == ConnectionState.waiting
+                        ? Center(child: CircularProgressIndicator())
+                        : SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: imageList,
                             ),
-                          ])),
-                    ])),
-            body: SingleChildScrollView(
-              physics: ScrollPhysics(),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                          );
+                  },
+                ),
+              ),
+              Divider(
+                  color: Color.fromARGB(255, 142, 142, 142),
+                  thickness: 4,
+                  indent: 30,
+                  endIndent: 30),
+              SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.only(left: 00),
+                child: Column(
                   children: [
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: <Widget>[
-                    //     Container(
-                    //       width: 30,
-                    //       height: 5,
-                    //       decoration: BoxDecoration(
-                    //           color: Colors.grey[300],
-                    //           borderRadius: BorderRadius.all(Radius.circular(12.0))),
-                    //     ),
-                    //   ],
-                    // ),
-                    Divider(
-                      thickness: 1.5,
-                      indent: 10,
-                      endIndent: 10,
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextButton(
-                          child: Text(
-                            widget.indices[widget.index].toString() + "m",
-                          ),
-                          onPressed: null,
-                          style: ButtonStyle(
-                            padding: MaterialStateProperty.all<EdgeInsets>(
-                                EdgeInsets.all(12)),
-                            foregroundColor: MaterialStateProperty.all<Color>(
-                                Color.fromARGB(255, 255, 255, 255)),
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Color.fromARGB(255, 179, 152, 112)),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(
-                                    color: Color.fromARGB(255, 179, 152, 112)),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 3),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 1,
-                      child: Text(
-                        widget.toiletList[widget.index].toiletName,
-                        maxLines: 2,
-                        style: Theme.of(context).textTheme.headline5,
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
+                    Text("User Reviews",
+                        style: Theme.of(context).textTheme.headline6),
                     SizedBox(height: 8),
+                    Divider(
+                        color: Color.fromARGB(255, 218, 218, 218),
+                        thickness: 2),
+                    SizedBox(height: 6),
                     Container(
-                      width: MediaQuery.of(context).size.width * 1,
-                      height: 18,
-                      child: Text(
-                        widget.toiletList[widget.index].address,
-                        style: Theme.of(context).textTheme.bodyText2?.merge(
-                            TextStyle(color: Color.fromARGB(255, 87, 87, 87))),
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                    Row(children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 30.0),
-                        child: Container(
-                            width: MediaQuery.of(context).size.width * 0.3,
-                            child: Text(
-                              "Official Hygiene Rating    ",
-                              style: Theme.of(context).textTheme.bodyText1,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            )),
-                      ),
-                      Padding(padding: const EdgeInsets.only(right: 110.0)),
-                      Row(
-                          children: displayStarRating(
-                              widget.toiletList[widget.index].awardInt))
-                    ]),
-                    SizedBox(height: 15),
-                    Row(children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 30.0),
-                        child: Container(
-                            width: MediaQuery.of(context).size.width * 0.3,
-                            child: Text(
-                              "User Hygiene Rating    ",
-                              style: Theme.of(context).textTheme.bodyText1,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            )),
-                      ),
-                      Padding(padding: const EdgeInsets.only(right: 110.0)),
-                      FutureBuilder(
-                          future: createReviewList(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<dynamic> snapshot) {
-                            return Row(
-                                children: displayStarRating((averageRating)));
-                          }), //placeholder value
-                    ]),
-                    SizedBox(height: 15),
-                    Row(children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 30.0),
-                        child: Container(
-                            width: MediaQuery.of(context).size.width * 0.3,
-                            child: Text(
-                              "Accessibility    ",
-                              style: Theme.of(context).textTheme.bodyText1,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            )),
-                      ),
-                      Padding(padding: const EdgeInsets.only(right: 110.0)),
-                      Row(children: [
-                        SizedBox(
-                          width: 60,
-                        ),
-                        Icon(
-                          Icons.wheelchair_pickup,
-                          color: Palette.beige[300],
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Icon(Icons.baby_changing_station)
-                      ])
-                    ]),
-                    SizedBox(height: 15),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 18.0),
-                      child: Text(
-                        "Official Images",
-                        style: Theme.of(context).textTheme.bodyText1?.merge(
-                            TextStyle(
-                                color: Color.fromARGB(255, 118, 118, 118))),
-                      ),
-                    ),
-                    SizedBox(
-                      // height: 180,
-
+                      height: 300,
                       child: FutureBuilder(
-                        future: createImageList(),
-                        builder: (context, snapshot) {
-                          return snapshot.connectionState ==
-                                  ConnectionState.waiting
-                              ? Center(child: CircularProgressIndicator())
-                              : SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  padding:
-                                      EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: imageList,
-                                  ),
-                                );
+                        future: createReviewList(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<dynamic> snapshot) {
+                          if (snapshot.connectionState !=
+                                  ConnectionState.waiting &&
+                              reviewList.length != 0) {
+                            print('reviewlist has data');
+                            return SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              padding: EdgeInsets.fromLTRB(8.0, 0.0, 10.0, 0.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: reviewList,
+                              ),
+                            );
+                          } else if (snapshot.connectionState !=
+                                  ConnectionState.waiting &&
+                              reviewList.length == 0) {
+                            print('Comment: no reviews');
+                            return Column(
+                              children: [
+                                Image.asset(
+                                  'lib/assets/no_toilets.png',
+                                  width: 100,
+                                  height: 100,
+                                  //scale: 0.1,
+                                ),
+                                Text('No reviews, waiting for yours!',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline6
+                                        ?.copyWith(color: Colors.black),
+                                    textAlign: TextAlign.center),
+                              ],
+                            );
+                          }
+                          // no date might return some query documents
+                          // else if (!snapshot.hasData) {
+                          //   print('Comment: get review snapshot no data');
+                          //   return Container();
+
+                          // }
+                          else if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            //else {
+                            print('connecting');
+                            return Center(
+                                child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        (Palette.beige[300] as Color))));
+                          } else {
+                            return Container();
+                          }
                         },
                       ),
                     ),
-                    Divider(
-                        color: Color.fromARGB(255, 142, 142, 142),
-                        thickness: 4,
-                        indent: 30,
-                        endIndent: 30),
-                    SizedBox(height: 12),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 00),
-                      child: Column(
-                        children: [
-                          Text("User Reviews",
-                              style: Theme.of(context).textTheme.headline6),
-                          SizedBox(height: 8),
-                          Divider(
-                              color: Color.fromARGB(255, 218, 218, 218),
-                              thickness: 2),
-                          SizedBox(height: 6),
-                          Container(
-                            height: 300,
-                            child: FutureBuilder(
-                              future: createReviewList(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<dynamic> snapshot) {
-                                if (snapshot.connectionState !=
-                                        ConnectionState.waiting &&
-                                    reviewList.length != 0) {
-                                  print('reviewlist has data');
-                                  return SingleChildScrollView(
-                                    scrollDirection: Axis.vertical,
-                                    padding: EdgeInsets.fromLTRB(
-                                        8.0, 0.0, 10.0, 0.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: reviewList,
-                                    ),
-                                  );
-                                } else if (snapshot.connectionState !=
-                                        ConnectionState.waiting &&
-                                    reviewList.length == 0) {
-                                  print('Comment: no reviews');
-                                  return Column(
-                                    children: [
-                                      Image.asset(
-                                        'lib/assets/no_toilets.png',
-                                        width: 100,
-                                        height: 100,
-                                        //scale: 0.1,
-                                      ),
-                                      Text('No reviews, waiting for yours!',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline6
-                                              ?.copyWith(color: Colors.black),
-                                          textAlign: TextAlign.center),
-                                    ],
-                                  );
-                                }
-                                // no date might return some query documents
-                                // else if (!snapshot.hasData) {
-                                //   print('Comment: get review snapshot no data');
-                                //   return Container();
-
-                                // }
-                                else if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  //else {
-                                  print('connecting');
-                                  return Center(
-                                      child: CircularProgressIndicator(
-                                          valueColor: AlwaysStoppedAnimation<
-                                                  Color>(
-                                              (Palette.beige[300] as Color))));
-                                } else {
-                                  return Container();
-                                }
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ]),
-            ),
-          );
+                  ],
+                ),
+              ),
+            ]),
+      ),
+      // ),
+    );
   }
 }

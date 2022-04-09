@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:toilocator/palette.dart';
 import 'package:toilocator/widgets/map_stack.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:toilocator/screens/auth_screen.dart';
 import 'package:toilocator/widgets/side_drawer_button.dart';
 import 'package:toilocator/screens/profile_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeMapScreen extends StatelessWidget {
   HomeMapScreen({Key? key}) : super(key: key);
@@ -25,22 +27,56 @@ class HomeMapScreen extends StatelessWidget {
                   );
                 }),
                 DrawerButton(context, 'Profile', Icons.person_pin, () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ProfileScreen()),
-                  );
+                  if (FirebaseAuth.instance.currentUser == null) {
+                    Fluttertoast.showToast(
+                        msg: "Please sign up or sign in to see your profile!",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 3,
+                        backgroundColor: Color.fromARGB(255, 99, 99, 99),
+                        textColor: Colors.white,
+                        fontSize: 16.0);
+                  } else {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ProfileScreen()),
+                    );
+                  }
                 }),
-                DrawerButton(context, 'Help', Icons.help, () {}),
-                DrawerButton(context, 'Login', Icons.logout, () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        settings: RouteSettings(name: "/loginPage"),
-                        builder: (context) => AuthScreen()),
-                  );
-                }),
+                // DrawerButton(context, 'Help', Icons.help, () {}),
+                (FirebaseAuth.instance.currentUser == null
+                    ? DrawerButton(context, 'Login', Icons.login, () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              settings: RouteSettings(name: "/loginPage"),
+                              builder: (context) => AuthScreen()),
+                        );
+                      })
+                    : DrawerButton(context, 'Logout', Icons.logout, () async {
+                        // () async {
+                        final FirebaseAuth _firebaseAuth =
+                            FirebaseAuth.instance;
+                        await _firebaseAuth.signOut();
+                        // globalName = "You are not logged in...";
+                        // globalAge = 0;
+                        // globalGender = "";
+                        // globalEmail = "";
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => HomeMapScreen()));
+                      })),
+
+                // DrawerButton(context, 'Login', Icons.logout, () {
+                //   Navigator.pop(context);
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         settings: RouteSettings(name: "/loginPage"),
+                //         builder: (context) => AuthScreen()),
+                //   );
+                // }),
                 Spacer(),
                 Container(
                   child: Center(child: Text('V4.20.69')),

@@ -14,7 +14,6 @@ class ProfileScreen extends StatelessWidget {
     final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
     return Scaffold(
       drawer: Container(width: 100, child: HomeMapScreen.buildDrawer(context)),
-      // backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: Builder(builder: (context) {
           return Column(
@@ -22,10 +21,6 @@ class ProfileScreen extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   color: Palette.beige[500],
-                  // image: DecorationImage(
-                  //     image: NetworkImage(
-                  //         "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.theguardian.com%2Flifeandstyle%2F2019%2Fnov%2F08%2Fexperience-hide-the-pain-harold-face-became-meme-turned-it-into-career&psig=AOvVaw3xRZQ75mtTZuFLknTsTZCQ&ust=1648968747866000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCNiZ47Xl9PYCFQAAAAAdAAAAABAD"),
-                  //     fit: BoxFit.cover),
                 ),
                 child: Container(
                   width: double.infinity,
@@ -43,7 +38,7 @@ class ProfileScreen extends StatelessWidget {
                               },
                               icon: Icon(Icons.menu_rounded)),
                           Text('Profile',
-                              style: Theme.of(context).textTheme.headline4),
+                              style: Theme.of(context).textTheme.headline5),
                           SizedBox(width: 40),
                         ],
                       ),
@@ -64,7 +59,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 35,
+                height: 45,
               ),
               Text(
                 globalName,
@@ -74,42 +69,43 @@ class ProfileScreen extends StatelessWidget {
                     fontWeight: FontWeight.w400),
               ),
               SizedBox(
-                height: 8,
+                height: 20,
               ),
               SizedBox(
                 height: 10,
               ),
-              Text('Age', style: Theme.of(context).textTheme.headline2),
+              Text('Age', style: Theme.of(context).textTheme.headline5),
               SizedBox(height: 8),
               Text(globalAge.toString(),
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95)))),
               SizedBox(height: 30),
-              Text('Gender', style: Theme.of(context).textTheme.headline2),
+              Text('Gender', style: Theme.of(context).textTheme.headline5),
               SizedBox(height: 8),
               Text(globalGender,
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95)))),
               SizedBox(height: 30),
-              Text('Email', style: Theme.of(context).textTheme.headline2),
+              Text('Email', style: Theme.of(context).textTheme.headline5),
               SizedBox(height: 8),
               Text(globalEmail,
                   style: Theme.of(context).textTheme.subtitle1?.merge(
                       TextStyle(color: Color.fromARGB(255, 95, 95, 95))),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis),
-              SizedBox(height: 8),
-              TextButton(
-                  child: const Text('Sign Out'),
-                  onPressed: () async {
-                    await _firebaseAuth.signOut();
-                    globalName = "You are not logged in...";
-                    globalAge = 0;
-                    globalGender = "";
-                    globalEmail = "";
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => HomeMapScreen()));
-                  }),
+              SizedBox(height: 30),
+              // TextButton(
+              //     child: const Text('Sign Out',
+              //         style: TextStyle(color: Colors.brown)),
+              //     onPressed: () async {
+              //       await _firebaseAuth.signOut();
+              //       // globalName = "You are not logged in...";
+              //       // globalAge = 0;
+              //       // globalGender = "";
+              //       // globalEmail = "";
+              //       Navigator.of(context).pushReplacement(MaterialPageRoute(
+              //           builder: (context) => HomeMapScreen()));
+              //     }),
             ],
           );
         }),
