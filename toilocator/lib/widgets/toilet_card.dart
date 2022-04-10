@@ -96,15 +96,6 @@ class toiletCard extends StatelessWidget {
                                 'Official Rating    ',
                                 toiletList[index].awardInt),
                           ),
-                          // Row(
-                          //   children: displayStarRating(
-                          //       context,
-                          //       'User Rating        ',
-                          //       (toiletList[index] // this is placeholder variable
-                          //               .userRating)
-                          //           .ceil()) //
-                          //   ,
-                          // ),
                           SizedBox(
                             height: 15,
                           ),
@@ -162,7 +153,6 @@ class toiletCard extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                print("TAPT TPA TPAT PT APT APT APT PAPTPA T");
                 Navigator.of(context).push(createRoute(index));
                 // may fuck with the scrolling a bit ON THE MULATOR, not sure
               },

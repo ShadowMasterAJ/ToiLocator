@@ -1,6 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../global_variables/my_globals.dart';
 import '../models/user.dart';
@@ -10,7 +10,6 @@ import '../services/auth.dart';
 import '../services/userDatabase.dart';
 import 'AuthCard_Widgets/age_field.dart';
 import 'AuthCard_Widgets/confPassword_field.dart';
-import 'AuthCard_Widgets/email_field.dart';
 import 'AuthCard_Widgets/password_field.dart';
 import 'AuthCard_Widgets/username_field.dart';
 
@@ -19,7 +18,6 @@ class AuthForm extends StatefulWidget {
   _AuthFormState createState() => _AuthFormState();
 }
 
-bool _isObscure = true;
 enum AuthMode { Signup, Login }
 
 class _AuthFormState extends State<AuthForm> {
@@ -29,10 +27,8 @@ class _AuthFormState extends State<AuthForm> {
   User currentUser = User(
       uid: '', userName: '', userEmail: '', password: '', gender: '', age: 0);
 
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _authMode = AuthMode.Signup;
     // });
@@ -47,15 +43,13 @@ class _AuthFormState extends State<AuthForm> {
 
   final navigatorKey = GlobalKey<NavigatorState>();
   final authService = AuthService();
-  final _auth = auth.FirebaseAuth.instance;
-  final _formKey = GlobalKey<FormState>();
   String dropDownValue = "Female";
   //final _auth = auth.FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     //navigatorKey: navigatorKey;
-    final authService = Provider.of<AuthService>(context);
+    // final authService = Provider.of<AuthService>(context);
     return SingleChildScrollView(
       physics: ScrollPhysics(),
       child: Form(
@@ -71,7 +65,35 @@ class _AuthFormState extends State<AuthForm> {
                 : SizedBox(
                     height: 5,
                   ),
-            Email_Field(emailController: emailController),
+            // Email_Field(emailController: emailController),
+            Card(
+              color: Colors.grey.shade100,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: TextFormField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  isDense: true,
+                  hintText: 'Email',
+                  hintStyle: TextStyle(color: Colors.black26, fontSize: 18),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Colors.white54, width: 1.0),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Colors.black, width: 2.0),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderSide: BorderSide(width: 1, color: Colors.red)),
+                ),
+                keyboardType: TextInputType.emailAddress,
+              ),
+            ),
             SizedBox(
               height: 0,
             ),
@@ -198,8 +220,7 @@ class _AuthFormState extends State<AuthForm> {
   Future<void> authCorrecter(BuildContext context) async {
     bool exist = await checkIfEmailInUse(emailController.text);
     if (_authMode == AuthMode.Signup) {
-      if (emailController.text.isEmpty ||
-          !emailController.text.contains('@')) {
+      if (emailController.text.isEmpty || !emailController.text.contains('@')) {
         const snackBar = SnackBar(
           content: Text('Please enter a valid email.'),
         );
@@ -211,12 +232,10 @@ class _AuthFormState extends State<AuthForm> {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       } else if (passwordController.text.length < 6) {
         const snackBar = SnackBar(
-          content: Text(
-              'Password must be at least 7 characters long.'),
+          content: Text('Password must be at least 7 characters long.'),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      } else if (confirmController.text !=
-          passwordController.text) {
+      } else if (confirmController.text != passwordController.text) {
         const snackBar = SnackBar(
           content: Text('Passwords do not match.'),
         );
@@ -226,18 +245,9 @@ class _AuthFormState extends State<AuthForm> {
           content: Text('Please register with your age.'),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      } else{
-        signUp(emailController.text, nameController.text, passwordController.text, dropDownValue, int.parse(ageController.text));
-            currentUser.uid = auth.FirebaseAuth.instance.currentUser!.uid;
-            globalAge = int.parse(ageController.text);
-            globalName = nameController.text;
-            globalEmail = emailController.text;
-            globalGender = dropDownValue;
-                Navigator.pushAndRemoveUntil(
-        (context),
-        MaterialPageRoute(builder: (context) => ProfileScreen()),
-        (route) => false);
-        }
+      } else {
+        signUp();
+      }
     } else {
       bool verified = await checkIfPasswordCorrect(
           emailController.text, passwordController.text);
@@ -252,73 +262,67 @@ class _AuthFormState extends State<AuthForm> {
           content: Text('Wrong password. Please enter again.'),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      } else{
-        signIn(emailController.text, passwordController.text);
-            globalEmail = emailController.text;
+      } else {
+        signIn();
+      }
+    }
+  }
+
+  Future signIn() async {
+    try {
+      await auth.FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+    } on auth.FirebaseAuthException catch (e) {
+      print('Error in auth: $e\n----------------------');
+    }
+    globalEmail = emailController.text;
     globalAge = await getUserAge(globalEmail);
     globalName = await getUserNameByEmail(globalEmail);
     globalGender = await getUserGender(globalEmail);
 
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => ProfileScreen()));}
-    }
+        MaterialPageRoute(builder: (context) => ProfileScreen()));
   }
 
-  // Future signIn() async {
-  //   try {
-  //     await auth.FirebaseAuth.instance.signInWithEmailAndPassword(
-  //       email: emailController.text.trim(),
-  //       password: passwordController.text.trim(),
-  //     );
-  //   } on auth.FirebaseAuthException catch (e) {
-  //     print('Error in auth: $e\n----------------------');
-  //   }
-  //   globalEmail = emailController.text;
-  //   globalAge = await getUserAge(globalEmail);
-  //   globalName = await getUserNameByEmail(globalEmail);
-  //   globalGender = await getUserGender(globalEmail);
+  Future signUp() async {
+    try {
+      await auth.FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: emailController.text.trim(),
+            password: passwordController.text.trim(),
+          )
+          .then((value) => {postDetailsToFirestore()});
+      //await UserDatabaseService(FirebaseAuth.instance.currentUser!.uid).addNewUser(emailController.text, emailController.text, int.parse(emailController.text));
+    } on auth.FirebaseAuthException catch (e) {
+      print(e);
+    }
+    Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context) => ProfileScreen()),
+        (route) => false);
+  }
 
-  //   Navigator.of(context).pushReplacement(
-  //       MaterialPageRoute(builder: (context) => ProfileScreen()));
-  // }
+  postDetailsToFirestore() async {
+    // calling our firestore, calling our user record, sending these values
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    // writing all the values
+    currentUser.uid = auth.FirebaseAuth.instance.currentUser!.uid;
+    currentUser.userName = nameController.text;
+    currentUser.userEmail = emailController.text;
+    currentUser.password = passwordController.text;
+    currentUser.gender = dropDownValue;
+    currentUser.age = int.parse(ageController.text);
 
-  // Future signUp() async {
-  //   try {
-  //     await auth.FirebaseAuth.instance
-  //         .createUserWithEmailAndPassword(
-  //           email: emailController.text.trim(),
-  //           password: passwordController.text.trim(),
-  //         )
-  //         .then((value) => {postDetailsToFirestore()});
-  //     //await UserDatabaseService(FirebaseAuth.instance.currentUser!.uid).addNewUser(emailController.text, emailController.text, int.parse(emailController.text));
-  //   } on auth.FirebaseAuthException catch (e) {
-  //     print(e);
-  //   }
-  //   Navigator.pushAndRemoveUntil(
-  //       (context),
-  //       MaterialPageRoute(builder: (context) => ProfileScreen()),
-  //       (route) => false);
-  // }
+    globalAge = currentUser.age;
+    globalName = currentUser.userName;
+    globalEmail = currentUser.userEmail;
+    globalGender = currentUser.gender;
 
-  // postDetailsToFirestore() async {
-  //   // calling our firestore, calling our user record, sending these values
-  //   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-  //   // writing all the values
-  //   currentUser.uid = auth.FirebaseAuth.instance.currentUser!.uid;
-  //   currentUser.userName = nameController.text;
-  //   currentUser.userEmail = emailController.text;
-  //   currentUser.password = passwordController.text;
-  //   currentUser.gender = dropDownValue;
-  //   currentUser.age = int.parse(ageController.text);
-
-  //   globalAge = currentUser.age;
-  //   globalName = currentUser.userName;
-  //   globalEmail = currentUser.userEmail;
-  //   globalGender = currentUser.gender;
-
-  //   await firebaseFirestore
-  //       .collection("users")
-  //       .doc(user?.uid)
-  //       .set(currentUser.toMap());
-  // }
+    await firebaseFirestore
+        .collection("users")
+        .doc(user?.uid)
+        .set(currentUser.toMap());
+  }
 }

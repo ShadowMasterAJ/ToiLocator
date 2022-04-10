@@ -93,18 +93,7 @@ class ProfileScreen extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis),
               SizedBox(height: 30),
-              // TextButton(
-              //     child: const Text('Sign Out',
-              //         style: TextStyle(color: Colors.brown)),
-              //     onPressed: () async {
-              //       await _firebaseAuth.signOut();
-              //       // globalName = "You are not logged in...";
-              //       // globalAge = 0;
-              //       // globalGender = "";
-              //       // globalEmail = "";
-              //       Navigator.of(context).pushReplacement(MaterialPageRoute(
-              //           builder: (context) => HomeMapScreen()));
-              //     }),
+             
             ],
           );
         }),

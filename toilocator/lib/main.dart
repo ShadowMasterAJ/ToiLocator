@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Palette.beige)
               .copyWith(secondary: Colors.red),
         ),
-        home: HomeMapScreen(), // TODO: Need to add logic for AuthScreen
+        home: HomeMapScreen(),
         //),
       ),
     );

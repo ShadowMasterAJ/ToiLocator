@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:toilocator/palette.dart';
-import 'package:toilocator/widgets/map_stack.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:toilocator/screens/auth_screen.dart';
-import 'package:toilocator/widgets/side_drawer_button.dart';
-import 'package:toilocator/screens/profile_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:toilocator/palette.dart';
+import 'package:toilocator/screens/auth_screen.dart';
+import 'package:toilocator/screens/profile_screen.dart';
+import 'package:toilocator/widgets/map_stack.dart';
+import 'package:toilocator/widgets/side_drawer_button.dart';
 
 class HomeMapScreen extends StatelessWidget {
   HomeMapScreen({Key? key}) : super(key: key);
@@ -44,7 +43,6 @@ class HomeMapScreen extends StatelessWidget {
                     );
                   }
                 }),
-                // DrawerButton(context, 'Help', Icons.help, () {}),
                 (FirebaseAuth.instance.currentUser == null
                     ? DrawerButton(context, 'Login', Icons.login, () {
                         Navigator.pop(context);
@@ -60,10 +58,6 @@ class HomeMapScreen extends StatelessWidget {
                         final FirebaseAuth _firebaseAuth =
                             FirebaseAuth.instance;
                         await _firebaseAuth.signOut();
-                        // globalName = "You are not logged in...";
-                        // globalAge = 0;
-                        // globalGender = "";
-                        // globalEmail = "";
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (context) => HomeMapScreen()));
                       })),

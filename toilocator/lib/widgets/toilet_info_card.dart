@@ -24,7 +24,7 @@ class toiletInfoCard extends StatefulWidget {
     required this.index,
     required this.getPolyLines,
     required this.lat,
-    required this.lng, //TODO: if user doesnt enter
+    required this.lng,
   }) : super(key: key);
 }
 
@@ -32,34 +32,6 @@ class _toiletInfoCardState extends State<toiletInfoCard>
     with AutomaticKeepAliveClientMixin<toiletInfoCard> {
   bool get wantKeepAlive => true;
   int averageRating = 0;
-
-  // Route createRoute(int index, List toiletList) {
-  //   return PageRouteBuilder(
-  //     settings: RouteSettings(name: "/inputReview"),
-  //     pageBuilder: (
-  //       context,
-  //       animation,
-  //       secondaryAnimation,
-  //     ) =>
-  //         InputReviewScreen(
-  //       index: index,
-  //       toiletList: toiletList,
-  //     ),
-  //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-  //       const begin = Offset(0.0, 1.0);
-  //       const end = Offset.zero;
-  //       const curve = Curves.ease;
-
-  //       var tween =
-  //           Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-  //       return SlideTransition(
-  //         position: animation.drive(tween),
-  //         child: child,
-  //       );
-  //     },
-  //   );
-  // }
 
   @override
   // ignore: must_call_super

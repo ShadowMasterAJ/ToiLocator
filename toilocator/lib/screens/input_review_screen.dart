@@ -157,7 +157,6 @@ class _InputReviewScreenState extends State<InputReviewScreen>
                   child: Text(
                     "Submit Review",
                   ),
-                  // TODO: add userID after auth
                   onPressed: () async {
                     await onPressSubmitReview();
                   },
