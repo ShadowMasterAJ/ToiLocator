@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -227,8 +226,18 @@ class _AuthFormState extends State<AuthForm> {
           content: Text('Please register with your age.'),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      } else
-        signUp();
+      } else{
+        signUp(emailController.text, nameController.text, passwordController.text, dropDownValue, int.parse(ageController.text));
+            currentUser.uid = auth.FirebaseAuth.instance.currentUser!.uid;
+            globalAge = int.parse(ageController.text);
+            globalName = nameController.text;
+            globalEmail = emailController.text;
+            globalGender = dropDownValue;
+                Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context) => ProfileScreen()),
+        (route) => false);
+        }
     } else {
       bool verified = await checkIfPasswordCorrect(
           emailController.text, passwordController.text);
@@ -243,66 +252,73 @@ class _AuthFormState extends State<AuthForm> {
           content: Text('Wrong password. Please enter again.'),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      } else
-        signIn();
-    }
-  }
-
-  Future signIn() async {
-    try {
-      await auth.FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-    } on auth.FirebaseAuthException catch (e) {
-      print('Error in auth: $e\n----------------------');
-    }
-    globalEmail = emailController.text;
+      } else{
+        signIn(emailController.text, passwordController.text);
+            globalEmail = emailController.text;
     globalAge = await getUserAge(globalEmail);
     globalName = await getUserNameByEmail(globalEmail);
     globalGender = await getUserGender(globalEmail);
 
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => ProfileScreen()));
-  }
-
-  Future signUp() async {
-    try {
-      await auth.FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-            email: emailController.text.trim(),
-            password: passwordController.text.trim(),
-          )
-          .then((value) => {postDetailsToFirestore()});
-      //await UserDatabaseService(FirebaseAuth.instance.currentUser!.uid).addNewUser(emailController.text, emailController.text, int.parse(emailController.text));
-    } on auth.FirebaseAuthException catch (e) {
-      print(e);
+        MaterialPageRoute(builder: (context) => ProfileScreen()));}
     }
-    Navigator.pushAndRemoveUntil(
-        (context),
-        MaterialPageRoute(builder: (context) => ProfileScreen()),
-        (route) => false);
   }
 
-  postDetailsToFirestore() async {
-    // calling our firestore, calling our user record, sending these values
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    // writing all the values
-    currentUser.uid = auth.FirebaseAuth.instance.currentUser!.uid;
-    currentUser.userName = nameController.text;
-    currentUser.userEmail = emailController.text;
-    currentUser.password = passwordController.text;
-    currentUser.gender = dropDownValue;
-    currentUser.age = int.parse(ageController.text);
+  // Future signIn() async {
+  //   try {
+  //     await auth.FirebaseAuth.instance.signInWithEmailAndPassword(
+  //       email: emailController.text.trim(),
+  //       password: passwordController.text.trim(),
+  //     );
+  //   } on auth.FirebaseAuthException catch (e) {
+  //     print('Error in auth: $e\n----------------------');
+  //   }
+  //   globalEmail = emailController.text;
+  //   globalAge = await getUserAge(globalEmail);
+  //   globalName = await getUserNameByEmail(globalEmail);
+  //   globalGender = await getUserGender(globalEmail);
 
-    globalAge = currentUser.age;
-    globalName = currentUser.userName;
-    globalEmail = currentUser.userEmail;
-    globalGender = currentUser.gender;
+  //   Navigator.of(context).pushReplacement(
+  //       MaterialPageRoute(builder: (context) => ProfileScreen()));
+  // }
 
-    await firebaseFirestore
-        .collection("users")
-        .doc(user?.uid)
-        .set(currentUser.toMap());
-  }
+  // Future signUp() async {
+  //   try {
+  //     await auth.FirebaseAuth.instance
+  //         .createUserWithEmailAndPassword(
+  //           email: emailController.text.trim(),
+  //           password: passwordController.text.trim(),
+  //         )
+  //         .then((value) => {postDetailsToFirestore()});
+  //     //await UserDatabaseService(FirebaseAuth.instance.currentUser!.uid).addNewUser(emailController.text, emailController.text, int.parse(emailController.text));
+  //   } on auth.FirebaseAuthException catch (e) {
+  //     print(e);
+  //   }
+  //   Navigator.pushAndRemoveUntil(
+  //       (context),
+  //       MaterialPageRoute(builder: (context) => ProfileScreen()),
+  //       (route) => false);
+  // }
+
+  // postDetailsToFirestore() async {
+  //   // calling our firestore, calling our user record, sending these values
+  //   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  //   // writing all the values
+  //   currentUser.uid = auth.FirebaseAuth.instance.currentUser!.uid;
+  //   currentUser.userName = nameController.text;
+  //   currentUser.userEmail = emailController.text;
+  //   currentUser.password = passwordController.text;
+  //   currentUser.gender = dropDownValue;
+  //   currentUser.age = int.parse(ageController.text);
+
+  //   globalAge = currentUser.age;
+  //   globalName = currentUser.userName;
+  //   globalEmail = currentUser.userEmail;
+  //   globalGender = currentUser.gender;
+
+  //   await firebaseFirestore
+  //       .collection("users")
+  //       .doc(user?.uid)
+  //       .set(currentUser.toMap());
+  // }
 }

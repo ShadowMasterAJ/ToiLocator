@@ -103,3 +103,60 @@ Future<bool> checkIfPasswordCorrect(String email, String password) async{
             else return false;
          
 }
+
+Future signIn(String email, String password) async {
+    try {
+      await authen.FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on authen.FirebaseAuthException catch (e) {
+      print('Error in auth: $e\n----------------------');
+    }
+
+  }
+
+   Future signUp(String email, String name, String Password, String gender, int age) async {
+    try {
+      await authen.FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: email,
+            password: Password,
+          )
+          .then((value) => {postDetailsToFirestore(email, name, Password, gender, age)});
+      //await UserDatabaseService(FirebaseAuth.instance.currentUser!.uid).addNewUser(emailController.text, emailController.text, int.parse(emailController.text));
+    } on authen.FirebaseAuthException catch (e) {
+      print(e);
+    }
+    // Navigator.pushAndRemoveUntil(
+    //     (context),
+    //     MaterialPageRoute(builder: (context) => ProfileScreen()),
+    //     (route) => false);
+  }
+
+  postDetailsToFirestore(String email, String name, String Password, String gender, int age) async {
+    // calling our firestore, calling our user record, sending these values
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    // writing all the values
+    authen.User? user = authen.FirebaseAuth.instance.currentUser;
+    String uid=user!.uid;
+    User currentUser = User(
+      uid: uid, userName: name, userEmail: email, password: Password, gender: gender, age: age);
+    currentUser.uid = authen.FirebaseAuth.instance.currentUser!.uid;
+    currentUser.userName = name;
+    currentUser.userEmail = email;
+    currentUser.password = Password;
+    currentUser.gender = gender;
+    currentUser.age = age;
+
+    // globalAge = currentUser.age;
+    // globalName = currentUser.userName;
+    // globalEmail = currentUser.userEmail;
+    // globalGender = currentUser.gender;
+
+    await firebaseFirestore
+        .collection("users")
+        .doc(user?.uid)
+        .set(currentUser.toMap());
+  }
+
