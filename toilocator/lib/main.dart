@@ -26,10 +26,7 @@ class MyApp extends StatelessWidget {
         StreamProvider(
             create: (context) => context.read<AuthService>().user,
             initialData: null)
-        // StreamBuilder<QuerySnapshot>(
-        //   stream: FirebaseFirestore.instance.collection('users').snapshots(),
-        //   builder: BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot
-        // )
+       
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

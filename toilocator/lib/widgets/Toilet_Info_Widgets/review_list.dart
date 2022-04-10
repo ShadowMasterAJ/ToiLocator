@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../palette.dart';
 import '../../services/getToiletInfo.dart';
-
+/// Review list for toilet info screen
 class ReviewList extends StatefulWidget {
   const ReviewList({
     Key? key,

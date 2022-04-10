@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../palette.dart';
-
+/// Toilet info for toilet info screen
 class ToiletInfo extends StatelessWidget {
   const ToiletInfo({
     Key? key,

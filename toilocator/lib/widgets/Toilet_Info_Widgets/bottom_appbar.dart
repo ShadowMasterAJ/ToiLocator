@@ -6,7 +6,7 @@ import '../../palette.dart';
 import '../../screens/auth_screen.dart';
 import '../../screens/input_review_screen.dart';
 import '../../services/directions.dart';
-
+/// Bottom app bar for the toilet info screen
 class BottomAppBarRow extends StatefulWidget {
   const BottomAppBarRow({
     Key? key,

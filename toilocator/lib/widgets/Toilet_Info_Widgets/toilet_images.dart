@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../palette.dart';
 import '../../services/getToiletImageUrlList.dart';
-
+/// Image generator for toilet images in the toilet info screen
 class ToiletImages extends StatefulWidget {
   const ToiletImages({
     Key? key,
