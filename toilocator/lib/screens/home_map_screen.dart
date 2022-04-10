@@ -98,8 +98,8 @@ class HomeMapScreen extends StatelessWidget {
         // appBar: AppBar(title: Text('Toilocator')),
         body: SafeArea(
             child: MapStack(
-          getLocFromInfo: (double lat, double long) {},
-        )),
+                // getLocFromInfo: (double lat, double long) {},
+                )),
         drawer: SafeArea(
           child: Container(
             width: 100,

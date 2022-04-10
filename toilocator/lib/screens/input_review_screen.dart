@@ -192,7 +192,7 @@ class _InputReviewScreenState extends State<InputReviewScreen>
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 3,
-        backgroundColor: Palette.beige[300],
+        backgroundColor: Colors.grey,
         textColor: Colors.white,
         fontSize: 16.0);
 

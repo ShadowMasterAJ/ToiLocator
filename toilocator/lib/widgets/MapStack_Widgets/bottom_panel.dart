@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'toilet_card.dart';
-import '../models/toilet.dart';
+import '../../models/toilet.dart';
+import '../toilet_card.dart';
 
 class bottomPanel extends StatelessWidget {
   const bottomPanel({
@@ -11,7 +11,8 @@ class bottomPanel extends StatelessWidget {
     required List<Toilet> toiletList,
     required this.sc,
     required this.lat,
-    required this.lng, required this.getPolyLines,
+    required this.lng,
+    required this.getPolyLines,
   })  : _toiletList = toiletList,
         super(key: key);
 
@@ -104,7 +105,7 @@ class bottomPanel extends StatelessWidget {
                           toiletList: _toiletList,
                           index: indexList[indexPointer],
                           sc: this.sc,
-                          getPolyLines: (polies)=>getPolyLines(polies),
+                          getPolyLines: (polies) => getPolyLines(polies),
                           lat: lat,
                           lng: lng,
                         );

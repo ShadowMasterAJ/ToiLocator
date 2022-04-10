@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:toilocator/screens/home_map_screen.dart';
 import 'package:toilocator/services/auth.dart';
-import '/screens/profile_screen.dart';
-import '/screens/auth_screen.dart';
+
 import 'palette.dart';
 
 //the app will always initialise firebase when it starts
@@ -24,8 +23,9 @@ class MyApp extends StatelessWidget {
         Provider<AuthService>(
           create: (_) => AuthService(),
         ),
-        StreamProvider(create: (context) => context.read<AuthService>().user, 
-        initialData: null)
+        StreamProvider(
+            create: (context) => context.read<AuthService>().user,
+            initialData: null)
         // StreamBuilder<QuerySnapshot>(
         //   stream: FirebaseFirestore.instance.collection('users').snapshots(),
         //   builder: BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot

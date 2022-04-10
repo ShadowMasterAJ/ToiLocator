@@ -3,30 +3,25 @@
 //just there cuz why not
 import 'dart:math' show cos, sqrt, asin;
 
-//files
-import '/models/toilet.dart';
-
 //packages
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:toilocator/services/getToiletInfo.dart';
-import 'package:toilocator/widgets/toilet_info_card.dart';
 import 'package:flutter/material.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:toilocator/palette.dart';
-import 'bottom_panel.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geocoder/geocoder.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+
+//files
+import '/models/toilet.dart';
+import '../palette.dart';
+import '../services/getToiletInfo.dart';
+import 'MapStack_Widgets/bottom_panel.dart';
+import 'MapStack_Widgets/search_bar.dart';
+import 'toilet_info_card.dart';
 
 class MapStack extends StatefulWidget {
-  final Function(double lat, double long) getLocFromInfo;
-  // static MapStack _instance;
-  // factory MapStack() => _instance ??= new MapStack();
-
   const MapStack({
     Key? key,
-    required this.getLocFromInfo,
+    // required this.getLocFromInfo,
   }) : super(key: key);
 
   @override
@@ -36,10 +31,8 @@ class MapStack extends StatefulWidget {
 class _MapStackState extends State<MapStack> {
   LatLng _initialcameraposition =
       LatLng(1.3521, 103.8198); // 1.346150, 103.681500
-
-  late double userLat = 1.3521, userLong = 103.8198;
-
   late GoogleMapController _controller;
+  late double userLat = 1.3521, userLong = 103.8198;
 
   Map indices = {}; // key = index of toilet, value = distance
   List<Marker> _markers = [];
@@ -58,7 +51,6 @@ class _MapStackState extends State<MapStack> {
     super.initState();
     _fabHeight = _initFabHeight;
     retrieveIcon();
-    // readJson();
     prepareToilets();
   }
 
@@ -98,55 +90,6 @@ class _MapStackState extends State<MapStack> {
         icon: toiletIcon);
     _markers.add(marker);
     print('added marker');
-  }
-
-  // Future<void> downloadJSON() async {
-  //   Directory appDocDir = await getApplicationDocumentsDirectory();
-  //   File downloadToFile = File('${appDocDir.path}/test.json');
-
-  //   try {
-  //     await firebase_storage.FirebaseStorage.instance
-  //       .ref('toilets.json')
-  //       .writeToFile(downloadToFile);
-  //   // ignore: nullable_type_in_catch_clause
-  //   } on firebase_core.FirebaseException catch (e) {
-  //     // e.code == 'canceled'
-  //     print("firebaseException");
-  //   }
-  // }
-  // void readJson() async {
-  //   print('fetching from json...');
-  //   final String toiletJson =
-  //       await rootBundle.loadString('lib/data/toilets.json');
-  //   final toiletParsed = await json.decode(toiletJson);
-  //   _toiletTemp = toiletParsed["toilets"];
-  //   debugPrint('toiletJson.statusCode');
-  //   for (int i = 0; i < _toiletTemp.length; i++) {
-  //     int index = _toiletTemp[i]["index"];
-  //     String type = _toiletTemp[i]["type"];
-  //     String image = _toiletTemp[i]["image_link-href"];
-  //     String address = _toiletTemp[i]["address"];
-  //     String name = _toiletTemp[i]["toilet_name"];
-  //     //String district = _toiletTemp[i]["district_name"];
-  //     List coords = _toiletTemp[i]["coords"];
-  //     int award = _toiletTemp[i]["award_int"];
-  //     Toilet toilet = new Toilet(
-  //         index: index,
-  //         type: type,
-  //         image: image,
-  //         address: address,
-  //         toiletName: name,
-  //         //district: district,
-  //         coords: coords,
-  //         awardInt: award);
-  //     _toiletList.add(toilet);
-  //   }
-  //   print('fetched from json');
-  // }
-
-  void updateUserRating(int newRating, int index) {
-    _toiletList[index].userRating = newRating;
-    print("updating compelted in mapstack");
   }
 
   void markNearestToilets(double lat, double long) {
@@ -232,6 +175,14 @@ class _MapStackState extends State<MapStack> {
     _controller = _cntlr;
   }
 
+  Future<void> uploadingData(value) async {
+    await FirebaseFirestore.instance.collection('userInput').add({
+      'location': value,
+      'dateTime': DateTime.now(),
+    });
+    print('Comment: value added');
+  }
+
   Route createRoute(int markerId) {
     return PageRouteBuilder(
       settings: RouteSettings(name: "/toiletInfo"),
@@ -278,7 +229,6 @@ class _MapStackState extends State<MapStack> {
   @override
   Widget build(BuildContext context) {
     _panelHeightOpen = MediaQuery.of(context).size.height * .8;
-    bool entered = false;
     return Stack(
         alignment: AlignmentDirectional.topStart,
         fit: StackFit.loose,
@@ -297,74 +247,16 @@ class _MapStackState extends State<MapStack> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
-            child: TextField(
-              onSubmitted: (value) async {
-                try {
-                  var addr = await Geocoder.local.findAddressesFromQuery(value);
-                  var lat = addr.first.coordinates.latitude;
-                  var long = addr.first.coordinates.longitude;
-                  setState(() {
-                    userLat = lat;
-                    userLong = long;
-                  });
-                  print('Mapstack latlng: $lat, $long');
-                  centerToPositionandMark(lat, long);
-                  entered = true;
-                  print(entered);
-                  uploadingData(value);
-                } catch (PlatformException) {
-                  Fluttertoast.showToast(
-                      msg: "Invalid Location, please try again!",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 3,
-                      backgroundColor: Color.fromARGB(255, 99, 99, 99),
-                      textColor: Colors.white,
-                      fontSize: 16.0);
-                }
-                // var addr = await locationFromAddress(value);
-              },
-              decoration: InputDecoration(
-                prefixIcon: IconButton(
-                  icon: Icon(
-                    Icons.menu,
-                    size: 20,
-                    color: Palette.beige.shade900,
-                  ),
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                ),
-                suffixIcon: Icon(
-                  Icons.search_sharp,
-                  size: 30,
-                  color: Palette.beige.shade800,
-                ),
-                filled: true,
-                fillColor: Palette.beige[100]?.withOpacity(0.95),
-                enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.brown.shade100, width: 2),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    )),
-                focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.brown.shade100, width: 5),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    )),
-                hintText: 'Enter your location',
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 13, vertical: 18),
-              ),
+            child: SearchBar(
+              centerToPositionandMark: centerToPositionandMark,
+              uploadingData: uploadingData,
             ),
           ),
           SlidingUpPanel(
             // bottom drawer
             snapPoint: 0.35,
             maxHeight: _panelHeightOpen,
-            minHeight: entered ? _panelHeightClosed + 185 : _panelHeightClosed,
+            minHeight: _panelHeightClosed,
             parallaxEnabled: true,
             parallaxOffset: .1,
             panelBuilder: (sc) => bottomPanel(
@@ -401,12 +293,4 @@ class _MapStackState extends State<MapStack> {
           ),
         ]);
   }
-}
-
-Future<void> uploadingData(value) async {
-  await FirebaseFirestore.instance.collection('userInput').add({
-    'location': value,
-    'dateTime': DateTime.now(),
-  });
-  print('Comment: value added');
 }
