@@ -6,6 +6,8 @@ Toilocator is a mobile app that provides a convenient way for the general public
 
 Toilocator aims to improve the overall public toilet experience of the general Singapore population by searching the nearest public toilets from user location, displaying relevant toilet information and reviews of the toilet left by other users.
 
+Here is a [youtube link](https://youtu.be/1Gx1KsMDHrw) that demonstrates the app.
+
 ### Source and tools
 
 Data source - [toilet.org](https://www.toilet.org.sg/loomapdirectory)
