@@ -3,11 +3,23 @@ import 'package:flutter/material.dart';
 import '../palette.dart';
 import 'toilet_info_card.dart';
 
+/// Builds the general information card of each toilet.
+/// Returns a card containing general information of the toilet.
+/// Information includes name, address, ratings.
 class toiletCard extends StatelessWidget {
+  /// A map containing all toilet indices as key and corresponding distance from the user location as value.
   final Map indices;
+
+  /// The list of all toilets.
   final List toiletList;
+
+  /// The index of the current toilet which information is to be displayed.
   final int index;
+
+  /// The coordinates of the user's input location.
   final double lat, lng;
+
+  /// Displays the path from the user's input location to the current toilet.
   final Function(dynamic) getPolyLines;
 
   final ScrollController sc;
@@ -25,9 +37,7 @@ class toiletCard extends StatelessWidget {
 
   List<Widget> displayStarRating(
       BuildContext context, String input, int awardInt) {
-    List<Widget> childrenList = [
-      Text(input)
-    ]; // PROBLEM: some toilets have 6 star rating while we max at 5 stars. need to discuss.
+    List<Widget> childrenList = [Text(input)];
     if (awardInt > 5) {
       awardInt = 5;
     }

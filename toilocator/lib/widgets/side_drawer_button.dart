@@ -3,10 +3,17 @@
 import 'package:flutter/material.dart';
 import 'package:toilocator/palette.dart';
 
+/// Builds a tappable button on the side drawer for navigation.
 class DrawerButton extends StatelessWidget {
   BuildContext ctx;
+
+  /// The name of the button function.
   String text;
+
+  /// The icon of the button function.
   IconData icn;
+
+  /// The function to be executed upon tapping on the button.
   VoidCallback onTap;
   DrawerButton(this.ctx, this.text, this.icn, this.onTap);
 

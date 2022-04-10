@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../palette.dart';
 import '../../services/getToiletImageUrlList.dart';
-/// Image generator for toilet images in the toilet info screen
+
+/// Generates the toilet images in the toilet information screen.
+/// Builds the horizontal-scrolling widget for all the images in a toilet.
 class ToiletImages extends StatefulWidget {
   const ToiletImages({
     Key? key,
@@ -10,8 +12,12 @@ class ToiletImages extends StatefulWidget {
     required this.index,
   }) : super(key: key);
 
+  /// The list of all toilets.
   final List toiletList;
+
+  /// The index of the current toilet which information is to be displayed.
   final int index;
+
   @override
   State<ToiletImages> createState() => _ToiletImagesState();
 }
@@ -22,9 +28,8 @@ class _ToiletImagesState extends State<ToiletImages> {
 
   bool isLoading = false;
 
+  /// Converts URL links to a list of Image widgets.
   Future createImageList() async {
-    // Convert URL links to realToiletImage
-
     List<Widget> realToiletImages = [];
     List? ImageUrlList =
         await getToiletImageUrlList(widget.toiletList[widget.index].image);

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../palette.dart';
 
-
+/// Builds the ratings and accessibility widgets of a toilet information card.
+/// Displays the official hygiene rating, user hygiene rating, and accessibility features of the toilet.
 class RatingsAccessibility extends StatelessWidget {
   const RatingsAccessibility({
     Key? key,
@@ -11,9 +12,18 @@ class RatingsAccessibility extends StatelessWidget {
     required this.averageRating,
   }) : super(key: key);
 
+  /// The list of all toilets.
   final List toiletList;
+
+  /// The index of the current toilet which information is to be displayed.
   final int index;
+
+  /// The average rating of the current toilet.
+  /// Rounded up to the nearest integer.
   final int averageRating;
+
+  /// Builds the ratings of a toilet.
+  /// Returns a list of 5 stars, with the number of stars shaded yellow according to the rating.
   List<Widget> displayStarRating(int awardInt) {
     List<Widget> childrenList = [];
 

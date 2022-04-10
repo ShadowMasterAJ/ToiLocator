@@ -7,11 +7,23 @@ import 'Toilet_Info_Widgets/toilet_images.dart';
 import 'Toilet_Info_Widgets/toilet_info.dart';
 import 'Toilet_Info_Widgets/toilet_ratings_access.dart';
 
+/// Builds the full information card of each toilet.
+/// Returns a card containing all the information of the toilet.
+/// Information includes name, address, ratings, images, reviews, and directions.
 class toiletInfoCard extends StatefulWidget {
+  /// A map containing all toilet indices as key and corresponding distance from the user location as value.
   final Map indices;
+
+  /// The list of all toilets.
   final List toiletList;
+
+  /// The index of the current toilet which information is to be displayed.
   final int index;
+
+  /// The coordinates of the user's input location.
   final double lat, lng;
+
+  /// Displays the path from the user's input location to the current toilet.
   final Function(Map<PolylineId, Polyline>) getPolyLines;
 
   @override

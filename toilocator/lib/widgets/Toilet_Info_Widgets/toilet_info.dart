@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../palette.dart';
-/// Toilet info for toilet info screen
+
+/// Builds the display for the name, address and distance of a toilet information card.
 class ToiletInfo extends StatelessWidget {
   const ToiletInfo({
     Key? key,
@@ -9,8 +10,14 @@ class ToiletInfo extends StatelessWidget {
     required this.toiletList,
     required this.index,
   }) : super(key: key);
+
+  /// The list of all toilets.
   final List toiletList;
+
+  /// The index of the current toilet which information is to be displayed.
   final int index;
+
+  /// A map containing all toilet indices as key and corresponding distance from the user location as value.
   final Map indices;
 
   @override
