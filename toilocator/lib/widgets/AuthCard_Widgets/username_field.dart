@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../palette.dart';
 
+///Belongs to auth_card class, return the user input name
 class Username_Field extends StatelessWidget {
   const Username_Field(
       {Key? key, required TextEditingController this.nameController})
