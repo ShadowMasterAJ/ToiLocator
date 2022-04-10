@@ -4,12 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 /// It also provides a stream which we listen to in `Home.dart` (after login)
 class UserDatabaseService {
   final String uid;
-// final String userName;
-// final String gender;
-// final int age;
+
   UserDatabaseService(this.uid);
 
-/// collection reference
+/// Collection reference
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
 
@@ -91,7 +89,7 @@ class UserDatabaseService {
 
 
 }
-///Calling the user collection to get user name by uid 
+///Call the user collection to get user name by uid 
 Future<String> getUserName(String uid) async {
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
