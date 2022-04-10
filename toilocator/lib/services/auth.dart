@@ -10,7 +10,7 @@ class AuthService {
   get auth => null;
 
 
-  /// To Create custom `User` obj (based on our user in `lib/models`) based on firebase user.
+  ///Create custom `User` obj (based on our user in `lib/models`) based on firebase user.
   User? _userFromFirebase(authen.User? user) {
     if (user == null)
       return null;
@@ -24,7 +24,7 @@ class AuthService {
           age: 0);
   }
 
-  /// the stream that parent widgets listen to, to be notified of authentication changes.
+  /// The stream that parent widgets listen to, to be notified of authentication changes.
   /// Returns a firebase user, mapped to custom `User` object when change in auth- sign in or out.
   Stream<User?>? get user {
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);

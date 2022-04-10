@@ -6,7 +6,7 @@ class UserDatabaseService {
   final String uid;
   UserDatabaseService(this.uid);
 
-/// collection reference
+/// Collection reference
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
 
@@ -88,7 +88,7 @@ class UserDatabaseService {
 
 
 }
-///Calling the user collection to get user name by uid 
+///Call the user collection to get user name by uid 
 Future<String> getUserName(String uid) async {
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
