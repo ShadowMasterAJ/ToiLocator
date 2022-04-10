@@ -18,6 +18,12 @@ Webscrape tool - [webscrape.io](https://webscraper.io)
 2. Navigate to the directory “toilocator”, then you can access the source code files.
 3. Use Android Studio to set up an Android emulator.
 4. Type `flutter run --no-sound-null-safety` in the terminal to run the app.
+
+### API keys
+
+- This project requires certain API keys from Google Maps and Firebase.
+- There is currently no one file that stores all the required API keys, so if you were to run the code, you might need to search for the files that contains the API keys and insert your own.
+
 ## UI
 ##### Authentication Screen
 
