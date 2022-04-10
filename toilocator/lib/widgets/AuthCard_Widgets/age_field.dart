@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-///Belongs to auth_card class, return the user age input
+/// Builds a card containing the user's input age in the authentication card.
 class Age_Field extends StatelessWidget {
-  const Age_Field(
-      {Key? key, required TextEditingController this.ageController})
+  const Age_Field({Key? key, required TextEditingController this.ageController})
       : super(key: key);
   final TextEditingController ageController;
 

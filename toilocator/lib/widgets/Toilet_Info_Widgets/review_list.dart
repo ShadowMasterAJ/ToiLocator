@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../palette.dart';
 import '../../services/getToiletInfo.dart';
-/// Review list for toilet info screen
+
+/// Builds a list of reviews for each toilet of the toilet information card.
 class ReviewList extends StatefulWidget {
   const ReviewList({
     Key? key,
@@ -10,7 +11,10 @@ class ReviewList extends StatefulWidget {
     required this.index,
   }) : super(key: key);
 
+  /// The list of all toilets.
   final List toiletList;
+
+  /// The index of the current toilet which information is to be displayed.
   final int index;
 
   @override
@@ -18,9 +22,11 @@ class ReviewList extends StatefulWidget {
 }
 
 class _ReviewListState extends State<ReviewList> {
+  /// The list of all review widgets.
   List<Widget> reviewList = [];
   int averageRating = 0;
 
+  /// Creates a list of all reviews of a toilet, retrieved from FireBase.
   Future createReviewList(BuildContext context) async {
     int sumRating = 0;
 
@@ -48,6 +54,8 @@ class _ReviewListState extends State<ReviewList> {
     return Future.value();
   }
 
+  /// Builds the user-reviewed rating of a toilet.
+  /// Returns a list of 5 stars, with the number of stars shaded yellow according to the rating.
   List<Widget> displayStarRating(int awardInt) {
     List<Widget> childrenList = [];
     if (awardInt > 5) {
@@ -64,6 +72,8 @@ class _ReviewListState extends State<ReviewList> {
     return childrenList;
   }
 
+  /// Creates a container of user review information.
+  /// Includes the user-reviewed rating.
   Widget UserReviewInfo(
       String userID, int userRating, String userComment, BuildContext context) {
     return Container(
@@ -88,7 +98,6 @@ class _ReviewListState extends State<ReviewList> {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(color: Color.fromARGB(255, 136, 136, 136)),
             )),
-        
         Divider(
           color: Color.fromARGB(255, 218, 218, 218),
           thickness: 1,

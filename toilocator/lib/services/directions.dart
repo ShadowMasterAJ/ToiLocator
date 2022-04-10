@@ -3,12 +3,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../palette.dart';
 
+/// Builds the path between the user input location and the toilet location.
+/// Returns a polyline.
 class Directions {
   late PolylinePoints polylinePoints;
   List<LatLng> polylineCoordinates = [];
   Map<PolylineId, Polyline> polylines = {};
   bool isLoading = false;
 
+  /// Creates the polyline path.
   createPolylines(
     double startLatitude,
     double startLongitude,

@@ -1,25 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-/// This class handles all the cloud FireStore database related functions(read and write).
-/// It also provides a stream which we listen to in `Home.dart` (after login)
+/// Handles all the cloud FireStore database-related functions (read and write).
+/// Provides a stream which we listen to in `Home.dart` (after login).
 class UserDatabaseService {
   final String uid;
-// final String userName;
-// final String gender;
-// final int age;
   UserDatabaseService(this.uid);
 
-/// collection reference
+  /// Collection reference.
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
 
-///Check with the firestore if the user exits or not by user id
+  /// Checks with the firestore whether the user exits or not by user id.
   Future<bool> checkIfUserExists(String uid) async {
     DocumentSnapshot snapshot =
         await FirebaseFirestore.instance.collection('users').doc(uid).get();
     return snapshot.exists;
   }
-/// Call the user's CollectionReference to add a new user
+
+  /// Calls the user's CollectionReference to add a new user.
   Future<void> addNewUser(
       String userName, String userEmail, String gender, int age) {
     return usersCollection
@@ -32,7 +30,8 @@ class UserDatabaseService {
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
   }
-///Update user information
+
+  /// Updates user information.
   Future<void> updateUser(
       String uid, String userName, String userEmail, String gender, int age) {
     return usersCollection
@@ -46,7 +45,8 @@ class UserDatabaseService {
         .then((value) => print("User Updated"))
         .catchError((error) => print("Failed to update user: $error"));
   }
-///Call the user collection to get user name by uid
+
+  /// Calls the user collection to get user name by uid.
   String getUserName(String uid) {
     String name = "";
     usersCollection
@@ -58,9 +58,9 @@ class UserDatabaseService {
       });
     });
     return name;
-
   }
-///Interact with the Firestore to read user's data by the uid
+
+  /// Interact with the Firestore to read user's data by the uid.
   Future<void> readUserData(String uid) {
     return usersCollection
         .doc(uid)
@@ -74,8 +74,7 @@ class UserDatabaseService {
     });
   }
 
-
-///Call the Firestore to read user's name by uid
+  /// Calls Firestore to read user's name by uid.
   Future<void> readUserName(String uid) {
     return usersCollection
         .doc(uid)
@@ -88,10 +87,9 @@ class UserDatabaseService {
       }
     });
   }
-
-
 }
-///Calling the user collection to get user name by uid 
+
+/// Calls the user collection to get user's name by uid.
 Future<String> getUserName(String uid) async {
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
@@ -105,10 +103,9 @@ Future<String> getUserName(String uid) async {
     });
   });
   return name;
-
 }
 
-///Call the user collection to get user's name by email
+/// Calls the user collection to get user's name by email.
 Future<String> getUserNameByEmail(String email) async {
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
@@ -122,10 +119,9 @@ Future<String> getUserNameByEmail(String email) async {
     });
   });
   return name;
-
 }
 
-///Call the user collection to get user email by uid
+/// Call the user collection to get user email by uid
 Future<String> getUserEmail(String uid) async {
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
@@ -139,10 +135,9 @@ Future<String> getUserEmail(String uid) async {
     });
   });
   return email;
-
 }
 
-///Call the user collection to get user age by user email
+/// Calls the user collection to get user age by user email.
 Future<int> getUserAge(String email) async {
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
@@ -157,7 +152,8 @@ Future<int> getUserAge(String email) async {
   });
   return age;
 }
-///Call the user collection to get user gender by email
+
+/// Calls the user collection to get user gender by email.
 Future<String> getUserGender(String email) async {
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');

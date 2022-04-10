@@ -5,8 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/review.dart';
 import '../models/toilet.dart';
 
-// can have cupertino
-
 // DO NOT DELETE
 // Must press run to initialise app
 // void main() async {
@@ -28,15 +26,15 @@ import '../models/toilet.dart';
 
 // }
 
-/// Adds a document in firebase with field test: [test]
+/// Adds a document in firebase with field test: [test].
 Future<void> test(String test) async {
   await FirebaseFirestore.instance.collection("userInput").add({'test': test});
 }
 
-/// Adds a new toilet document to firebase given all the attributes
-// add a toilet instance to firebase
-// doc() specifies our own index
-// .set is used for the doc like to update
+/// Adds a new toilet document to firebase given all the attributes.
+// Adds a toilet instance to firebase.
+// doc() specifies the new index used.
+// .set updates doc().
 Future<void> addToilet(
     int index,
     String type,
@@ -97,8 +95,8 @@ Future<void> addToilet(
 //   }
 // }
 
-/// Adds a new review document to firebase given all the attributes
-// addReview for a toilet ID = index
+/// Adds a new review document to firebase given all the attributes.
+/// addReview for a toilet ID = index.
 Future<void> addReview(DateTime dateTime, String userID, String toiletID,
     int userRating, String userComment) async {
   CollectionReference toilets =
@@ -115,8 +113,8 @@ Future<void> addReview(DateTime dateTime, String userID, String toiletID,
   print('Comment: addReview - review added');
 }
 
-/// Gets all the reviews from firebase given [toiletID]
-/// Returns a list of reviews
+/// Gets all the reviews from firebase given [toiletID].
+/// Returns a list of reviews.
 Future<List<Review>> getReviewList(String toiletID, int numOfReview) async {
   List<Review> reviewList = [];
   CollectionReference toilets =
@@ -142,8 +140,8 @@ Future<List<Review>> getReviewList(String toiletID, int numOfReview) async {
   return reviewList;
 }
 
-/// Gets all the toilets from firebase
-/// Returns a list of toilets
+/// Gets all the toilets from firebase.
+/// Returns a list of toilets.
 Future<List<Toilet>> getToiletList() async {
   List<Toilet> toiletList = [];
   CollectionReference toilets =
@@ -167,4 +165,3 @@ Future<List<Toilet>> getToiletList() async {
       'Comment: alolo getToiletList length of toiletList: ${toiletList.length}');
   return toiletList;
 }
-

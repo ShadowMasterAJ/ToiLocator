@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../palette.dart';
 
-
-///Belongs to auth_card class, return the confirmed password
+/// Builds a card containing the user's confirmed password in the authentication card.
 class ConfPassword_Field extends StatefulWidget {
   const ConfPassword_Field(
       {Key? key, required TextEditingController this.confirmController})

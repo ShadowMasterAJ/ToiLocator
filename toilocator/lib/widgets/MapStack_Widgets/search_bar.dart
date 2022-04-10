@@ -5,15 +5,15 @@ import 'package:geocoder/geocoder.dart';
 
 import '../../palette.dart';
 
+/// Builds the search bar as seen in the map.
 class SearchBar extends StatefulWidget {
   const SearchBar({
     Key? key,
     required this.centerToPositionandMark,
-    required this.uploadingData,
   }) : super(key: key);
 
+  /// Centres the view to the user's input location and puts a marker at the location.
   final Function(double, double) centerToPositionandMark;
-  final Function(String) uploadingData;
   @override
   State<SearchBar> createState() => _SearchBarState();
 }
@@ -34,7 +34,6 @@ class _SearchBarState extends State<SearchBar> {
           });
           print('Mapstack latlng: $lat, $long');
           widget.centerToPositionandMark(lat, long);
-          widget.uploadingData(value);
         } catch (PlatformException) {
           Fluttertoast.showToast(
               msg: "Invalid Location, please try again!",

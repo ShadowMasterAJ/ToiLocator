@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../models/toilet.dart';
 import '../toilet_card.dart';
 
+/// Builds the bottom pull-up drawer of the map.
 class bottomPanel extends StatelessWidget {
   const bottomPanel({
     Key? key,
@@ -16,11 +17,20 @@ class bottomPanel extends StatelessWidget {
   })  : _toiletList = toiletList,
         super(key: key);
 
+  /// A map containing all toilet indices as key and corresponding distance from the user location as value.
   final Map indices;
+
   final BuildContext context;
+
+  /// The list of all toilets.
   final List<Toilet> _toiletList;
+
   final ScrollController sc;
+
+  /// The coordinates of the user's input location.
   final double lat, lng;
+
+  /// Displays the path from the user's input location to the current toilet.
   final Function(dynamic) getPolyLines;
 
   @override

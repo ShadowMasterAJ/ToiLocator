@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../palette.dart';
 
-///Belongs to auth_card class, return the user input password
+/// Builds a card containing the user's input password in the authentication card.
 class Password_Field extends StatefulWidget {
   const Password_Field(
       {Key? key, required TextEditingController this.passwordController})

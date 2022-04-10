@@ -3,12 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart' as authen;
 
 import '../models/user.dart';
 
-/// This is the class that handles all the authentication communications with Firebase.
+/// Handles all the authentication communications with Firebase.
 /// Contains functions used in the authentication files present in `lib/screens/auth_screen`.
 class AuthService {
   final authen.FirebaseAuth _firebaseAuth = authen.FirebaseAuth.instance;
   get auth => null;
-
 
   /// To Create custom `User` obj (based on our user in `lib/models`) based on firebase user.
   User? _userFromFirebase(authen.User? user) {
@@ -24,15 +23,14 @@ class AuthService {
           age: 0);
   }
 
-  /// the stream that parent widgets listen to, to be notified of authentication changes.
-  /// Returns a firebase user, mapped to custom `User` object when change in auth- sign in or out.
+  /// The stream that parent widgets listen to, to be notified of authentication changes.
+  /// Returns a firebase user, mapped to custom `User` object when there is a change in auth- sign in or out.
   Stream<User?>? get user {
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
   }
 
-
- /// Sign in with specified `email` and `password` using Firebase Auth.
- /// Firebase checks if such a user exists, and returns the `User` ubject if it does and `null` otherwise.
+  /// Sign in with specified `email` and `password` using Firebase Auth.
+  /// Firebase checks if such a user exists, and returns the `User` ubject if it does and `null` otherwise.
   Future<User?> signInWithEmailAndPassword(
     String email,
     String password,
@@ -44,7 +42,8 @@ class AuthService {
 
     return _userFromFirebase(credential.user);
   }
-  ///Create a user account with email and password
+
+  /// Creates a user account with email and password.
   Future<User?> createUserWithEmailAndPassword(
     String email,
     String password,
@@ -56,17 +55,19 @@ class AuthService {
     return _userFromFirebase(credential.user);
   }
 
-  /// Sign out of the current session. This sign out event is also reflected in the auth stream, 
+  /// Signs out of the current session.
+  /// This sign out event is also reflected in the auth stream.
   Future<void> signOut() async {
     return await _firebaseAuth.signOut();
   }
-///Get current user from the firebase according to the authentication state
+
+  /// Gets current user from the firebase according to the authentication state.
   getCurrentUser() async {
     return await auth.FirebaseAuth.instance.currentUser;
   }
 }
 
-///Return 'User' object
+/// Returns 'User' object.
 Future<User> getUser() async {
   final firebaseUser = await authen.FirebaseAuth.instance.currentUser;
   return User(
@@ -78,7 +79,7 @@ Future<User> getUser() async {
       age: 0);
 }
 
-///Account validation, to check if the email is registered or not by user email
+/// Validates the account, to check whether the email is already registered or not.
 Future<bool> checkIfEmailInUse(String emailAddress) async {
   try {
     // Fetch sign-in methods for the email address
@@ -100,7 +101,7 @@ Future<bool> checkIfEmailInUse(String emailAddress) async {
   }
 }
 
-///Account validation, to check if the password is correct when log in
+/// Validates the account, to check if the password is correct when user is logging in.
 Future<bool> checkIfPasswordCorrect(String email, String password) async {
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');

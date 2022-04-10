@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-///Belongs to auth_card class, return the user input email
+/// Builds a card containing the user's input email in the authentication card.
 class Email_Field extends StatelessWidget {
   const Email_Field(
       {Key? key, required TextEditingController this.emailController})

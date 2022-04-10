@@ -6,7 +6,8 @@ import '../../palette.dart';
 import '../../screens/auth_screen.dart';
 import '../../screens/input_review_screen.dart';
 import '../../services/directions.dart';
-/// Bottom app bar for the toilet info screen
+
+/// Builds the bottom app bar of each toilet information screen.
 class BottomAppBarRow extends StatefulWidget {
   const BottomAppBarRow({
     Key? key,
@@ -17,18 +18,25 @@ class BottomAppBarRow extends StatefulWidget {
     required this.lng,
   }) : super(key: key);
 
+  /// The list of all toilets.
   final List toiletList;
+
+  /// The index of the current toilet which information is to be displayed.
   final int index;
+
+  /// The coordinates of the user's input location.
   final double lat, lng;
+
+  /// Displays the path from the user's input location to the current toilet.
   final Function(Map<PolylineId, Polyline>) getPolyLines;
 
   @override
   State<BottomAppBarRow> createState() => _BottomAppBarRowState();
 }
 
+/// Creates a navigator route with animation to authentication screen.
 Route createAltRoute() {
   return PageRouteBuilder(
-    // settings: RouteSettings(name: ""),
     pageBuilder: (
       context,
       animation,
@@ -50,6 +58,7 @@ Route createAltRoute() {
   );
 }
 
+/// Styles a button.
 buttonStyles(buttonColor, context) {
   return TextButton.styleFrom(
     padding: EdgeInsets.all(15),
@@ -62,13 +71,13 @@ buttonStyles(buttonColor, context) {
   );
 }
 
+// Generates a button with padding.
 Padding TextButtonGen(
     String text, Color textColor, ButtonStyle buttonStyle, onPress, context) {
   return Padding(
     padding: const EdgeInsets.all(15.0),
     child: TextButton(
         child: Text(
-          // no splashcolour here
           text,
           style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: textColor,
@@ -119,13 +128,14 @@ class _BottomAppBarRowState extends State<BottomAppBarRow> {
     );
   }
 
+  /// Checks whether the user is already logged in when user chooses to review.
+  /// If the user is not logged in, he will be navigated to the authentication page.
+  /// Otherwise he will be navigated to the commenting page.
   void onPressReview(BuildContext context) {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (FirebaseAuth.instance.currentUser == null) {
-        // if user is not lgged in
         Navigator.of(context).pushReplacement(createAltRoute());
       } else {
-        // else login already! go to write review page
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -139,8 +149,8 @@ class _BottomAppBarRowState extends State<BottomAppBarRow> {
     });
   }
 
+  /// Generates the directions from the user's current location to the selected toilet.
   Future<void> getDirections(BuildContext context) async {
-    print('directions pressed');
     print(
         "All LatLng: ${widget.lat}, ${widget.lng} || ${widget.toiletList[widget.index].coords[0]}, ${widget.toiletList[widget.index].coords[1]}");
 
