@@ -3,9 +3,9 @@
 //just there cuz why not
 import 'dart:math' show cos, sqrt, asin;
 
-//packages
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -15,7 +15,6 @@ import '/models/toilet.dart';
 import '../palette.dart';
 import '../services/getToiletInfo.dart';
 import 'MapStack_Widgets/bottom_panel.dart';
-import 'MapStack_Widgets/search_bar.dart';
 import 'toilet_info_card.dart';
 
 /// The main widget displayed in home_map_screen.dart
@@ -35,18 +34,22 @@ class MapStack extends StatefulWidget {
 
 class _MapStackState extends State<MapStack> {
   /// Initialial position of the map.
-  LatLng _initialcameraposition =
-      LatLng(1.3521, 103.8198);
+  LatLng _initialcameraposition = LatLng(1.3521, 103.8198);
+
   /// Initialisation of the map controller.
   late GoogleMapController _controller;
-  
-  late double userLat, userLong;
+
+  late double userLat = 1.3521, userLong = 103.8198;
+
   /// Map of the index of the toilet and its distance from the user's location.
-  Map indices = {}; 
+  Map indices = {};
+
   /// List of all markers to be displayed.
   List<Marker> _markers = [];
+
   /// List of all toilets.
   List<Toilet> _toiletList = [];
+
   /// Icon that signifies a toilet
   late BitmapDescriptor toiletIcon;
 
@@ -66,10 +69,12 @@ class _MapStackState extends State<MapStack> {
     retrieveIcon();
     prepareToilets();
   }
+
   /// Fills toiletList with all toilets from the database.
   void prepareToilets() async {
     _toiletList = await getToiletList();
   }
+
   /// Adds marker to the map for the searched/current location
   void addMarker() {
     _markers.add(
@@ -82,6 +87,7 @@ class _MapStackState extends State<MapStack> {
           position: _initialcameraposition),
     );
   }
+
   /// Retrieves the icon for the toilet.
   void retrieveIcon() {
     BitmapDescriptor.fromAssetImage(
@@ -90,6 +96,7 @@ class _MapStackState extends State<MapStack> {
       toiletIcon = onValue;
     });
   }
+
   /// Adds markers to the map for selected toilets.
   void addToiletMarker(int markerId, double lat, double long) {
     LatLng _position = LatLng(lat, long);
@@ -104,6 +111,7 @@ class _MapStackState extends State<MapStack> {
     _markers.add(marker);
     print('added marker');
   }
+
   /// Marks the toilets that are within 1km of the user's location.
   void markNearestToilets(double lat, double long) {
     indices.clear();
@@ -116,6 +124,7 @@ class _MapStackState extends State<MapStack> {
     }
     print(indices);
   }
+
   /// Calculates the distance of each toilet from the user's location.
   Map calculateNearestToilets(double lat, double long) {
     Map nearestToiletList = {};
@@ -144,6 +153,7 @@ class _MapStackState extends State<MapStack> {
           ..sort((e1, e2) => e1.value.compareTo(e2.value)));
     return nearestToiletListSorted;
   }
+
   /// Centers the map on the user's location and marks it.
   void centerToPositionandMark(double lat, double long) {
     print('fetched in function');
@@ -167,6 +177,7 @@ class _MapStackState extends State<MapStack> {
       print(_markers[i].markerId.toString());
     }
   }
+
   /// Function to fetch the user's location.
   Future<LatLng> getCurrentLocation() async {
     await Geolocator.requestPermission();
@@ -177,15 +188,18 @@ class _MapStackState extends State<MapStack> {
     var long = position.longitude;
     return LatLng(lat, long);
   }
+
   /// Function to center to the user's fetched location.
   void centerToCurrentLocation() async {
     LatLng latlng = await getCurrentLocation();
     centerToPositionandMark(latlng.latitude, latlng.longitude);
   }
+
   /// When the map is created, the map controller is set.
   void _onMapCreated(GoogleMapController _cntlr) {
     _controller = _cntlr;
   }
+
   /// Show toilet info when its marker is tapped
   Route createRoute(int markerId) {
     return PageRouteBuilder(
@@ -218,9 +232,10 @@ class _MapStackState extends State<MapStack> {
       },
     );
   }
+
   /// The polylines for the route between the user and the toilet.
   Map<PolylineId, Polyline> polylines = {};
-  
+
   /// Sets the polylines for the route between the user and the toilet.
   void setPolyLines(Map<PolylineId, Polyline> poly) {
     print('set poly points set state map stack');
@@ -250,12 +265,66 @@ class _MapStackState extends State<MapStack> {
             polylines: Set<Polyline>.of(polylines.values),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
-            child: SearchBar(
-              centerToPositionandMark: centerToPositionandMark,
-             
-            ),
-          ),
+              padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
+              child: TextField(
+                onSubmitted: (value) async {
+                  try {
+                    var addr =
+                        await Geocoder.local.findAddressesFromQuery(value);
+                    var lat = addr.first.coordinates.latitude;
+                    var long = addr.first.coordinates.longitude;
+                    setState(() {
+                      userLat = lat;
+                      userLong = long;
+                    });
+                    print('Mapstack latlng: $lat, $long');
+                    centerToPositionandMark(lat, long);
+                  } catch (PlatformException) {
+                    Fluttertoast.showToast(
+                        msg: "Invalid Location, please try again!",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 3,
+                        backgroundColor: Color.fromARGB(255, 99, 99, 99),
+                        textColor: Colors.white,
+                        fontSize: 16.0);
+                  }
+                },
+                decoration: InputDecoration(
+                  prefixIcon: IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      size: 20,
+                      color: Palette.beige.shade900,
+                    ),
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                  ),
+                  suffixIcon: Icon(
+                    Icons.search_sharp,
+                    size: 30,
+                    color: Palette.beige.shade800,
+                  ),
+                  filled: true,
+                  fillColor: Palette.beige[100]?.withOpacity(0.95),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.brown.shade100, width: 2),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      )),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.brown.shade100, width: 5),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      )),
+                  hintText: 'Enter your location',
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 13, vertical: 18),
+                ),
+              )),
           SlidingUpPanel(
             snapPoint: 0.35,
             maxHeight: _panelHeightOpen,
