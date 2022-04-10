@@ -13,6 +13,13 @@ import 'AuthCard_Widgets/confPassword_field.dart';
 import 'AuthCard_Widgets/password_field.dart';
 import 'AuthCard_Widgets/username_field.dart';
 
+
+/// This class is the sign-up/log-in UI. It contains the UI elements for 
+/// the sign-up and log-in page, for example the text feilds to enter the username, email and passoword.
+/// It also performs several forms of validation, such as checking if the email is valid, if the account already exists,
+/// if the re-entered password is matches with the previous password, etc. 
+/// Once the form is submitted, it uses the authentication service (in `services/auth.dart`) 
+/// to communicate with firebase and sign in the user.
 class AuthForm extends StatefulWidget {
   @override
   _AuthFormState createState() => _AuthFormState();
@@ -294,7 +301,6 @@ class _AuthFormState extends State<AuthForm> {
             password: passwordController.text.trim(),
           )
           .then((value) => {postDetailsToFirestore()});
-      //await UserDatabaseService(FirebaseAuth.instance.currentUser!.uid).addNewUser(emailController.text, emailController.text, int.parse(emailController.text));
     } on auth.FirebaseAuthException catch (e) {
       print(e);
     }
@@ -305,9 +311,9 @@ class _AuthFormState extends State<AuthForm> {
   }
 
   postDetailsToFirestore() async {
-    // calling our firestore, calling our user record, sending these values
+    /// calling our firestore, calling our user record, sending these values
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    // writing all the values
+    /// writing all the values
     currentUser.uid = auth.FirebaseAuth.instance.currentUser!.uid;
     currentUser.userName = nameController.text;
     currentUser.userEmail = emailController.text;

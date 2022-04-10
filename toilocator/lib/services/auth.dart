@@ -3,10 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart' as authen;
 
 import '../models/user.dart';
 
+/// This is the class that handles all the authentication communications with Firebase.
+/// Contains functions used in the authentication files present in `lib/screens/auth_screen`.
 class AuthService {
   final authen.FirebaseAuth _firebaseAuth = authen.FirebaseAuth.instance;
   get auth => null;
 
+
+  /// To Create custom `User` obj (based on our user in `lib/models`) based on firebase user.
   User? _userFromFirebase(authen.User? user) {
     if (user == null)
       return null;
@@ -26,6 +30,9 @@ class AuthService {
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
   }
 
+
+ /// Sign in with specified `email` and `password` using Firebase Auth.
+ /// Firebase checks if such a user exists, and returns the `User` ubject if it does and `null` otherwise.
   Future<User?> signInWithEmailAndPassword(
     String email,
     String password,
@@ -37,7 +44,7 @@ class AuthService {
 
     return _userFromFirebase(credential.user);
   }
-
+  ///Create a user account with email and password
   Future<User?> createUserWithEmailAndPassword(
     String email,
     String password,
@@ -49,15 +56,17 @@ class AuthService {
     return _userFromFirebase(credential.user);
   }
 
+  /// Sign out of the current session. This sign out event is also reflected in the auth stream, 
   Future<void> signOut() async {
     return await _firebaseAuth.signOut();
   }
-
+///Get current user from the firebase according to the authentication state
   getCurrentUser() async {
     return await auth.FirebaseAuth.instance.currentUser;
   }
 }
 
+///Return 'User' object
 Future<User> getUser() async {
   final firebaseUser = await authen.FirebaseAuth.instance.currentUser;
   return User(
@@ -69,6 +78,7 @@ Future<User> getUser() async {
       age: 0);
 }
 
+///Account validation, to check if the email is registered or not by user email
 Future<bool> checkIfEmailInUse(String emailAddress) async {
   try {
     // Fetch sign-in methods for the email address
@@ -90,6 +100,7 @@ Future<bool> checkIfEmailInUse(String emailAddress) async {
   }
 }
 
+///Account validation, to check if the password is correct when log in
 Future<bool> checkIfPasswordCorrect(String email, String password) async {
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
@@ -109,6 +120,7 @@ Future<bool> checkIfPasswordCorrect(String email, String password) async {
     return false;
 }
 
+/// Sign in with specified `email` and `password` using Firebase Auth.
 Future signIn(String email, String password) async {
   try {
     await authen.FirebaseAuth.instance.signInWithEmailAndPassword(
