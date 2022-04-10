@@ -34,10 +34,6 @@ Future<User?> signInWithEmailAndPassword(
   return _userFromFirebase(credential.user);
 }
 
-
-
-
-
 Future<User?> createUserWithEmailAndPassword(
   String email,
   String password,
@@ -48,8 +44,6 @@ Future<User?> createUserWithEmailAndPassword(
     return _userFromFirebase(credential.user);
 }
 
-
-
 Future<void> signOut() async {
   return await _firebaseAuth.signOut();
 }
@@ -59,7 +53,6 @@ Future<void> signOut() async {
   }
 
 }
-
 
 
 Future<User> getUser() async {
@@ -108,5 +101,5 @@ Future<bool> checkIfPasswordCorrect(String email, String password) async{
             });
             if(result==password) return true;
             else return false;
-                    
+         
 }
