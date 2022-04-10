@@ -27,11 +27,12 @@ import '../models/toilet.dart';
 
 // }
 
-//test
+/// Adds a document in firebase with field test: [test]
 Future<void> test(String test) async {
   await FirebaseFirestore.instance.collection("userInput").add({'test': test});
 }
 
+/// Adds a new toilet document to firebase given all the attributes
 // add a toilet instance to firebase
 // doc() specifies our own index
 // .set is used for the doc like to update
@@ -95,6 +96,7 @@ Future<void> addToilet(
 //   }
 // }
 
+/// Adds a new review document to firebase given all the attributes
 // addReview for a toilet ID = index
 Future<void> addReview(DateTime dateTime, String userID, String toiletID,
     int userRating, String userComment) async {
@@ -112,6 +114,8 @@ Future<void> addReview(DateTime dateTime, String userID, String toiletID,
   print('Comment: addReview - review added');
 }
 
+/// Gets all the reviews from firebase given [toiletID]
+/// Returns a list of reviews
 Future<List<Review>> getReviewList(String toiletID, int numOfReview) async {
   List<Review> reviewList = [];
   CollectionReference toilets =
@@ -156,6 +160,8 @@ Future<List<Review>> getReviewList(String toiletID, int numOfReview) async {
       //   }
       // });
 
+/// Gets all the toilets from firebase
+/// Returns a list of toilets
 Future<List<Toilet>> getToiletList() async {
     List<Toilet> toiletList = [];
     CollectionReference toilets = FirebaseFirestore.instance.collection('toilets');
@@ -181,15 +187,3 @@ Future<List<Toilet>> getToiletList() async {
   
 }
 
-// updateToilet
-
-Future<void> editProduct(bool _isFavourite, String id) async {
-  await FirebaseFirestore.instance
-      .collection("products")
-      .doc(id)
-      .update({"isFavourite": !_isFavourite});
-}
-
-Future<void> deleteProduct(DocumentSnapshot doc) async {
-  await FirebaseFirestore.instance.collection("products").doc(doc.id).delete();
-}

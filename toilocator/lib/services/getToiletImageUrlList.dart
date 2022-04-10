@@ -4,6 +4,8 @@ import 'package:html/parser.dart' show parse;
 //   print(getToiletImageUrlList("https://www.toilet.org.sg/gallery/202/4-star-toilet-dt20-fort-canning-station"));
 // }
 
+/// Gets all the image urls on toilet.org.sg given the [toiletAlbumLink]
+/// Returns a list of url strings
 Future<List?> getToiletImageUrlList(String toiletAlbumLink) async {
   // Download the content of the site
   http.Response response = await http.get(Uri.parse(toiletAlbumLink));
