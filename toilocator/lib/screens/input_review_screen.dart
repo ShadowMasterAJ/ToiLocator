@@ -7,6 +7,9 @@ import '../palette.dart';
 import '../services/getToiletInfo.dart';
 import '../services/userDatabase.dart' as ud;
 
+/// This is the UI for the review screen
+/// Gets star rating from user and sends to database
+/// Gets text review from user and sends to database
 class InputReviewScreen extends StatefulWidget {
   final List toiletList;
   final int index;
@@ -23,9 +26,10 @@ class InputReviewScreen extends StatefulWidget {
 
 class _InputReviewScreenState extends State<InputReviewScreen>
     with AutomaticKeepAliveClientMixin<InputReviewScreen> {
+      
   bool get wantKeepAlive => true;
-  int userRating = 0; // need somehow to fetch the userrating
-  String userComment = "";
+  int userRating = 0;
+  late String userComment;
   final myController = TextEditingController();
 
   @override
@@ -69,9 +73,7 @@ class _InputReviewScreenState extends State<InputReviewScreen>
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    child: Text(
-                      "Back",
-                    ),
+                    child: Text("Back"),
                     onPressed: () => Navigator.of(context).pop(),
                     style: ButtonStyle(
                       padding: MaterialStateProperty.all<EdgeInsets>(
