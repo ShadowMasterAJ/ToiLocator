@@ -2,7 +2,7 @@
 class Review {
   DateTime dateTime = DateTime.now();
   late String userID;
-  late String toiletID; // is index in Toilet class
+  late String toiletID; 
   late int userRating;
   late String userComment;
 

@@ -16,7 +16,6 @@ class Age_Field extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       child: TextField(
-        // textAlignVertical: TextAlignVertical.top,
         controller: ageController,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(

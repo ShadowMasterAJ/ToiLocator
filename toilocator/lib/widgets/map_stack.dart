@@ -166,7 +166,6 @@ class _MapStackState extends State<MapStack> {
     for (int i = 0; i < _markers.length; i++) {
       print(_markers[i].markerId.toString());
     }
-    // run the marknesrestest toilets here
   }
   /// Function to fetch the user's location.
   Future<LatLng> getCurrentLocation() async {
@@ -258,7 +257,6 @@ class _MapStackState extends State<MapStack> {
             ),
           ),
           SlidingUpPanel(
-            // bottom drawer
             snapPoint: 0.35,
             maxHeight: _panelHeightOpen,
             minHeight: _panelHeightClosed,

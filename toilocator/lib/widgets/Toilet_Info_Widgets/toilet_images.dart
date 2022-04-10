@@ -23,9 +23,7 @@ class ToiletImages extends StatefulWidget {
 }
 
 class _ToiletImagesState extends State<ToiletImages> {
-  // Directions directions = Directions();
   List<Widget> imageList = [];
-
   bool isLoading = false;
 
   /// Converts URL links to a list of Image widgets.

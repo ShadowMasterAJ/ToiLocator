@@ -89,14 +89,11 @@ Future<bool> checkIfEmailInUse(String emailAddress) async {
     // In case list is not empty
     if (list.isNotEmpty) {
       // Return true because there is an existing
-      //print("the email is in use.");
       return true;
     } else {
-      //print("the email is not in use.");
       return false;
     }
   } catch (error) {
-    // Handle error
     return true;
   }
 }

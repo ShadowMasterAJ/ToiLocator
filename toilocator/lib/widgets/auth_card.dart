@@ -38,7 +38,6 @@ class _AuthFormState extends State<AuthForm> {
   void initState() {
     super.initState();
     _authMode = AuthMode.Signup;
-    // });
   }
 
   final TextEditingController nameController = TextEditingController();
@@ -55,8 +54,6 @@ class _AuthFormState extends State<AuthForm> {
 
   @override
   Widget build(BuildContext context) {
-    //navigatorKey: navigatorKey;
-    // final authService = Provider.of<AuthService>(context);
     return SingleChildScrollView(
       physics: ScrollPhysics(),
       child: Form(
@@ -95,7 +92,7 @@ class _AuthFormState extends State<AuthForm> {
                         onChanged: (String? newValue) {
                           setState(() {
                             dropDownValue =
-                                newValue!; // CAN TAKE GENDER INPUT AS DROPDOWNVALUE (GLOBAL)
+                                newValue!;
                           });
                         },
                         underline: Container(

@@ -151,7 +151,7 @@ class toiletCard extends StatelessWidget {
                           child: Center(
                             child: Text(
                               indices[index].toString() +
-                                  "m", // CHANGE TO DISTANCE
+                                  "m",
                               style: Theme.of(context).textTheme.headline4,
                             ),
                           ),

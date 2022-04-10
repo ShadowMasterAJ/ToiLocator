@@ -54,14 +54,12 @@ class HomeMapScreen extends StatelessWidget {
                         );
                       })
                     : DrawerButton(context, 'Logout', Icons.logout, () async {
-                        // () async {
                         final FirebaseAuth _firebaseAuth =
                             FirebaseAuth.instance;
                         await _firebaseAuth.signOut();
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (context) => HomeMapScreen()));
                       })),
-
                 Spacer(),
                 Container(
                   child: Center(child: Text('V4.20.69')),
@@ -79,12 +77,7 @@ class HomeMapScreen extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         resizeToAvoidBottomInset: false,
-
-        // appBar: AppBar(title: Text('Toilocator')),
-        body: SafeArea(
-            child: MapStack(
-                // getLocFromInfo: (double lat, double long) {},
-                )),
+        body: SafeArea(child: MapStack()),
         drawer: SafeArea(
           child: Container(
             width: 100,

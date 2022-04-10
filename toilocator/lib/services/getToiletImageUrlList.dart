@@ -23,7 +23,6 @@ Future<List?> getToiletImageUrlList(String toiletAlbumLink) async {
 
     // for loop from 0 to end (break when error)
     int i = 0;
-    // final ImageURLList = <String>[]; // Creates growable list.
     List<String> ImageURLList = [];
     // Loop through the html and get all the toilet image links
     while (true) {
@@ -42,8 +41,6 @@ Future<List?> getToiletImageUrlList(String toiletAlbumLink) async {
               'Comment: Failed to load toilet images using the full toilet image link');
         }
         i++;
-
-        // Loop will break when there is an exception (of range error?)
       } catch (e) {
         print(e);
         print("Comment: Range error means there are no more links");
