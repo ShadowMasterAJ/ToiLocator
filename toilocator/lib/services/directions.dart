@@ -2,7 +2,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../palette.dart';
-
+/// Class to calculate polylines between points to draw on the map.
 class Directions {
   late PolylinePoints polylinePoints;
   List<LatLng> polylineCoordinates = [];

@@ -10,6 +10,7 @@ import '../services/auth.dart';
 import '../services/userDatabase.dart';
 import 'AuthCard_Widgets/age_field.dart';
 import 'AuthCard_Widgets/confPassword_field.dart';
+import 'AuthCard_Widgets/email_field.dart';
 import 'AuthCard_Widgets/password_field.dart';
 import 'AuthCard_Widgets/username_field.dart';
 
@@ -71,35 +72,7 @@ class _AuthFormState extends State<AuthForm> {
                 : SizedBox(
                     height: 5,
                   ),
-            // Email_Field(emailController: emailController),
-            Card(
-              color: Colors.grey.shade100,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: TextFormField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  isDense: true,
-                  hintText: 'Email',
-                  hintStyle: TextStyle(color: Colors.black26, fontSize: 18),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: Colors.white54, width: 1.0),
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: Colors.black, width: 2.0),
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                      borderSide: BorderSide(width: 1, color: Colors.red)),
-                ),
-                keyboardType: TextInputType.emailAddress,
-              ),
-            ),
+            Email_Field(emailController: emailController),
             SizedBox(
               height: 0,
             ),

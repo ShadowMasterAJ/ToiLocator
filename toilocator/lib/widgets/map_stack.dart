@@ -18,6 +18,11 @@ import 'MapStack_Widgets/bottom_panel.dart';
 import 'MapStack_Widgets/search_bar.dart';
 import 'toilet_info_card.dart';
 
+/// The main widget displayed in home_map_screen.dart
+/// Displays the map with all the toilets within 1km of the location
+/// Also displays the search bar and the bottom panel.
+/// The bottom panel contains the information of the displayed toilets.
+/// The search bar is used to search for toilets.
 class MapStack extends StatefulWidget {
   const MapStack({
     Key? key,
@@ -29,23 +34,31 @@ class MapStack extends StatefulWidget {
 }
 
 class _MapStackState extends State<MapStack> {
+  /// Initialial position of the map.
   LatLng _initialcameraposition =
-      LatLng(1.3521, 103.8198); // 1.346150, 103.681500
+      LatLng(1.3521, 103.8198);
+  /// Initialisation of the map controller.
   late GoogleMapController _controller;
-  late double userLat = 1.3521, userLong = 103.8198;
-
-  Map indices = {}; // key = index of toilet, value = distance
+  
+  late double userLat, userLong;
+  /// Map of the index of the toilet and its distance from the user's location.
+  Map indices = {}; 
+  /// List of all markers to be displayed.
   List<Marker> _markers = [];
+  /// List of all toilets.
   List<Toilet> _toiletList = [];
+  /// Icon that signifies a toilet
   late BitmapDescriptor toiletIcon;
 
+  /// Various constrains to control the bottom panel
   final double _initFabHeight = 131.0;
   double _fabHeight = 0;
   double _panelHeightOpen = 0;
   double _panelHeightClosed = 118.0;
 
-  bool infoDrawerPopup = false;
-
+  /// The first thing that is called when the widget is created.
+  /// Sets up the various constrains and icons.
+  /// Gets the toilets from the database.
   @override
   void initState() {
     super.initState();
@@ -53,11 +66,11 @@ class _MapStackState extends State<MapStack> {
     retrieveIcon();
     prepareToilets();
   }
-
+  /// Fills toiletList with all toilets from the database.
   void prepareToilets() async {
     _toiletList = await getToiletList();
   }
-
+  /// Adds marker to the map for the searched/current location
   void addMarker() {
     _markers.add(
       Marker(
@@ -69,7 +82,7 @@ class _MapStackState extends State<MapStack> {
           position: _initialcameraposition),
     );
   }
-
+  /// Retrieves the icon for the toilet.
   void retrieveIcon() {
     BitmapDescriptor.fromAssetImage(
             ImageConfiguration(), 'lib/assets/toilet_marker.png')
@@ -77,7 +90,7 @@ class _MapStackState extends State<MapStack> {
       toiletIcon = onValue;
     });
   }
-
+  /// Adds markers to the map for selected toilets.
   void addToiletMarker(int markerId, double lat, double long) {
     LatLng _position = LatLng(lat, long);
     Marker marker = Marker(
@@ -91,7 +104,7 @@ class _MapStackState extends State<MapStack> {
     _markers.add(marker);
     print('added marker');
   }
-
+  /// Marks the toilets that are within 1km of the user's location.
   void markNearestToilets(double lat, double long) {
     indices.clear();
     indices = calculateNearestToilets(lat, long);
@@ -103,7 +116,7 @@ class _MapStackState extends State<MapStack> {
     }
     print(indices);
   }
-
+  /// Calculates the distance of each toilet from the user's location.
   Map calculateNearestToilets(double lat, double long) {
     Map nearestToiletList = {};
     for (int i = 0; i < _toiletList.length; i++) {
@@ -131,7 +144,7 @@ class _MapStackState extends State<MapStack> {
           ..sort((e1, e2) => e1.value.compareTo(e2.value)));
     return nearestToiletListSorted;
   }
-
+  /// Centers the map on the user's location and marks it.
   void centerToPositionandMark(double lat, double long) {
     print('fetched in function');
     print("Latitude: $lat and Longitude: $long");
@@ -155,7 +168,7 @@ class _MapStackState extends State<MapStack> {
     }
     // run the marknesrestest toilets here
   }
-
+  /// Function to fetch the user's location.
   Future<LatLng> getCurrentLocation() async {
     await Geolocator.requestPermission();
     Position position = await Geolocator.getCurrentPosition(
@@ -165,24 +178,16 @@ class _MapStackState extends State<MapStack> {
     var long = position.longitude;
     return LatLng(lat, long);
   }
-
+  /// Function to center to the user's fetched location.
   void centerToCurrentLocation() async {
     LatLng latlng = await getCurrentLocation();
     centerToPositionandMark(latlng.latitude, latlng.longitude);
   }
-
+  /// When the map is created, the map controller is set.
   void _onMapCreated(GoogleMapController _cntlr) {
     _controller = _cntlr;
   }
-
-  Future<void> uploadingData(value) async {
-    await FirebaseFirestore.instance.collection('userInput').add({
-      'location': value,
-      'dateTime': DateTime.now(),
-    });
-    print('Comment: value added');
-  }
-
+  /// Show toilet info when its marker is tapped
   Route createRoute(int markerId) {
     return PageRouteBuilder(
       settings: RouteSettings(name: "/toiletInfo"),
@@ -214,9 +219,10 @@ class _MapStackState extends State<MapStack> {
       },
     );
   }
-
+  /// The polylines for the route between the user and the toilet.
   Map<PolylineId, Polyline> polylines = {};
-
+  
+  /// Sets the polylines for the route between the user and the toilet.
   void setPolyLines(Map<PolylineId, Polyline> poly) {
     print('set poly points set state map stack');
     setState(() {
@@ -248,7 +254,7 @@ class _MapStackState extends State<MapStack> {
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
             child: SearchBar(
               centerToPositionandMark: centerToPositionandMark,
-              uploadingData: uploadingData,
+             
             ),
           ),
           SlidingUpPanel(

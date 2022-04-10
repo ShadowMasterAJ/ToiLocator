@@ -1,19 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// This class handles all the cloud FireStore database related functions(read and write).
-/// It also provides a stream which we listen to in `Home.dart` (after login)
+/// It also provides a stream which we listen to in `HomeMapScreen.dart` (after login)
 class UserDatabaseService {
   final String uid;
-// final String userName;
-// final String gender;
-// final int age;
   UserDatabaseService(this.uid);
 
 /// collection reference
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
 
-///Check with the firestore if the user exits or not by user id
+/// Check with the firestore if the user exits or not by user id
   Future<bool> checkIfUserExists(String uid) async {
     DocumentSnapshot snapshot =
         await FirebaseFirestore.instance.collection('users').doc(uid).get();
@@ -32,7 +29,7 @@ class UserDatabaseService {
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
   }
-///Update user information
+/// Update user information
   Future<void> updateUser(
       String uid, String userName, String userEmail, String gender, int age) {
     return usersCollection
@@ -60,7 +57,7 @@ class UserDatabaseService {
     return name;
 
   }
-///Interact with the Firestore to read user's data by the uid
+/// Interact with the Firestore to read user's data by the uid
   Future<void> readUserData(String uid) {
     return usersCollection
         .doc(uid)
@@ -75,7 +72,7 @@ class UserDatabaseService {
   }
 
 
-///Call the Firestore to read user's name by uid
+/// Call the Firestore to read user's name by uid
   Future<void> readUserName(String uid) {
     return usersCollection
         .doc(uid)

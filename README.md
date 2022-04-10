@@ -20,8 +20,7 @@ Webscrape tool - [webscrape.io](https://webscraper.io)
 4. Type `flutter run --no-sound-null-safety` in the terminal to run the app.
 ## UI
 ##### Authentication Screen
-
-<img src="app_ss/signup.png" width="200"/> <img src="app_ss/login.png" width="200"/><img src="app_ss/profile_page.png" width="200"/>
+<img src="app_ss/signup.png" width="200"/> <img src="app_ss/login.png" width="200"/> <img src="app_ss/profile_page.png" width="200"/>
 
 ##### Home Screen
 
@@ -29,7 +28,7 @@ Webscrape tool - [webscrape.io](https://webscraper.io)
 
 ##### On Search Location and Directions
 
-<img src="app_ss/poop_markers.png" width="300"><img src="app_ss/directions.png" width="300"/>
+<img src="app_ss/poop_markers.png" width="300"> <img src="app_ss/directions.png" width="300"/>
 
 ##### On Swipe up Bottom Panel
 
