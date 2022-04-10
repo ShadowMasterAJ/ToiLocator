@@ -21,26 +21,20 @@ Webscrape tool - [webscrape.io](https://webscraper.io)
 ## UI
 ##### Authentication Screen
 
-<img src="app_ss/signup.png" width="200"/> 
-<img src="app_ss/login.png" width="200"/>
-<img src="app_ss/profile_page.png" width="200"/>
+<img src="app_ss/signup.png" width="200"/> <img src="app_ss/login.png" width="200"/><img src="app_ss/profile_page.png" width="200"/>
 
 ##### Home Screen
 
-<img src="app_ss/mapscreen.png" width="300"/> 
-<img src="app_ss/sidebar.png" width="300"/>
+<img src="app_ss/mapscreen.png" width="300"/> <img src="app_ss/sidebar.png" width="300"/>
 
 ##### On Search Location and Directions
 
-<img src="app_ss/poop_markers.png" width="300">
-<img src="app_ss/directions.png" width="300"/>
+<img src="app_ss/poop_markers.png" width="300"><img src="app_ss/directions.png" width="300"/>
 
 ##### On Swipe up Bottom Panel
 
-<img src="app_ss/no_toilets image.png" width="300"/> 
-<img src="app_ss/toilet_cards.png" width="300"/>
+<img src="app_ss/no_toilets image.png" width="300"/> <img src="app_ss/toilet_cards.png" width="300"/>
 
 ##### Toilet Info and Reviews
 
-<img src="app_ss/toilet_info.png" width="300"/> 
-<img src="app_ss/review_screen.png" width="300"/>
+<img src="app_ss/toilet_info.png" width="300"/> <img src="app_ss/review_screen.png" width="300"/>
