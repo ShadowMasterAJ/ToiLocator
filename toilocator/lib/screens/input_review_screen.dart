@@ -1,11 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
-
-import '../services/userDatabase.dart' as ud;
-import '../services/getToiletInfo.dart';
-import '../palette.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+import '../palette.dart';
+import '../services/getToiletInfo.dart';
+import '../services/userDatabase.dart' as ud;
 
 class InputReviewScreen extends StatefulWidget {
   final List toiletList;
@@ -34,17 +34,6 @@ class _InputReviewScreenState extends State<InputReviewScreen>
     myController.dispose();
     super.dispose();
   }
-
-  // void updateAveUserRating(int newUserRating) {
-  //   print("HELLO LOOK HERE");
-  //   int updatedAveUserRating = widget.toiletList[widget.index].userRating;
-  //   print(updatedAveUserRating);
-  //   updatedAveUserRating =
-  //       ((updatedAveUserRating * (widget.reviewCount - 1) + newUserRating) /
-  //               widget.reviewCount)
-  //           .ceil();
-  //   updateUserRating(widget.index, updatedAveUserRating);
-  // }
 
   Widget ratingBarBuilder() {
     return RatingBar.builder(
@@ -148,8 +137,6 @@ class _InputReviewScreenState extends State<InputReviewScreen>
                     ),
                     hintText: 'Write your comments...',
                     alignLabelWithHint: true,
-                    // contentPadding:
-                    //     EdgeInsets.symmetric(vertical: 80, horizontal: 20),
                   ),
                 ),
                 SizedBox(height: 20),

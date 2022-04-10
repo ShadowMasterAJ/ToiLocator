@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'toilet_info_card.dart';
+
 import '../palette.dart';
+import 'toilet_info_card.dart';
 
 class toiletCard extends StatelessWidget {
   final Map indices;
@@ -154,7 +155,6 @@ class toiletCard extends StatelessWidget {
             InkWell(
               onTap: () {
                 Navigator.of(context).push(createRoute(index));
-                // may fuck with the scrolling a bit ON THE MULATOR, not sure
               },
               splashColor: Palette.beige[200],
             )

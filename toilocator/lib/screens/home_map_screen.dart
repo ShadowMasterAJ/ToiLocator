@@ -62,15 +62,6 @@ class HomeMapScreen extends StatelessWidget {
                             builder: (context) => HomeMapScreen()));
                       })),
 
-                // DrawerButton(context, 'Login', Icons.logout, () {
-                //   Navigator.pop(context);
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         settings: RouteSettings(name: "/loginPage"),
-                //         builder: (context) => AuthScreen()),
-                //   );
-                // }),
                 Spacer(),
                 Container(
                   child: Center(child: Text('V4.20.69')),

@@ -79,7 +79,6 @@ class _ReviewListState extends State<ReviewList> {
           Spacer(),
           Row(children: displayStarRating(userRating)),
         ]),
-        // SizedBox(height: 10),
         Padding(
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
             child: Text(
@@ -89,8 +88,7 @@ class _ReviewListState extends State<ReviewList> {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(color: Color.fromARGB(255, 136, 136, 136)),
             )),
-        // Padding(padding: const EdgeInsets.only(right: 110.0)),
-        // SizedBox(height: 8),
+        
         Divider(
           color: Color.fromARGB(255, 218, 218, 218),
           thickness: 1,
@@ -99,7 +97,6 @@ class _ReviewListState extends State<ReviewList> {
         ),
       ]),
     );
-    // );
   }
 
   @override

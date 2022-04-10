@@ -219,7 +219,6 @@ class _MapStackState extends State<MapStack> {
 
   void setPolyLines(Map<PolylineId, Polyline> poly) {
     print('set poly points set state map stack');
-    // print('1',polylines.entries);
     setState(() {
       polylines = poly;
     });

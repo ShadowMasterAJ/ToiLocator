@@ -59,13 +59,7 @@ class RatingsAccessibility extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 )),
-            Spacer(), // FutureBuilder(
-            //     future: createReviewList(),
-            //     builder: (context,
-            //          snapshot) {
-            //       return ;
-            //     }),
-            ////placeholder value
+            Spacer(),
             Row(children: displayStarRating((averageRating)))
           ]),
           SizedBox(height: 15),
@@ -78,7 +72,6 @@ class RatingsAccessibility extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 )),
-            // Padding(padding: const EdgeInsets.only(right: 110.0)),
             Spacer(),
             Row(children: [
               SizedBox(
