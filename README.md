@@ -18,10 +18,15 @@ Webscrape tool - [webscrape.io](https://webscraper.io)
 2. Navigate to the directory “toilocator”, then you can access the source code files.
 3. Use Android Studio to set up an Android emulator.
 4. Type `flutter run --no-sound-null-safety` in the terminal to run the app.
+
+### API keys
+
+- This project requires certain API keys from Google Maps and Firebase.
+- There is currently no one file that stores all the required API keys, so if you were to run the code, you might need to search for the files that contains the API keys and insert your own.
+
 ## UI
 ##### Authentication Screen
-
-<img src="app_ss/signup.png" width="200"/> <img src="app_ss/login.png" width="200"/><img src="app_ss/profile_page.png" width="200"/>
+<img src="app_ss/signup.png" width="200"/> <img src="app_ss/login.png" width="200"/> <img src="app_ss/profile_page.png" width="200"/>
 
 ##### Home Screen
 
@@ -29,7 +34,7 @@ Webscrape tool - [webscrape.io](https://webscraper.io)
 
 ##### On Search Location and Directions
 
-<img src="app_ss/poop_markers.png" width="300"><img src="app_ss/directions.png" width="300"/>
+<img src="app_ss/poop_markers.png" width="300"> <img src="app_ss/directions.png" width="300"/>
 
 ##### On Swipe up Bottom Panel
 

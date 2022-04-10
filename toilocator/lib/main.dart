@@ -6,16 +6,15 @@ import 'package:toilocator/services/auth.dart';
 
 import 'palette.dart';
 
-//the app will always initialise firebase when it starts
+///The app will always initialise firebase when it starts
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
 }
 
-//may add in the wrapper, for users who wish to comment, switch to register screen, if not, back to homeMap screen
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

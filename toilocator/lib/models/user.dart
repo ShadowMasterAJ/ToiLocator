@@ -1,4 +1,4 @@
-class User{
+class User {
   String uid;
   String userName;
   String userEmail;
@@ -6,9 +6,16 @@ class User{
   String gender;
   int age;
 
-  User({ required this.uid, required this.userName,required this.userEmail,required this.password,required this.gender, required this.age});
+  User({
+    required this.uid,
+    required this.userName,
+    required this.userEmail,
+    required this.password,
+    required this.gender,
+    required this.age,
+  });
 
-    factory User.fromMap(map) {
+  factory User.fromMap(map) {
     return User(
       uid: map['uid'],
       userName: map['userName'],

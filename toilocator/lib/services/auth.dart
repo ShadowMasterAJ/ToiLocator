@@ -9,7 +9,7 @@ class AuthService {
   final authen.FirebaseAuth _firebaseAuth = authen.FirebaseAuth.instance;
   get auth => null;
 
-  /// To Create custom `User` obj (based on our user in `lib/models`) based on firebase user.
+  /// Creates custom `User` obj (based on our user in `lib/models`) based on firebase user.
   User? _userFromFirebase(authen.User? user) {
     if (user == null)
       return null;

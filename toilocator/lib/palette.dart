@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Theme data for the app
 class Palette {
   static const MaterialColor beige = const MaterialColor(
     0xFFe9c387, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.

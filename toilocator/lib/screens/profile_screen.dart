@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:toilocator/global_variables/my_globals.dart';
 
-import '../palette.dart';
 import './home_map_screen.dart';
+import '../palette.dart';
 
+/// UI for the profile screen
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -93,7 +94,6 @@ class ProfileScreen extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis),
               SizedBox(height: 30),
-             
             ],
           );
         }),

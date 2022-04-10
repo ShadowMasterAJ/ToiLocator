@@ -60,7 +60,7 @@ class UserDatabaseService {
     return name;
   }
 
-  /// Interact with the Firestore to read user's data by the uid.
+  /// Interacts with the Firestore to read user's data by the uid.
   Future<void> readUserData(String uid) {
     return usersCollection
         .doc(uid)
