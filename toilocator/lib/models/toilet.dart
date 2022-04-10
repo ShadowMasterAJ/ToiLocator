@@ -1,6 +1,6 @@
 import 'package:toilocator/models/review.dart';
 
-/// Defintion of the Toilet class
+/// Definition of the Toilet class.
 class Toilet {
   final int index;
   final String type;

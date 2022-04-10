@@ -1,4 +1,4 @@
-/// This class stores all the information of a review that is written by a user
+/// Stores all the information of a review that is written by a user.
 class Review {
   DateTime dateTime = DateTime.now();
   late String userID;

@@ -1,4 +1,4 @@
-/// Defintion of the User class
+/// Defintion of the User class.
 class User {
   String uid;
   String userName;
