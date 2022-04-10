@@ -4,6 +4,7 @@ import 'package:toilocator/palette.dart';
 import '../widgets/auth_card.dart';
 import '../screens/home_map_screen.dart';
 
+///The class calls for the auth_card page for user's registration or login purposes
 class AuthScreen extends StatefulWidget {
   @override
   _AuthScreenState createState() => _AuthScreenState();
