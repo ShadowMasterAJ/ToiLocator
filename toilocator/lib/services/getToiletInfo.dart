@@ -1,4 +1,5 @@
 import 'dart:core';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/review.dart';
@@ -124,12 +125,6 @@ Future<List<Review>> getReviewList(String toiletID, int numOfReview) async {
       .get() // get all the documents
       .then((QuerySnapshot querySnapshot) {
     querySnapshot.docs.forEach((doc) {
-      // print('Document: ${doc['userComment']}');
-      // print('Document: ${doc['userID']}');
-      // print('Document: ${doc['userRating']}');
-      // print('Document: ${doc['toiletID']}');
-      // print('Document: ${doc['userComment']}');
-
       Review review = new Review(
           DateTime.parse(doc['dateTime'].toDate().toString()),
           doc['userID'],
@@ -139,31 +134,18 @@ Future<List<Review>> getReviewList(String toiletID, int numOfReview) async {
       reviewList.add(review);
     });
   });
-      // print("Comment: getReviewList ${review.dateTime}");
-      // print("Comment: getReviewList ${reviewList[1].userID}");
-      // print("Comment: getReviewList ${reviewList[2].userRating}");
-      // print("Comment: getReviewList ${reviewList[0].userComment}");
-      print('Comment: getReviewList length of reviewList: ${reviewList.length}');
-      return reviewList;
+  print('Comment: getReviewList length of reviewList: ${reviewList.length}');
+  return reviewList;
 }
-      // THIS IS FOR ONE DOCUMENT
-      // .then((DocumentSnapshot documentSnapshot) { // only for one document
-      //   if (documentSnapshot.exists) {
-      //     print('Comment: document exists on firebase, data: ${documentSnapshot.data()}');
-      //   }
-      //   else {
-      //     print('Document does not exist on firebase');
-      //   }
-      // });
 
 Future<List<Toilet>> getToiletList() async {
-    List<Toilet> toiletList = [];
-    CollectionReference toilets = FirebaseFirestore.instance.collection('toilets');
-    await toilets
-      .get()  // get all the documents
+  List<Toilet> toiletList = [];
+  CollectionReference toilets =
+      FirebaseFirestore.instance.collection('toilets');
+  await toilets.get() // get all the documents
       .then((QuerySnapshot querySnapshot) {
-        querySnapshot.docs.forEach((doc) {
-          Toilet toilet = new Toilet(
+    querySnapshot.docs.forEach((doc) {
+      Toilet toilet = new Toilet(
           index: int.parse(doc['index']),
           type: doc['type'],
           image: doc['albumURL'],
@@ -171,14 +153,13 @@ Future<List<Toilet>> getToiletList() async {
           toiletName: doc['toiletName'],
           coords: [doc['latitude'], doc['longitude']],
           awardInt: doc['officialRating']);
-          // print('Comment: alolo ${doc['toiletName']}');
-          toiletList.add(toilet);
-        });
-      });
-      print('Comment: alolo getToiletList length of toiletList: ${toiletList.length}');
-      // print('Comment: alolo ${toiletList[0].toiletName}');
-      return toiletList;
-  
+      // print('Comment: alolo ${doc['toiletName']}');
+      toiletList.add(toilet);
+    });
+  });
+  print(
+      'Comment: alolo getToiletList length of toiletList: ${toiletList.length}');
+  return toiletList;
 }
 
 // updateToilet

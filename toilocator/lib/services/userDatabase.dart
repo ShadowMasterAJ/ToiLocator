@@ -22,11 +22,10 @@ class UserDatabaseService {
     // Call the user's CollectionReference to add a new user
     return usersCollection
         .add({
-          // 'uid': uid, // John Doe
           'name': userName,
           'email': userEmail,
-          'gender': gender, // Stokes and Sons
-          'age': age // 42
+          'gender': gender,
+          'age': age
         })
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
@@ -58,8 +57,6 @@ class UserDatabaseService {
     });
     return name;
 
-    // .then((value) => print("User Updated"))
-    // .catchError((error) => print("Failed to update user: $error"));
   }
 
   Future<void> readUserData(String uid) {
@@ -121,8 +118,6 @@ Future<String> getUserName(String uid) async {
   });
   return name;
 
-  // .then((value) => print("User Updated"))
-  // .catchError((error) => print("Failed to update user: $error"));
 }
 
 Future<String> getUserNameByEmail(String email) async {
@@ -139,8 +134,6 @@ Future<String> getUserNameByEmail(String email) async {
   });
   return name;
 
-  // .then((value) => print("User Updated"))
-  // .catchError((error) => print("Failed to update user: $error"));
 }
 
 Future<String> getUserEmail(String uid) async {
@@ -157,8 +150,6 @@ Future<String> getUserEmail(String uid) async {
   });
   return email;
 
-  // .then((value) => print("User Updated"))
-  // .catchError((error) => print("Failed to update user: $error"));
 }
 
 Future<int> getUserAge(String email) async {

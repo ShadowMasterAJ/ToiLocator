@@ -45,7 +45,6 @@ class _SearchBarState extends State<SearchBar> {
               textColor: Colors.white,
               fontSize: 16.0);
         }
-        // var addr = await locationFromAddress(value);
       },
       decoration: InputDecoration(
         prefixIcon: IconButton(
